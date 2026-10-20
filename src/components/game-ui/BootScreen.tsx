@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
 
@@ -9,108 +9,185 @@ interface BootScreenProps {
 }
 
 export default function BootScreen({ onComplete }: BootScreenProps) {
-  const [progress, setProgress] = useState(0);
-  const [logs, setLogs] = useState<string[]>([
-    "INITIALIZING GARRANIME CONSOLE BIOS v2.0...",
-  ]);
+  // Animation phases: 'towers' -> 'reveal' -> 'dissolve' -> 'done'
+  const [phase, setPhase] = useState<"towers" | "reveal" | "dissolve">("towers");
+  const [audioStarted, setAudioStarted] = useState(false);
+  const completedRef = useRef(false);
 
-  useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setLogs((prev) => [...prev, "CHECKING VIDEO BUFFER: 1080p 60FPS SHONEN MODE OK"]);
-      setProgress(25);
-    }, 400);
-
-    const timer2 = setTimeout(() => {
-      setLogs((prev) => [...prev, "LOADING TEAMS: BLUE SQUAD (250) vs ORANGE SQUAD (250) OK"]);
-      setProgress(55);
-    }, 900);
-
-    const timer3 = setTimeout(() => {
-      setLogs((prev) => [...prev, "AUDIO SYNTHESIZER: WEB AUDIO CHIP DETECTED OK"]);
-      setProgress(85);
-    }, 1400);
-
-    const timer4 = setTimeout(() => {
-      setLogs((prev) => [...prev, "ALL SYSTEMS READY! PRESS START TO FIGHT!"]);
-      setProgress(100);
-    }, 2000);
-
-    const timer5 = setTimeout(() => {
-      onComplete();
-    }, 2400);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
-      clearTimeout(timer5);
-    };
-  }, [onComplete]);
-
-  const handleSkip = () => {
-    sound.playSelect();
+  const finishBoot = () => {
+    if (completedRef.current) return;
+    completedRef.current = true;
     onComplete();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#070B28] p-6 text-white overflow-hidden">
-      {/* Retro Scanlines */}
-      <div className="scanlines-overlay absolute inset-0 pointer-events-none opacity-40" />
+  const startAudioIfPossible = () => {
+    if (!audioStarted) {
+      sound.playPS2Boot();
+      setAudioStarted(true);
+    }
+  };
 
-      {/* Top BIOS bar */}
-      <div className="w-full max-w-2xl flex items-center justify-between text-xs font-mono text-[#00D2FF] tracking-wider z-10 border-b border-[#1E2C6A] pb-2">
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#00D2FF] animate-ping" />
-          SYSTEM BOOT // GARRAFÃO DO NORTE - PA
-        </span>
-        <button
-          onClick={handleSkip}
-          className="text-[#FFE600] hover:underline font-bold px-3 py-1 bg-[#0F173D] border border-[#FFE600] active:scale-95 transition-transform"
-        >
-          PULAR BOOT ⏭️
-        </button>
+  useEffect(() => {
+    // Attempt automatic playback (works if browser allows or user already interacted)
+    startAudioIfPossible();
+
+    // Timeline of the PS2 boot sequence:
+    // 0s to 1.8s: 3D Crystal Towers rising in the dark ocean mist
+    // 1.8s: Logo reveals with bright sheen and PS2 chime
+    const revealTimer = setTimeout(() => {
+      setPhase("reveal");
+    }, 1800);
+
+    // 3.8s: Logo dissolves with light burst / fade
+    const dissolveTimer = setTimeout(() => {
+      setPhase("dissolve");
+    }, 3800);
+
+    // 4.6s: Complete and enter site!
+    const finishTimer = setTimeout(() => {
+      finishBoot();
+    }, 4600);
+
+    return () => {
+      clearTimeout(revealTimer);
+      clearTimeout(dissolveTimer);
+      clearTimeout(finishTimer);
+    };
+  }, []);
+
+  const handleUserInteract = () => {
+    startAudioIfPossible();
+  };
+
+  const handleSkip = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    sound.playSelect();
+    finishBoot();
+  };
+
+  // 7 Iconic PS2 Memory Monolith Towers with varied heights and positions
+  const monoliths = [
+    { height: "220px", left: "12%", delay: "0s", depth: "-120px" },
+    { height: "340px", left: "24%", delay: "0.2s", depth: "-60px" },
+    { height: "180px", left: "36%", delay: "0.1s", depth: "-180px" },
+    { height: "390px", left: "48%", delay: "0.3s", depth: "-20px" },
+    { height: "270px", left: "62%", delay: "0.15s", depth: "-90px" },
+    { height: "320px", left: "76%", delay: "0.25s", depth: "-50px" },
+    { height: "210px", left: "88%", delay: "0.05s", depth: "-140px" },
+  ];
+
+  return (
+    <div
+      onClick={handleUserInteract}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#020412] text-white overflow-hidden cursor-pointer select-none"
+    >
+      {/* Deep Atmospheric Ocean Mist Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#020410] via-[#050b2c] to-[#020517]" />
+      
+      {/* Subtle Scanlines & Vignette */}
+      <div className="scanlines-overlay absolute inset-0 pointer-events-none opacity-20" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black/80 pointer-events-none" />
+
+      {/* Floating Save Game Light Orbs / Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-[#00D2FF] rounded-sm shadow-[0_0_15px_#00D2FF] animate-pulse opacity-70" />
+        <div className="absolute top-1/3 right-1/4 w-2.5 h-2.5 bg-[#FF7A00] rounded-sm shadow-[0_0_15px_#FF7A00] animate-pulse opacity-80" />
+        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-[#FFE600] rounded-sm shadow-[0_0_12px_#FFE600] opacity-60" />
+        <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-[#00D2FF] rounded-sm shadow-[0_0_10px_#00D2FF] opacity-75" />
       </div>
 
-      {/* Center Logo with Pulse */}
-      <div className="my-auto flex flex-col items-center text-center z-10 max-w-md w-full px-4">
-        <div className="relative w-48 h-48 sm:w-60 sm:h-60 mb-6 drop-shadow-[0_0_35px_rgba(255,122,0,0.6)]">
-          <Image
-            src="/logo-gnime.png"
-            alt="Logo Garranime"
-            fill
-            priority
-            sizes="(max-width: 640px) 192px, 240px"
-            className="object-contain animate-pulse"
-          />
-        </div>
+      {/* 3D PS2 Crystal Towers Perspective Field */}
+      <div
+        className={`absolute inset-0 flex items-end justify-center pointer-events-none transition-all duration-1000 ease-out ${
+          phase === "towers"
+            ? "opacity-90 scale-100 translate-y-0"
+            : "opacity-25 scale-125 -translate-y-12 blur-sm"
+        }`}
+        style={{ perspective: "1000px" }}
+      >
+        {/* Ground Fog Reflection */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#00D2FF]/10 via-[#070B28]/40 to-transparent blur-md" />
 
-        {/* Loading Bar (HP / Chakra Bar) */}
-        <div className="w-full bg-[#0F173D] border-2 border-[#FF7A00] p-1 shonen-shadow-orange mb-3">
-          <div
-            className="h-4 bg-gradient-to-r from-[#FF7A00] via-[#FFE600] to-[#00D2FF] transition-all duration-300 ease-out flex items-center justify-end pr-1"
-            style={{ width: `${progress}%` }}
-          >
-            <span className="text-[10px] font-black text-[#070B28]">{progress}%</span>
-          </div>
-        </div>
-
-        {/* Console Boot Logs */}
-        <div className="w-full bg-[#070B28]/90 border border-[#1E2C6A] p-3 text-left font-mono text-[11px] text-[#00D2FF] space-y-1 min-h-[90px]">
-          {logs.map((log, index) => (
-            <p key={index} className="truncate">
-              {">"} {log}
-            </p>
+        {/* Monolith Towers */}
+        <div className="relative w-full max-w-5xl h-full flex items-end justify-between px-4 pb-12">
+          {monoliths.map((tower, idx) => (
+            <div
+              key={idx}
+              className="relative transition-transform duration-1000 ease-out"
+              style={{
+                height: tower.height,
+                width: "48px",
+                transform: `translateZ(${tower.depth})`,
+                animationDelay: tower.delay,
+              }}
+            >
+              {/* Glass Monolith Body with glowing cyan edge */}
+              <div className="w-full h-full bg-gradient-to-t from-[#00D2FF]/30 via-[#0F173D]/60 to-[#00D2FF]/20 border-t-2 border-x border-[#00D2FF]/50 shadow-[0_0_20px_rgba(0,210,255,0.25)] rounded-t-sm backdrop-blur-xs flex flex-col justify-between p-1">
+                <div className="w-full h-1 bg-[#00D2FF]/60 rounded-full" />
+                <div className="w-full h-1 bg-[#FF7A00]/40 rounded-full" />
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Bottom Tip */}
-      <div className="w-full max-w-2xl text-center z-10 py-2 border-t border-[#1E2C6A]">
-        <p className="text-xs text-[#FFE600] font-sans">
-          💡 <span className="font-bold">Dica Geek:</span> Garanta seu ingresso antecipado por R$ 10 e escolha entre Time Azul e Time Laranja!
-        </p>
+      {/* Center Stage: Event Logo with PS2 Reveal & Dissolve */}
+      <div className="relative z-20 flex flex-col items-center justify-center max-w-lg w-full px-6">
+        {/* Logo Container */}
+        <div
+          className={`relative w-72 h-44 sm:w-96 sm:h-60 transition-all duration-700 ease-out ${
+            phase === "towers"
+              ? "opacity-0 scale-75 blur-md"
+              : phase === "reveal"
+              ? "opacity-100 scale-100 blur-0 drop-shadow-[0_0_50px_rgba(255,122,0,0.8)]"
+              : "opacity-0 scale-125 blur-lg brightness-200"
+          }`}
+        >
+          <Image
+            src="/logo-gnime.png"
+            alt="Garranime 2026"
+            fill
+            priority
+            sizes="(max-width: 640px) 288px, 384px"
+            className="object-contain"
+          />
+
+          {/* Shimmer Light Beam Effect across Logo */}
+          {phase === "reveal" && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 animate-shimmer pointer-events-none" />
+          )}
+        </div>
+
+        {/* Subtitle with PS2 font vibe */}
+        <div
+          className={`mt-4 transition-all duration-500 ease-out ${
+            phase === "reveal" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <p className="font-mono text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-[#00D2FF] text-center drop-shadow-[0_0_10px_#00D2FF]">
+            1º EVENTO GEEK • GARRAFÃO DO NORTE
+          </p>
+        </div>
       </div>
+
+      {/* Top Controls / Skip Button */}
+      <div className="absolute top-6 right-6 z-30">
+        <button
+          onClick={handleSkip}
+          className="text-xs font-mono font-bold text-gray-400 hover:text-[#FFE600] px-3 py-1.5 bg-[#0F173D]/80 border border-[#1E2C6A] hover:border-[#FFE600] transition-colors"
+        >
+          PULAR ⏭️
+        </button>
+      </div>
+
+      {/* Audio hint if not yet interacted */}
+      {!audioStarted && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
+          <p className="text-[11px] font-mono text-[#FFE600]/80 tracking-wider animate-pulse">
+            🔊 TOQUE NA TELA PARA ATIVAR O SOM DO PS2
+          </p>
+        </div>
+      )}
     </div>
   );
 }

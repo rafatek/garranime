@@ -93,9 +93,16 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 1. Console Boot Sequence
+  // 1. Console Boot Sequence (Estilo PS2 com transição direta)
   if (!booted) {
-    return <BootScreen onComplete={() => setBooted(true)} />;
+    return (
+      <BootScreen
+        onComplete={() => {
+          setBooted(true);
+          setStarted(true);
+        }}
+      />
+    );
   }
 
   // 2. Title Screen ("PRESS START")
