@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+:root {
+  --orange-shonen: #FF7A00;
+  --flame-orange: #E65100;
+  --konoha-navy: #070B28;
+  --navy-surface: #0F173D;
+  --accent-border: #1E2C6A;
+  --pacman-yellow: #FFE600;
+  --arcade-cyan: #00D2FF;
+  --pure-white: #FFFFFF;
+
+  --font-bangers: "Bangers", cursive, system-ui;
+  --font-russo: "Russo One", sans-serif;
+  --font-chakra: "Chakra Petch", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+@theme {
+  --color-shonen: #FF7A00;
+  --color-flame: #E65100;
+  --color-konoha: #070B28;
+  --color-surface: #0F173D;
+  --color-accent-border: #1E2C6A;
+  --color-pacman: #FFE600;
+  --color-arcade: #00D2FF;
+
+  --font-display: var(--font-bangers);
+  --font-gamer: var(--font-russo);
+  --font-tech: var(--font-chakra);
+  --font-sans: var(--font-inter);
+}
+
+/* Base resets & typography */
+html {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: #070B28;
+  color: #FFFFFF;
+}
+
+/* Custom Scrollbar for Anime Gaming Vibe */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070B28;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF7A00;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE600;
+}
+
+/* Manga Chamfered Edges */
+.clip-chamfer {
+  clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+}
+
+.clip-chamfer-lg {
+  clip-path: polygon(24px 0%, 100% 0%, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0% 100%, 0% 24px);
+}
+
+.clip-badge {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+}
+
+.clip-tag-skew {
+  transform: skewX(-12deg);
+}
+
+/* Neobrutalist Hard Shadows */
+.shonen-shadow {
+  box-shadow: 4px 4px 0px #070B28;
+}
+.shonen-shadow-orange {
+  box-shadow: 5px 5px 0px #FF7A00;
+}
+.shonen-shadow-cyan {
+  box-shadow: 5px 5px 0px #00D2FF;
+}
+.shonen-shadow-yellow {
+  box-shadow: 5px 5px 0px #FFE600;
+}
+.shonen-shadow-white {
+  box-shadow: 4px 4px 0px #FFFFFF;
+}
+
+/* Halftone Manga Dots Background Pattern (CSS fallback / accent) */
+.manga-dots {
+  background-image: radial-gradient(rgba(255, 122, 0, 0.25) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+.manga-dots-blue {
+  background-image: radial-gradient(rgba(0, 210, 255, 0.2) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* Scanlines Effect for CRT retro gaming touch */
+.scanlines-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 0, 0, 0.25) 50%,
+    rgba(0, 0, 0, 0.25)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Shonen Impact text outline */
+.text-stroke-black {
+  -webkit-text-stroke: 1.5px #070B28;
+}
+.text-stroke-orange {
+  -webkit-text-stroke: 1.5px #FF7A00;
+}
+
+/* Energy Aura Pulse */
+@keyframes auraPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 122, 0, 0.4), inset 0 0 15px rgba(255, 122, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 122, 0, 0.8), inset 0 0 20px rgba(255, 230, 0, 0.4);
+  }
+}
+
+.aura-pulse {
+  animation: auraPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes energyGlowCyan {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), inset 0 0 15px rgba(0, 210, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.8), inset 0 0 20px rgba(0, 210, 255, 0.4);
+  }
+}
+
+.aura-pulse-cyan {
+  animation: energyGlowCyan 2.5s infinite ease-in-out;
+}
+
+/* Speed Lines for Versus / Start */
+.speed-lines-bg {
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 122, 0, 0.08) 0deg 3deg,
+    transparent 3deg 12deg
+  );
+}
+
+/* Mobile Safe Area Bottom Padding */
+.safe-bottom-dock {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
