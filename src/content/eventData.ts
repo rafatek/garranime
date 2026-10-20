@@ -40,13 +40,12 @@ export const TICKET_PLANS = [
     badgeColor: "#FFE600",
     price: 10,
     priceFormatted: "R$ 10,00",
-    tagline: "Economize e garanta sua cor de equipe!",
+    tagline: "Economize e garanta sua vaga antecipada!",
     features: [
-      "Acesso completo a todas as áreas e salas",
-      "Pulseira oficial numerada (1 a 500)",
-      "Escolha entre Time Azul ou Time Laranja",
-      "Direito de competir nas gincanas interativas",
-      "Participação no sorteio exclusivo para a equipe vencedora",
+      "Acesso completo a todas as áreas e salas temáticas",
+      "Pulseira oficial numerada do evento (limite de 500 vagas)",
+      "Direito de participar de gincanas e desafios interativos",
+      "Participação no grande sorteio final de brindes geek",
       "Inscrição gratuita no Concurso Cosplay (Adulto ou Kids)",
     ],
     ctaText: "Comprar Antecipado (R$ 10)",
@@ -59,10 +58,10 @@ export const TICKET_PLANS = [
     badgeColor: "#00D2FF",
     price: 15,
     priceFormatted: "R$ 15,00",
-    tagline: "Venda no local sujeito ao limite de pulseiras",
+    tagline: "Venda no local sujeito à lotação",
     features: [
       "Acesso a todas as áreas do evento",
-      "Pulseira da equipe conforme disponibilidade restante",
+      "Pulseira oficial conforme disponibilidade restante",
       "Participação nas gincanas e torneios",
       "Sujeito à lotação máxima das 500 pulseiras",
     ],
@@ -71,32 +70,9 @@ export const TICKET_PLANS = [
   },
 ];
 
-export const TEAM_BATTLE = {
-  totalLimit: 500,
-  teams: {
-    blue: {
-      id: "blue",
-      name: "Time Azul",
-      badge: "TROPA KONOHA",
-      colorHex: "#00D2FF",
-      borderHex: "#0099FF",
-      totalSlots: 250,
-      numberRange: "001 a 250",
-      description: "Equipe focada em agilidade, estratégia e espírito ninja. Concorra ao sorteio final se sua equipe somar mais pontos!",
-      motto: "A Vontade do Fogo em Tom Azul!",
-    },
-    orange: {
-      id: "orange",
-      name: "Time Laranja",
-      badge: "TROPA SHONEN",
-      colorHex: "#FF7A00",
-      borderHex: "#E65100",
-      totalSlots: 250,
-      numberRange: "251 a 500",
-      description: "Equipe de pura energia shonen, força de vontade e intensidade gamer. Desafie o Time Azul em gincanas épicas!",
-      motto: "Poder Infinito & Determinação Inabalável!",
-    },
-  },
+export const EVENT_CAPACITY = {
+  totalWristbands: 500,
+  description: "Limite máximo de 500 pulseiras numeradas oficiais para garantir conforto e segurança de todos os participantes.",
 };
 
 export const TOURNAMENTS = [
@@ -224,15 +200,15 @@ export const TIMELINE_STAGES = [
     stage: "FASE 01",
     time: "10:00",
     title: "Portões Abertos & Check-in das Pulseiras",
-    desc: "Abertura oficial, entrega das pulseiras do Time Azul e Time Laranja, ativação das salas temáticas e feira geek.",
+    desc: "Abertura oficial, entrega das pulseiras oficiais numeradas, ativação das salas temáticas e feira geek.",
     status: "Liberado",
     icon: "⛩️",
   },
   {
     stage: "FASE 02",
     time: "11:30",
-    title: "Batalha de Abertura: Desafio das Equipes",
-    desc: "Primeira gincana interativa valendo pontos para a disputa de equipes (Time Azul vs Time Laranja).",
+    title: "Gincanas de Abertura & Desafios no Palco",
+    desc: "Primeiras gincanas e desafios interativos valendo brindes para os participantes.",
     status: "Em Breve",
     icon: "⚔️",
   },
@@ -255,16 +231,16 @@ export const TIMELINE_STAGES = [
   {
     stage: "FASE 05",
     time: "17:30",
-    title: "Karaokê Livre & Gincanas Finais de Equipes",
-    desc: "Batalha musical de aberturas de anime e contagem decisiva dos pontos da equipe campeã.",
+    title: "Karaokê Livre & Gincanas Finais",
+    desc: "Batalha musical de aberturas de anime e momentos de diversão e interação com o público.",
     status: "Em Breve",
     icon: "🎤",
   },
   {
     stage: "BOSS FINAL",
     time: "19:00",
-    title: "Cerimônia de Premiação & Sorteio Exclusivo",
-    desc: "Entrega de troféus aos campeões e sorteio de brindes exclusivo para os membros da equipe vencedora!",
+    title: "Cerimônia de Premiação & Sorteio Especial",
+    desc: "Entrega de troféus aos campeões e grande sorteio final de brindes para os participantes!",
     status: "Boss Final",
     icon: "🏆",
   },
@@ -276,8 +252,8 @@ export const FAQ_LIST = [
     a: "Você copia a chave Pix do evento exibida aqui no site (ou escaneia o QR Code), transfere o valor de R$ 10,00 (antecipado) e envia o comprovante para o nosso WhatsApp ou Instagram oficial. Nossa equipe confirma o pagamento e registra o número da sua pulseira!",
   },
   {
-    q: "O que é a disputa entre Time Azul e Time Laranja?",
-    a: "Para tornar o evento super interativo, limitamos a 500 pulseiras: 250 azuis (001 a 250) e 250 laranjas (251 a 500). Ao garantir o ingresso, você escolhe seu time para participar das gincanas integrativas. A equipe com mais vitórias no final ganha o direito exclusivo de participar do sorteio de brindes especiais!",
+    q: "Como funcionam as pulseiras oficiais de acesso?",
+    a: "O evento possui uma capacidade limitada a 500 pulseiras oficiais numeradas. Ao garantir seu ingresso antecipado, você assegura sua pulseira com valor promocional de R$ 10,00 e garante participação em todas as salas, gincanas e no sorteio final de brindes do evento!",
   },
   {
     q: "Quanto custa para participar do Concurso de Cosplay?",

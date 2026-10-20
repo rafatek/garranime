@@ -35,10 +35,10 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
           </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-sans">
-            GARANTA SEU <span className="text-[#FFE600]">INGRESSO</span> & SUA <span className="text-[#00D2FF]">EQUIPE</span>
+            GARANTA SEU <span className="text-[#FFE600]">INGRESSO</span> <span className="text-[#00D2FF]">ANTECIPADO</span>
           </h2>
           <p className="max-w-xl mx-auto mt-2 text-sm text-gray-300">
-            Apenas 500 pulseiras disponíveis! Compre antecipado por R$ 10, escolha seu time e concorra ao sorteio de brindes exclusivos.
+            Apenas 500 pulseiras disponíveis! Compre antecipado por R$ 10,00 e garanta seu acesso a todas as atrações, torneios e sorteios.
           </p>
         </div>
 
@@ -128,8 +128,8 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
               </h4>
               <p className="text-xs sm:text-sm text-gray-300 max-w-xl">
                 1. Transfira o valor pelo Pix. <br />
-                2. Envie o comprovante via WhatsApp informando se deseja o <strong>Time Azul</strong> ou <strong>Time Laranja</strong>. <br />
-                3. Receba seu código de pulseira para retirada na entrada do evento!
+                2. Envie o comprovante via WhatsApp para confirmação do pagamento. <br />
+                3. Receba a confirmação e número da sua pulseira para retirada rápida na entrada do evento!
               </p>
             </div>
 

@@ -3,20 +3,17 @@
 import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { EVENT_DATA } from "@/content/eventData";
-import { X, Copy, Check, MessageCircle, Shield, Flame, QrCode } from "lucide-react";
+import { X, Copy, Check, MessageCircle, Ticket, QrCode } from "lucide-react";
 
 interface PixModalProps {
   isOpen: boolean;
   onClose: () => void;
-  defaultTeam?: "blue" | "orange";
 }
 
 export default function PixModal({
   isOpen,
   onClose,
-  defaultTeam = "orange",
 }: PixModalProps) {
-  const [selectedTeam, setSelectedTeam] = useState<"blue" | "orange">(defaultTeam);
   const [quantity, setQuantity] = useState(1);
   const [copied, setCopied] = useState(false);
 
@@ -34,9 +31,8 @@ export default function PixModal({
 
   const handleWhatsApp = () => {
     sound.playSelect();
-    const teamName = selectedTeam === "blue" ? "Time Azul" : "Time Laranja";
     const text = encodeURIComponent(
-      `Olá, equipe Garranime! Acabei de realizar a transferência Pix no valor de R$ ${totalPrice},00 referente a ${quantity} ingresso(s) antecipado(s) para o ${teamName}. Segue o comprovante para emissão da(s) pulseira(s)!`
+      `Olá, equipe Garranime! Acabei de realizar a transferência Pix no valor de R$ ${totalPrice},00 referente a ${quantity} ingresso(s) antecipado(s). Segue o comprovante para emissão da(s) pulseira(s) oficial(is)!`
     );
     window.open(`https://wa.me/${EVENT_DATA.whatsappContact}?text=${text}`, "_blank");
   };
@@ -49,7 +45,7 @@ export default function PixModal({
           <div className="flex items-center gap-2">
             <span className="p-1.5 bg-[#FF7A00] text-[#070B28] font-black text-xs">PIX</span>
             <h3 className="text-xl font-black uppercase text-white font-sans">
-              Checkout Rápido de Ingressos
+              Checkout de Ingressos Antecipados
             </h3>
           </div>
 
@@ -64,58 +60,24 @@ export default function PixModal({
           </button>
         </div>
 
-        {/* Team Selection */}
-        <div className="space-y-4 mb-6">
-          <label className="block text-xs font-mono font-bold uppercase text-gray-300">
-            1. Escolha a sua Equipe (Cor da Pulseira):
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                sound.playHover();
-                setSelectedTeam("blue");
-              }}
-              className={`p-3 border-2 flex items-center justify-center gap-2 font-bold text-xs uppercase transition-all ${
-                selectedTeam === "blue"
-                  ? "bg-[#00D2FF] text-[#070B28] border-white shonen-shadow"
-                  : "bg-[#070B28] text-gray-400 border-[#1E2C6A]"
-              }`}
-            >
-              <Shield className="w-4 h-4" />
-              <span>Time Azul (#1 a #250)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                sound.playHover();
-                setSelectedTeam("orange");
-              }}
-              className={`p-3 border-2 flex items-center justify-center gap-2 font-bold text-xs uppercase transition-all ${
-                selectedTeam === "orange"
-                  ? "bg-[#FF7A00] text-[#070B28] border-white shonen-shadow"
-                  : "bg-[#070B28] text-gray-400 border-[#1E2C6A]"
-              }`}
-            >
-              <Flame className="w-4 h-4" />
-              <span>Time Laranja (#251 a #500)</span>
-            </button>
-          </div>
-        </div>
-
         {/* Quantity */}
         <div className="space-y-2 mb-6">
-          <label className="block text-xs font-mono font-bold uppercase text-gray-300">
-            2. Quantidade de Ingressos:
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-mono font-bold uppercase text-gray-300">
+              1. Quantidade de Ingressos:
+            </label>
+            <span className="text-xs font-mono text-[#FFE600] font-bold">
+              R$ 10,00 cada
+            </span>
+          </div>
+
           <div className="flex items-center gap-4 bg-[#070B28] border border-[#1E2C6A] p-2.5 max-w-[200px]">
             <button
               onClick={() => {
                 sound.playSelect();
                 setQuantity(Math.max(1, quantity - 1));
               }}
-              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center"
+              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center active:scale-95"
             >
               -
             </button>
@@ -127,7 +89,7 @@ export default function PixModal({
                 sound.playSelect();
                 setQuantity(Math.min(10, quantity + 1));
               }}
-              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center"
+              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center active:scale-95"
             >
               +
             </button>
@@ -147,7 +109,7 @@ export default function PixModal({
         {/* Pix Key Box */}
         <div className="space-y-2 mb-6">
           <label className="block text-xs font-mono font-bold uppercase text-gray-300">
-            3. Chave Pix Oficial do Evento:
+            2. Chave Pix Oficial do Evento:
           </label>
           <div className="flex items-center justify-between gap-2 bg-[#070B28] border border-[#FF7A00] p-3 text-xs font-mono text-white">
             <span className="truncate">{EVENT_DATA.pixKey}</span>
@@ -174,7 +136,7 @@ export default function PixModal({
         </button>
 
         <p className="text-[11px] text-center text-gray-400 font-mono">
-          Após o envio, a equipe registrará o número da sua pulseira de acesso!
+          Após o envio, a equipe registrará o número da sua pulseira oficial de acesso!
         </p>
       </div>
     </div>

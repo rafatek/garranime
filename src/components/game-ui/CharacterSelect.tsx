@@ -13,7 +13,7 @@ const GEEK_HEROES = [
     title: "Herói de Konoha & Espírito Shonen",
     image: "/assets/personagens/naruto.webp",
     quote: "Meu jeito ninja de ser no 1º Garranime!",
-    teamAffiliation: "Time Laranja",
+    archetype: "Ninja Shonen",
     stats: {
       Chakra: 99,
       Determinação: 100,
@@ -27,7 +27,7 @@ const GEEK_HEROES = [
     title: "Capitão do Chapéu de Palha",
     image: "/assets/personagens/luffy.webp",
     quote: "Vou ser o Rei dos Cosplayers e comer toda a praça de alimentação!",
-    teamAffiliation: "Time Laranja",
+    archetype: "Pirata dos Chapéus de Palha",
     stats: {
       Chakra: 94,
       Determinação: 100,
@@ -41,7 +41,7 @@ const GEEK_HEROES = [
     title: "Guerreiro Saiyajin Lendário",
     image: "/assets/personagens/goku.webp",
     quote: "Ouvi dizer que tem guerreiros fortes em Garrafão do Norte!",
-    teamAffiliation: "Time Azul",
+    archetype: "Guerreiro Z Lendário",
     stats: {
       Chakra: 100,
       Determinação: 98,
@@ -120,7 +120,7 @@ export default function CharacterSelect() {
             <div className="bg-[#0F173D] border border-[#1E2C6A] p-4 space-y-3">
               <div className="flex items-center justify-between border-b border-[#1E2C6A] pb-2">
                 <span className="text-xs font-mono font-bold text-[#FFE600]">
-                  AFILIAÇÃO: {current.teamAffiliation}
+                  CLASSE: {current.archetype}
                 </span>
                 <span className="text-[10px] font-mono bg-[#FF7A00] text-[#070B28] font-black px-2 py-0.5">
                   RANK S

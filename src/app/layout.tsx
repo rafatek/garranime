@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://garranime.vercel.app"),
   title: "GARRANIME 2026 — 1º Evento Geek de Garrafão do Norte (PA)",
   description:
-    "O maior evento de anime, mangá, cosplay e games clássicos de Garrafão do Norte! 22 de Novembro. Ingressos antecipados, Time Azul vs Time Laranja e torneios imperdíveis.",
+    "O maior evento de anime, mangá, cosplay e games clássicos de Garrafão do Norte! 22 de Novembro. Ingressos antecipados por R$ 10, concurso de cosplay, torneios gamer e gincanas.",
   keywords: [
     "Garranime",
     "Anime Garrafão do Norte",

@@ -62,16 +62,10 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 font-mono text-xs font-bold uppercase tracking-wider text-gray-200">
           <button
-            onClick={() => handleNavClick("equipes")}
+            onClick={() => handleNavClick("versus")}
             className="hover:text-[#FF7A00] transition-colors flex items-center gap-1.5"
           >
-            <span className="w-2 h-2 rounded-full bg-[#00D2FF]" />
-            Time Azul x Laranja
-          </button>
-          <button
-            onClick={() => handleNavClick("versus")}
-            className="hover:text-[#FF7A00] transition-colors"
-          >
+            <span className="w-2 h-2 rounded-full bg-[#FF7A00]" />
             Torneios & Cosplay
           </button>
           <button
@@ -164,13 +158,6 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#070B28] border-b-2 border-[#FF7A00] p-4 flex flex-col gap-3 font-mono text-sm uppercase tracking-wider">
-          <button
-            onClick={() => handleNavClick("equipes")}
-            className="text-left py-2 px-3 bg-[#0F173D] border-l-4 border-[#00D2FF] text-white flex items-center justify-between"
-          >
-            <span>Time Azul x Time Laranja</span>
-            <span className="text-xs text-[#00D2FF]">500 Pulseiras</span>
-          </button>
           <button
             onClick={() => handleNavClick("versus")}
             className="text-left py-2 px-3 bg-[#0F173D] border-l-4 border-[#FF7A00] text-white flex items-center justify-between"

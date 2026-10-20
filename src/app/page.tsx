@@ -10,7 +10,6 @@ import BootScreen from "@/components/game-ui/BootScreen";
 import TitleScreen from "@/components/game-ui/TitleScreen";
 import Header from "@/components/game-ui/Header";
 import MobileDock from "@/components/game-ui/MobileDock";
-import TeamBattle from "@/components/game-ui/TeamBattle";
 import VersusSection from "@/components/game-ui/VersusSection";
 import StoryTimeline from "@/components/game-ui/StoryTimeline";
 import CharacterSelect from "@/components/game-ui/CharacterSelect";
@@ -27,7 +26,7 @@ import CosplayModal from "@/components/game-ui/CosplayModal";
 import TournamentModal from "@/components/game-ui/TournamentModal";
 import OptionsModal from "@/components/game-ui/OptionsModal";
 
-import { Sparkles, Ticket, Shield, Flame, Play, Clock, MapPin } from "lucide-react";
+import { Sparkles, Ticket, Swords, Clock } from "lucide-react";
 
 export default function Home() {
   const [booted, setBooted] = useState(false);
@@ -37,7 +36,6 @@ export default function Home() {
 
   // Modal States
   const [pixModalOpen, setPixModalOpen] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState<"blue" | "orange">("orange");
   const [cosplayModalOpen, setCosplayModalOpen] = useState(false);
   const [tournamentModalOpen, setTournamentModalOpen] = useState(false);
   const [activeTournament, setActiveTournament] = useState("naruto");
@@ -73,7 +71,7 @@ export default function Home() {
   // Update current section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["topo", "equipes", "versus", "historia", "atracoes", "ingressos", "lojas", "arena", "manual"];
+      const sections = ["topo", "versus", "historia", "atracoes", "ingressos", "lojas", "arena", "manual"];
       const scrollPos = window.scrollY + 200;
 
       for (const s of sections) {
@@ -105,7 +103,7 @@ export default function Home() {
     );
   }
 
-  // 2. Title Screen ("PRESS START")
+  // 2. Title Screen ("PRESS START" - fallback se ativado)
   if (!started) {
     return (
       <TitleScreen
@@ -126,10 +124,7 @@ export default function Home() {
 
       {/* Main Gaming Header */}
       <Header
-        onOpenTickets={() => {
-          setSelectedTeam("orange");
-          setPixModalOpen(true);
-        }}
+        onOpenTickets={() => setPixModalOpen(true)}
         onOpenOptions={() => setOptionsModalOpen(true)}
       />
 
@@ -172,7 +167,7 @@ export default function Home() {
           </h1>
 
           <p className="text-xs sm:text-base text-gray-300 max-w-xl mb-8 leading-relaxed">
-            Prepare seu cosplay, escolha entre <strong className="text-[#00D2FF]">Time Azul</strong> e <strong className="text-[#FF7A00]">Time Laranja</strong>, e venha viver um dia inesquecível de anime, games clássicos, gincanas e música geek!
+            Prepare seu cosplay, participe dos torneios e gincanas, e venha viver um dia inesquecível de anime, games clássicos e cultura pop japonesa!
           </p>
 
           {/* Dual CTAs */}
@@ -180,7 +175,6 @@ export default function Home() {
             <button
               onClick={() => {
                 sound.playCoin();
-                setSelectedTeam("orange");
                 setPixModalOpen(true);
               }}
               className="w-full sm:w-auto px-8 py-4 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-sm sm:text-base uppercase tracking-wider border-2 border-white shonen-shadow-cyan active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
@@ -192,13 +186,13 @@ export default function Home() {
             <button
               onClick={() => {
                 sound.playSelect();
-                const el = document.getElementById("equipes");
+                const el = document.getElementById("versus");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
               className="w-full sm:w-auto px-7 py-4 bg-[#0F173D] hover:bg-[#1E2C6A] text-[#00D2FF] font-black text-sm sm:text-base uppercase tracking-wider border-2 border-[#00D2FF] shonen-shadow active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
             >
-              <Shield className="w-5 h-5" />
-              <span>Ver Batalha das Equipes</span>
+              <Swords className="w-5 h-5" />
+              <span>Ver Torneios & Cosplay</span>
             </button>
           </div>
 
@@ -241,14 +235,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION: Batalha de Equipes (Time Azul vs Time Laranja) */}
-      <TeamBattle
-        onChooseTeam={(team) => {
-          setSelectedTeam(team);
-          setPixModalOpen(true);
-        }}
-      />
-
       {/* SECTION: Versus (Cosplay & Torneios Gamers) */}
       <VersusSection
         onOpenCosplay={() => setCosplayModalOpen(true)}
@@ -266,10 +252,7 @@ export default function Home() {
 
       {/* SECTION: Loja & Ingressos (R$ 10 Antecipado / R$ 15 Na Hora) */}
       <StoreTickets
-        onOpenPixModal={(planId) => {
-          setSelectedTeam("orange");
-          setPixModalOpen(true);
-        }}
+        onOpenPixModal={() => setPixModalOpen(true)}
       />
 
       {/* SECTION: Lojas Parceiras & Sorteio Instagram */}
@@ -287,10 +270,7 @@ export default function Home() {
       {/* Handheld Mobile Navigation Dock */}
       <MobileDock
         currentSection={currentSection}
-        onOpenTickets={() => {
-          setSelectedTeam("orange");
-          setPixModalOpen(true);
-        }}
+        onOpenTickets={() => setPixModalOpen(true)}
       />
 
       {/* Gamification HUD (Scouter Power Level + Mobile D-Pad Konami Code) */}
@@ -300,7 +280,6 @@ export default function Home() {
       <PixModal
         isOpen={pixModalOpen}
         onClose={() => setPixModalOpen(false)}
-        defaultTeam={selectedTeam}
       />
 
       <CosplayModal

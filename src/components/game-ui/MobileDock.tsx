@@ -1,7 +1,7 @@
 "use client";
 
 import { sound } from "@/lib/sound";
-import { Home, Swords, Users, Map, Ticket } from "lucide-react";
+import { Home, Swords, Sparkles, Map, Ticket } from "lucide-react";
 
 interface MobileDockProps {
   currentSection: string;
@@ -48,16 +48,15 @@ export default function MobileDock({
           <span className="text-[10px] font-mono font-bold tracking-tight uppercase">Versus</span>
         </button>
 
-        {/* Teams / Equipes */}
+        {/* Atrações / Salas */}
         <button
-          onClick={() => handleScroll("equipes")}
+          onClick={() => handleScroll("atracoes")}
           className={`flex flex-col items-center gap-0.5 py-1 px-2.5 transition-all active:scale-90 relative ${
-            currentSection === "equipes" ? "text-[#00D2FF]" : "text-gray-400 hover:text-white"
+            currentSection === "atracoes" ? "text-[#00D2FF]" : "text-gray-400 hover:text-white"
           }`}
         >
-          <span className="absolute -top-1 right-1 w-2 h-2 rounded-full bg-[#00D2FF] animate-ping" />
-          <Users className="w-5 h-5" />
-          <span className="text-[10px] font-mono font-bold tracking-tight uppercase">Equipes</span>
+          <Sparkles className="w-5 h-5 text-[#FFE600]" />
+          <span className="text-[10px] font-mono font-bold tracking-tight uppercase">Atrações</span>
         </button>
 
         {/* Story / Fases */}
