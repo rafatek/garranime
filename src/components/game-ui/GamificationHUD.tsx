@@ -107,12 +107,12 @@ export default function GamificationHUD() {
         </div>
       )}
 
-      {/* Floating HUD elements */}
-      <div className="fixed bottom-20 lg:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end gap-2 pointer-events-auto">
+      {/* Floating HUD elements (posicionado de forma discreta para não cobrir botões no mobile) */}
+      <div className="fixed bottom-16 sm:bottom-20 lg:bottom-6 right-2 sm:right-6 z-30 flex flex-col items-end gap-1.5 pointer-events-auto">
         {/* Scouter Power Level Box */}
-        <div className="bg-[#0F173D]/95 border-2 border-[#00D2FF] px-3 py-1.5 shonen-shadow-cyan flex items-center gap-2 font-mono text-xs">
-          <Zap className="w-4 h-4 text-[#FFE600] animate-pulse" />
-          <span className="text-gray-300">SCOUTER KI:</span>
+        <div className="bg-[#0F173D]/90 border border-[#00D2FF] px-2 sm:px-3 py-1 sm:py-1.5 shadow-[2px_2px_0px_#00D2FF] flex items-center gap-1.5 font-mono text-[10px] sm:text-xs backdrop-blur-sm">
+          <Zap className="w-3.5 h-3.5 text-[#FFE600] animate-pulse" />
+          <span className="text-gray-300 hidden xs:inline">KI:</span>
           <span
             className={`font-black ${
               powerLevel >= 9000
@@ -130,11 +130,10 @@ export default function GamificationHUD() {
             sound.playSelect();
             setShowDpad(!showDpad);
           }}
-          className="group relative p-1 active:scale-95 transition-transform"
+          className="group relative p-0.5 active:scale-95 transition-transform"
           title="Ativar D-Pad para Código Secreto"
         >
-          <span className="absolute inset-0 bg-[#FF7A00] -rotate-2 group-hover:-rotate-3 transition-transform shadow-[2px_2px_0px_#070B28]" />
-          <span className="relative z-10 flex items-center gap-1.5 bg-[#0A1138] border border-[#FF7A00] px-2.5 py-1 text-white font-display uppercase tracking-wider text-xs garranime-btn-text-sm">
+          <span className="relative z-10 flex items-center gap-1 bg-[#0A1138] border border-[#FF7A00] px-2 py-1 text-white font-mono uppercase tracking-wider text-[10px] sm:text-xs">
             <Gamepad2 className="w-3.5 h-3.5 text-[#FFE600]" />
             <span className="hidden sm:inline">CÓDIGO SECRETO</span>
           </span>
