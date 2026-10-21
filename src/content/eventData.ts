@@ -250,9 +250,18 @@ export const CONFIRMED_STORES = [
  */
 export const CONFIRMED_SPONSORS = [
   {
+    name: "Rafael Turbo Digital",
+    tier: "Cota Diamante",
+    badge: "OFICIAL",
+    logo: "/assets/patrocinadores/rafael_turbo_digital.png",
+    initials: "TD",
+    color: "#E50914",
+    desc: "Marketing Digital, Tráfego Pago & Soluções Web",
+  },
+  {
     name: "Patrocinador Master",
     tier: "Cota Ouro",
-    badge: "OFICIAL",
+    badge: "MASTER",
     logo: "/assets/patrocinadores/patrocinador-master.png",
     initials: "PM",
     color: "#FF7A00",

@@ -182,31 +182,64 @@ export default function LojasPartners() {
 /**
  * Card Quadrado com Destaque Neon Laranja e Foco 100% na Logo Oficial
  */
+/**
+ * Card Quadrado com Destaque Neon Personalizado (Cor da Marca) e Foco 100% na Logo Oficial
+ */
 function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
   const [imgError, setImgError] = useState(false);
+  const accentColor = sponsor.color || "#FF7A00";
 
   return (
-    <div className="relative group bg-[#070B28] border-2 border-[#FF7A00] rounded-2xl p-3.5 sm:p-5 flex flex-col items-center justify-between aspect-square transition-all duration-300 hover:-translate-y-1.5 shadow-[0_0_22px_rgba(255,122,0,0.35)] hover:shadow-[0_0_35px_rgba(255,122,0,0.7)] hover:border-[#FFA500] overflow-hidden">
+    <div
+      className="relative group bg-[#070B28] rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-between aspect-square transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
+      style={{
+        border: `2px solid ${accentColor}`,
+        boxShadow: `0 0 20px ${accentColor}40`,
+      }}
+    >
       {/* Glow de Fundo Sutil no Hover */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FF7A00]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at center, ${accentColor}25 0%, transparent 70%)`,
+        }}
+      />
 
       {/* Cantos Tecnológicos Estilo Gamer */}
-      <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 border-[#FF7A00] pointer-events-none" />
-      <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 border-[#FF7A00] pointer-events-none" />
-      <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 border-[#FF7A00] pointer-events-none" />
-      <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 border-[#FF7A00] pointer-events-none" />
+      <div
+        className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 pointer-events-none"
+        style={{ borderColor: accentColor }}
+      />
+      <div
+        className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 pointer-events-none"
+        style={{ borderColor: accentColor }}
+      />
+      <div
+        className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 pointer-events-none"
+        style={{ borderColor: accentColor }}
+      />
+      <div
+        className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 pointer-events-none"
+        style={{ borderColor: accentColor }}
+      />
 
       {/* Topo do Card: Cota / Tag */}
-      <div className="w-full flex items-center justify-between text-[10px] font-mono z-10 pb-1.5 border-b border-[#FF7A00]/20">
-        <span className="text-[#FFE600] font-black uppercase tracking-wider text-[9px] sm:text-[11px] truncate">
+      <div
+        className="w-full flex items-center justify-between text-[10px] font-mono z-10 pb-1.5 border-b"
+        style={{ borderColor: `${accentColor}30` }}
+      >
+        <span
+          className="font-black uppercase tracking-wider text-[9px] sm:text-[11px] truncate"
+          style={{ color: accentColor }}
+        >
           {sponsor.tier}
         </span>
         <span
           className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded font-mono tracking-wider"
           style={{
-            backgroundColor: `${sponsor.color || "#FF7A00"}25`,
-            color: sponsor.color || "#FF7A00",
-            border: `1px solid ${sponsor.color || "#FF7A00"}60`,
+            backgroundColor: `${accentColor}25`,
+            color: accentColor,
+            border: `1px solid ${accentColor}60`,
           }}
         >
           {sponsor.badge}
@@ -214,26 +247,34 @@ function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
       </div>
 
       {/* Área Central: Logo Gigante em Destaque */}
-      <div className="w-full flex-1 flex items-center justify-center p-2 my-1 z-10 overflow-hidden">
+      <div className="w-full flex-1 flex items-center justify-center p-1.5 my-1 z-10 overflow-hidden">
         {sponsor.logo && !imgError ? (
-          <img
-            src={sponsor.logo}
-            alt={sponsor.name}
-            onError={() => setImgError(true)}
-            className="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(255,122,0,0.35)] group-hover:scale-110 transition-transform duration-300"
-          />
+          <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black/50 border border-white/10 group-hover:border-white/25 transition-all">
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
         ) : (
-          <div className="w-full h-full rounded-xl bg-[#0F173D]/80 border-2 border-dashed border-[#FF7A00]/40 flex flex-col items-center justify-center p-2 group-hover:border-[#FF7A00] group-hover:bg-[#0F173D] transition-all duration-300">
+          <div
+            className="w-full h-full rounded-xl bg-[#0F173D]/80 border-2 border-dashed flex flex-col items-center justify-center p-2 transition-all duration-300"
+            style={{ borderColor: `${accentColor}50` }}
+          >
             <div
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-mono font-black text-lg sm:text-2xl text-white shadow-lg border border-white/20 transition-transform duration-300 group-hover:scale-110"
               style={{
-                backgroundColor: sponsor.color || "#FF7A00",
-                boxShadow: `0 0 20px ${sponsor.color || "#FF7A00"}70`,
+                backgroundColor: accentColor,
+                boxShadow: `0 0 20px ${accentColor}70`,
               }}
             >
               {sponsor.initials}
             </div>
-            <span className="mt-2 text-[9px] sm:text-[10px] font-mono uppercase text-[#FFE600] tracking-widest font-black">
+            <span
+              className="mt-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest font-black"
+              style={{ color: accentColor }}
+            >
               LOGO OFICIAL
             </span>
           </div>
@@ -241,8 +282,11 @@ function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
       </div>
 
       {/* Rodapé: Nome do Patrocinador (Limpo, sem texto corrido) */}
-      <div className="w-full text-center z-10 pt-1.5 border-t border-[#FF7A00]/20">
-        <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans truncate group-hover:text-[#FFE600] transition-colors">
+      <div
+        className="w-full text-center z-10 pt-1.5 border-t"
+        style={{ borderColor: `${accentColor}30` }}
+      >
+        <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans truncate group-hover:text-white transition-colors">
           {sponsor.name}
         </h4>
       </div>
