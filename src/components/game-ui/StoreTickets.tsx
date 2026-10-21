@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { TICKET_PLANS, EVENT_DATA } from "@/content/eventData";
-import { Ticket, CheckCircle2, Shield, QrCode, Copy, Check, ExternalLink } from "lucide-react";
+import { Ticket, CheckCircle2, Shield, QrCode, Copy, Check, ExternalLink, MapPin } from "lucide-react";
 import GamerButton from "./GamerButton";
 
 interface StoreTicketsProps {
@@ -98,22 +98,33 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
                 </ul>
               </div>
 
-              {/* Action Button */}
+              {/* Action Button for Antecipado / In-Person Box for Portaria */}
               <div className="w-full">
-                <GamerButton
-                  fullWidth
-                  size="md"
-                  showPacman={plan.featured}
-                  ghost={plan.featured ? "orange" : "blue"}
-                  tilt={plan.featured ? "left" : "right"}
-                  onClick={() => {
-                    sound.playCoin();
-                    onOpenPixModal(plan.id);
-                  }}
-                  icon={<Ticket className="w-5 h-5 fill-current" />}
-                >
-                  {plan.ctaText}
-                </GamerButton>
+                {plan.id === "na-hora" ? (
+                  <div className="w-full p-3.5 bg-[#070B28] border-2 border-[#1E2C6A] text-center font-mono text-xs text-gray-300 flex flex-col items-center justify-center gap-1">
+                    <div className="flex items-center gap-1.5 text-[#00D2FF] font-black uppercase tracking-wider text-xs sm:text-sm">
+                      <MapPin className="w-4 h-4 shrink-0 text-[#00D2FF]" />
+                      <span>Venda Exclusiva no Local</span>
+                    </div>
+                    <span className="text-[11px] text-gray-400">
+                      Disponível na bilheteria física no dia 22/Nov (Pix ou Dinheiro).
+                    </span>
+                  </div>
+                ) : (
+                  <GamerButton
+                    fullWidth
+                    size="md"
+                    showPacman={plan.featured}
+                    ghost="orange"
+                    onClick={() => {
+                      sound.playCoin();
+                      onOpenPixModal(plan.id);
+                    }}
+                    icon={<Ticket className="w-5 h-5 fill-current" />}
+                  >
+                    {plan.ctaText}
+                  </GamerButton>
+                )}
               </div>
             </div>
           ))}
