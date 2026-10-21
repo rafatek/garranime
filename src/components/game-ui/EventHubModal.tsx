@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
-import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS, CONFIRMED_SPONSORS } from "@/content/eventData";
+import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS, CONFIRMED_SPONSORS, TIMELINE_STAGES } from "@/content/eventData";
 import {
   X,
   ArrowLeft,
@@ -25,12 +25,14 @@ import {
   Swords,
   CheckCircle2,
   DoorOpen,
+  Clock,
 } from "lucide-react";
 import GamerButton from "./GamerButton";
 
 export type HubView =
   | "menu"
   | "resumo"
+  | "cronograma"
   | "competicoes"
   | "cosplay"
   | "cosplay_kids"
@@ -161,7 +163,18 @@ export default function EventHubModal({
                 </GamerButton>
               </div>
 
-              {/* 2. COMPETIÇÕES */}
+              {/* 2. CRONOGRAMA DO EVENTO */}
+              <div className="w-full max-w-xs">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  onClick={() => navigateTo("cronograma")}
+                >
+                  CRONOGRAMA DO EVENTO
+                </GamerButton>
+              </div>
+
+              {/* 3. COMPETIÇÕES */}
               <div className="w-full max-w-xs">
                 <GamerButton
                   fullWidth
@@ -319,6 +332,88 @@ export default function EventHubModal({
                   <MessageCircle className="w-4 h-4" />
                   <span>Dúvidas no WhatsApp ({EVENT_DATA.whatsappDisplay})</span>
                 </button>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* VIEW: CRONOGRAMA OFICIAL (MODO HISTÓRIA)                   */}
+          {/* ========================================================== */}
+          {view === "cronograma" && (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="text-center pb-2 border-b border-[#1E2C6A]">
+                <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#FFE600]/40">
+                  22 DE NOVEMBRO • PROGRAMAÇÃO
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
+                  CRONOGRAMA DO EVENTO
+                </h3>
+                <p className="text-xs text-gray-300 mt-1">
+                  Arraste para acompanhar todas as fases e horários da aventura:
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {TIMELINE_STAGES.map((stage, idx) => {
+                  const isBoss = stage.stage === "BOSS FINAL";
+                  return (
+                    <div
+                      key={idx}
+                      className={`p-3.5 border-l-4 border-y border-r transition-all ${
+                        isBoss
+                          ? "bg-[#0A1138] border-l-[#FFE600] border-[#FFE600]/40"
+                          : "bg-[#0A1138] border-l-[#FF7A00] border-[#1E2C6A]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span
+                          className={`text-[9px] font-mono font-black uppercase px-2 py-0.5 ${
+                            isBoss ? "bg-[#FFE600] text-[#070B28]" : "bg-[#FF7A00] text-[#070B28]"
+                          }`}
+                        >
+                          {stage.stage}
+                        </span>
+                        <span className="flex items-center gap-1 text-xs font-mono font-bold text-[#00D2FF]">
+                          <Clock className="w-3.5 h-3.5" />
+                          {stage.time}
+                        </span>
+                      </div>
+
+                      <div className="flex items-start gap-2 mb-1.5">
+                        <span className="text-xl shrink-0">{stage.icon}</span>
+                        <h4 className="text-sm font-black uppercase text-white font-sans leading-tight">
+                          {stage.title}
+                        </h4>
+                      </div>
+
+                      <p className="text-xs text-gray-300 leading-relaxed font-sans">
+                        {stage.desc}
+                      </p>
+
+                      <div className="mt-2.5 pt-2 border-t border-[#1E2C6A] flex items-center justify-between text-[10px] font-mono">
+                        <span className="text-gray-400">Status da Missão:</span>
+                        <span className={`font-bold ${isBoss ? "text-[#FFE600] animate-pulse" : "text-[#00D2FF]"}`}>
+                          {stage.status}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="pt-2">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  onClick={() =>
+                    openWhatsApp(
+                      "Olá, equipe Garranime! Gostaria de tirar dúvidas sobre os horários e o cronograma do evento."
+                    )
+                  }
+                  icon={<MessageCircle className="w-5 h-5 text-[#25D366]" />}
+                >
+                  TIRAR DÚVIDAS NO WHATSAPP
+                </GamerButton>
               </div>
             </div>
           )}

@@ -277,6 +277,12 @@ export default function Home() {
           </div>
 
           <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("cronograma")}>
+              CRONOGRAMA DO EVENTO
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
             <GamerButton fullWidth size="md" onClick={() => handleOpenHub("competicoes")}>
               COMPETIÇÕES
             </GamerButton>
@@ -290,13 +296,13 @@ export default function Home() {
 
           <div className="w-full max-w-xs">
             <GamerButton fullWidth size="md" onClick={() => handleOpenHub("lojas")}>
-              LOJAS PARCEIRAS
+              LOJAS CONFIRMADAS
             </GamerButton>
           </div>
 
           <div className="w-full max-w-xs">
             <GamerButton fullWidth size="md" onClick={() => handleOpenHub("apoiadores")}>
-              APOIADORES
+              APOIADORES & PATROCÍNIO
             </GamerButton>
           </div>
 
@@ -315,7 +321,7 @@ export default function Home() {
       />
 
       {/* SECTION: Modo História (Cronograma do Dia) */}
-      <StoryTimeline />
+      <StoryTimeline onOpenTimeline={() => handleOpenHub("cronograma")} />
 
       {/* SECTION: Seleção de Personagens & Salas Temáticas */}
       <CharacterSelect onOpenSalas={() => handleOpenHub("salas")} />

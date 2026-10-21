@@ -127,6 +127,33 @@ export const COSPLAY_DATA = {
   ],
 };
 
+export const STAGE_COMPETITIONS = [
+  {
+    id: "danca",
+    name: "Torneio de Dança Geek",
+    category: "K-Pop & Anime Dance",
+    platform: "Palco Principal",
+    rules: "Apresentações solo ou em grupo. Envio prévio da música (até 3 minutos). Avaliação de ritmo, presença de palco e sincronia.",
+    fee: "Inscrição Gratuita (com ingresso do evento)",
+    reward: "Troféu Oficial + Brindes Geek",
+    icon: "💃",
+    badge: "PALCO PRINCIPAL",
+    color: "#EC4899",
+  },
+  {
+    id: "espadas",
+    name: "Torneio de Batalha de Espadas",
+    category: "Soft Combat & Duelo Medieval",
+    platform: "Arena de Combate",
+    rules: "Duelos mata-mata 1 vs 1 com espadas seguras de espuma acolchoada. Equipamento de proteção fornecido pela organização.",
+    fee: "Inscrição Gratuita (com ingresso do evento)",
+    reward: "Troféu de Campeão da Arena + Brindes",
+    icon: "⚔️",
+    badge: "ARENA DE COMBATE",
+    color: "#FFE600",
+  },
+];
+
 export const THEMED_ROOMS = [
   {
     id: "karaoke",
