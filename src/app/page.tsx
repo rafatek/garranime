@@ -283,6 +283,12 @@ export default function Home() {
           </div>
 
           <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("salas")}>
+              SALAS TEMÁTICAS
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
             <GamerButton fullWidth size="md" onClick={() => handleOpenHub("lojas")}>
               LOJAS PARCEIRAS
             </GamerButton>
@@ -312,7 +318,7 @@ export default function Home() {
       <StoryTimeline />
 
       {/* SECTION: Seleção de Personagens & Salas Temáticas */}
-      <CharacterSelect />
+      <CharacterSelect onOpenSalas={() => handleOpenHub("salas")} />
 
       {/* SECTION: Loja & Ingressos (R$ 10 Antecipado / R$ 15 Na Hora) */}
       <StoreTickets

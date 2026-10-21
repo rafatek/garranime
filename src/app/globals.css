@@ -244,21 +244,49 @@ html {
 }
 
 /* Infinite Marquee Loop for Lojas & Parceiros Carousel */
-@keyframes marqueeScroll {
+@-webkit-keyframes marqueeScroll {
   0% {
-    transform: translateX(0%);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-.animate-marquee-loop {
-  display: flex;
-  width: max-content;
-  animation: marqueeScroll 25s linear infinite;
+@keyframes marqueeScroll {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-.animate-marquee-loop:hover {
-  animation-play-state: paused;
+@utility animate-marquee-loop {
+  display: flex !important;
+  width: max-content !important;
+  -webkit-animation: marqueeScroll 22s linear infinite !important;
+  animation: marqueeScroll 22s linear infinite !important;
+  will-change: transform;
 }
+
+@utility track-marquee-running {
+  display: flex !important;
+  width: max-content !important;
+  -webkit-animation: marqueeScroll 22s linear infinite !important;
+  animation: marqueeScroll 22s linear infinite !important;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee-loop:hover,
+  .track-marquee-running:hover {
+    -webkit-animation-play-state: paused !important;
+    animation-play-state: paused !important;
+  }
+}
+

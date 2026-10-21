@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
-import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES } from "@/content/eventData";
+import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS } from "@/content/eventData";
 import {
   X,
   ArrowLeft,
@@ -24,6 +24,7 @@ import {
   Crown,
   Swords,
   CheckCircle2,
+  DoorOpen,
 } from "lucide-react";
 import GamerButton from "./GamerButton";
 
@@ -36,6 +37,7 @@ export type HubView =
   | "cosplay_adulto"
   | "jogos"
   | "jogo_detalhe"
+  | "salas"
   | "lojas"
   | "apoiadores"
   | "organizacao";
@@ -56,6 +58,14 @@ export default function EventHubModal({
   const [view, setView] = useState<HubView>(initialView);
   const [history, setHistory] = useState<HubView[]>([]);
   const [selectedGameId, setSelectedGameId] = useState<string>("freefire");
+
+  // Sincroniza a visualização sempre que o modal for aberto com uma rota específica
+  useEffect(() => {
+    if (isOpen) {
+      setView(initialView);
+      setHistory([]);
+    }
+  }, [isOpen, initialView]);
 
   if (!isOpen) return null;
 
@@ -162,7 +172,18 @@ export default function EventHubModal({
                 </GamerButton>
               </div>
 
-              {/* 3. LOJAS PARCEIRAS */}
+              {/* 3. SALAS TEMÁTICAS */}
+              <div className="w-full max-w-xs">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  onClick={() => navigateTo("salas")}
+                >
+                  SALAS TEMÁTICAS
+                </GamerButton>
+              </div>
+
+              {/* 4. LOJAS PARCEIRAS */}
               <div className="w-full max-w-xs">
                 <GamerButton
                   fullWidth
@@ -831,6 +852,74 @@ export default function EventHubModal({
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}
                 >
                   FALAR COM A ORGANIZAÇÃO NO WHATSAPP
+                </GamerButton>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* VIEW: SALAS TEMÁTICAS CONFIRMADAS                         */}
+          {/* ========================================================== */}
+          {view === "salas" && (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="text-center pb-2 border-b border-[#1E2C6A]">
+                <span className="text-[10px] font-mono font-black uppercase text-[#00D2FF] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#00D2FF]/40">
+                  AMBIENTES CONFIRMADOS
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
+                  SALAS TEMÁTICAS
+                </h3>
+                <p className="text-xs text-gray-300 mt-1">
+                  Ambientes climatizados e interativos para você curtir durante todo o evento:
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {THEMED_ROOMS.map((room) => (
+                  <div
+                    key={room.id}
+                    className="bg-[#0A1138] p-3.5 border-l-4 border-[#FF7A00] border-y border-r border-[#1E2C6A] space-y-2.5 transition-all hover:border-l-[#FFE600]"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-2xl shrink-0">{room.icon}</span>
+                        <h4 className="text-sm font-black uppercase text-white font-sans leading-tight">
+                          {room.title}
+                        </h4>
+                      </div>
+                      <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 bg-[#FFE600] text-[#070B28] shrink-0">
+                        {room.badge}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-gray-300 leading-relaxed font-sans">
+                      {room.desc}
+                    </p>
+
+                    <div className="pt-2 border-t border-[#1E2C6A] grid grid-cols-3 gap-2 text-[10px] font-mono text-center">
+                      {Object.entries(room.stats).map(([label, score]) => (
+                        <div key={label} className="bg-[#070B28] p-1 border border-[#1E2C6A]/60">
+                          <span className="text-gray-400 block truncate">{label}</span>
+                          <span className="text-[#00D2FF] font-bold">{score}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  onClick={() =>
+                    openWhatsApp(
+                      "Olá, equipe Garranime! Gostaria de mais detalhes sobre as Salas Temáticas do evento!"
+                    )
+                  }
+                  icon={<MessageCircle className="w-5 h-5 text-[#25D366]" />}
+                >
+                  TIRAR DÚVIDAS NO WHATSAPP
                 </GamerButton>
               </div>
             </div>

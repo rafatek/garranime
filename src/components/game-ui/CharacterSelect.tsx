@@ -5,6 +5,7 @@ import Image from "next/image";
 import { sound } from "@/lib/sound";
 import { THEMED_ROOMS } from "@/content/eventData";
 import { Users, Zap, Heart, Star, Sparkles } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 const GEEK_HEROES = [
   {
@@ -51,7 +52,11 @@ const GEEK_HEROES = [
   },
 ];
 
-export default function CharacterSelect() {
+interface CharacterSelectProps {
+  onOpenSalas?: () => void;
+}
+
+export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
   const [selectedHero, setSelectedHero] = useState(0);
 
   const handleHeroSelect = (index: number) => {
@@ -171,45 +176,36 @@ export default function CharacterSelect() {
           </div>
         </div>
 
-        {/* Themed Rooms Grid */}
-        <h3 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-white font-sans mb-6 text-center">
-          ⛩️ SALAS TEMÁTICAS CONFIRMADAS NO EVENTO
-        </h3>
+        {/* Themed Rooms Compact Access Box */}
+        <div className="mt-8 bg-[#070B28] border-4 border-[#FF7A00] p-6 sm:p-8 max-w-lg mx-auto text-center shonen-shadow-orange">
+          <div className="inline-flex items-center gap-2 bg-[#0F173D] border border-[#FFE600] px-3.5 py-1 mb-3 clip-chamfer">
+            <span className="text-base">⛩️</span>
+            <span className="text-xs font-black uppercase text-[#FFE600] tracking-widest font-mono">
+              AMBIENTES CONFIRMADOS
+            </span>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {THEMED_ROOMS.map((room) => (
-            <div
-              key={room.id}
-              className="bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#FF7A00] p-5 shonen-shadow transition-all flex flex-col justify-between"
+          <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-sans mb-2">
+            SALAS <span className="text-[#00D2FF]">TEMÁTICAS</span>
+          </h3>
+
+          <p className="text-xs sm:text-sm text-gray-300 max-w-sm mx-auto mb-6 leading-relaxed">
+            Karaokê Geek, Arena Gamer & Retrô, Sala Medieval RPG & TCG e Praça de Alimentação.
+          </p>
+
+          <div className="w-full max-w-xs mx-auto">
+            <GamerButton
+              size="md"
+              fullWidth
+              onClick={() => {
+                sound.playConfirm();
+                if (onOpenSalas) onOpenSalas();
+              }}
+              icon={<Sparkles className="w-4 h-4" />}
             >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-3xl">{room.icon}</span>
-                  <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-[#FFE600] text-[#070B28]">
-                    {room.badge}
-                  </span>
-                </div>
-
-                <h4 className="text-lg font-black uppercase text-white mb-2 leading-tight">
-                  {room.title}
-                </h4>
-
-                <p className="text-xs text-gray-300 leading-relaxed mb-4">
-                  {room.desc}
-                </p>
-              </div>
-
-              {/* Room Stats */}
-              <div className="border-t border-[#1E2C6A] pt-3 space-y-1.5 text-[11px] font-mono">
-                {Object.entries(room.stats).map(([label, score]) => (
-                  <div key={label} className="flex justify-between text-gray-400">
-                    <span>{label}:</span>
-                    <span className="text-[#00D2FF] font-bold">{score}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+              VER SALAS TEMÁTICAS
+            </GamerButton>
+          </div>
         </div>
       </div>
     </section>

@@ -44,6 +44,43 @@ export default function LojasPartners() {
         {/* CARROSSEL LATERAL INFINITO COM FADE GRADIENT NAS BORDAS   */}
         {/* ======================================================== */}
         <div className="relative w-full overflow-hidden py-3">
+          {/* Estilos diretos de animação para garantir execução a 60fps no iOS, Android e Desktop */}
+          <style>{`
+            @keyframes marqueeInfiniteLoop {
+              0% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+              }
+              100% {
+                -webkit-transform: translate3d(-50%, 0, 0);
+                transform: translate3d(-50%, 0, 0);
+              }
+            }
+            @-webkit-keyframes marqueeInfiniteLoop {
+              0% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+              }
+              100% {
+                -webkit-transform: translate3d(-50%, 0, 0);
+                transform: translate3d(-50%, 0, 0);
+              }
+            }
+            .track-marquee-running {
+              display: flex !important;
+              width: max-content !important;
+              -webkit-animation: marqueeInfiniteLoop 22s linear infinite !important;
+              animation: marqueeInfiniteLoop 22s linear infinite !important;
+              will-change: transform;
+            }
+            @media (hover: hover) and (pointer: fine) {
+              .track-marquee-running:hover {
+                -webkit-animation-play-state: paused !important;
+                animation-play-state: paused !important;
+              }
+            }
+          `}</style>
+
           {/* Efeito de Fade Esquerda (Desaparecer suavemente na borda) */}
           <div
             aria-hidden="true"
@@ -57,7 +94,7 @@ export default function LojasPartners() {
           />
 
           {/* Trilha do Carrossel em Movimento Loop */}
-          <div className="flex gap-4 sm:gap-6 animate-marquee-loop items-stretch">
+          <div className="flex gap-4 sm:gap-6 track-marquee-running items-stretch">
             {loopedStores.map((store, i) => (
               <div
                 key={i}
