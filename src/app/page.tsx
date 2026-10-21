@@ -25,6 +25,7 @@ import PixModal from "@/components/game-ui/PixModal";
 import CosplayModal from "@/components/game-ui/CosplayModal";
 import TournamentModal from "@/components/game-ui/TournamentModal";
 import OptionsModal from "@/components/game-ui/OptionsModal";
+import EventHubModal, { HubView } from "@/components/game-ui/EventHubModal";
 import GamerButton from "@/components/game-ui/GamerButton";
 
 import { Sparkles, Ticket, Swords, Clock } from "lucide-react";
@@ -41,6 +42,13 @@ export default function Home() {
   const [tournamentModalOpen, setTournamentModalOpen] = useState(false);
   const [activeTournament, setActiveTournament] = useState("naruto");
   const [optionsModalOpen, setOptionsModalOpen] = useState(false);
+  const [hubModalOpen, setHubModalOpen] = useState(false);
+  const [hubInitialView, setHubInitialView] = useState<HubView>("menu");
+
+  const handleOpenHub = (view: HubView = "menu") => {
+    setHubInitialView(view);
+    setHubModalOpen(true);
+  };
 
   // Countdown timer for Hero
   const [countdown, setCountdown] = useState({
@@ -127,6 +135,7 @@ export default function Home() {
       <Header
         onOpenTickets={() => setPixModalOpen(true)}
         onOpenOptions={() => setOptionsModalOpen(true)}
+        onOpenHub={handleOpenHub}
       />
 
       {/* HERO SECTION */}
@@ -171,34 +180,37 @@ export default function Home() {
             Prepare seu Cosplay e sua energia para as competições, gincanas e muito mais que teremos no evento. Aqui você ficará por dentro de tudo o que vai acontecer no evento e detalhes, garanta seu ingresso, te esperamos lá!
           </p>
 
-          {/* Dual CTAs (Using reference design: Orange angled backplate, Navy frontplate, 3D text shadow, Pacman & Ghosts) */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto mb-10 pt-2">
-            <GamerButton
-              size="lg"
-              showPacman
-              ghost="orange"
-              onClick={() => {
-                sound.playCoin();
-                setPixModalOpen(true);
-              }}
-              icon={<Ticket className="w-5 h-5 fill-current" />}
-            >
-              Garantir Ingresso (R$ 10)
-            </GamerButton>
+          {/* Dual CTAs (Using reference design matching Image 2) */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mb-10 pt-2">
+            <div className="w-full sm:w-auto max-w-sm">
+              <GamerButton
+                size="lg"
+                fullWidth
+                showPacman
+                ghost="orange"
+                onClick={() => {
+                  sound.playCoin();
+                  setPixModalOpen(true);
+                }}
+                icon={<Ticket className="w-5 h-5 fill-current" />}
+              >
+                GARANTIR PULSEIRA ANTECIPADA
+              </GamerButton>
+            </div>
 
-            <GamerButton
-              size="lg"
-              tilt="right"
-              ghost="red"
-              onClick={() => {
-                sound.playSelect();
-                const el = document.getElementById("versus");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-              }}
-              icon={<Swords className="w-5 h-5" />}
-            >
-              Ver Torneios & Cosplay
-            </GamerButton>
+            <div className="w-full sm:w-auto max-w-sm">
+              <GamerButton
+                size="lg"
+                fullWidth
+                onClick={() => {
+                  sound.playSelect();
+                  handleOpenHub("menu");
+                }}
+                icon={<Sparkles className="w-5 h-5" />}
+              >
+                CENTRAL DO EVENTO
+              </GamerButton>
+            </div>
           </div>
 
             {/* Live Flip Countdown Bar */}
@@ -240,13 +252,60 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECTION: Central de Informações do Projeto (Exact Image 1 layout) */}
+      <section
+        id="central-menu"
+        className="py-12 px-4 sm:px-6 relative flex flex-col items-center justify-center bg-[#070B28] border-b-4 border-[#1E2C6A]"
+      >
+        <div className="w-full max-w-md bg-[#070B28] border-4 border-[#FF7A00] p-6 sm:p-8 shadow-[0_0_35px_rgba(255,122,0,0.5)] flex flex-col items-center space-y-4 relative">
+          <div className="text-center mb-2">
+            <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-widest bg-[#0A1138] px-3 py-1 border border-[#FF7A00]">
+              GUIA DO PARTICIPANTE
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black uppercase text-white font-sans mt-2">
+              INFORMAÇÕES DO GARRANIME
+            </h2>
+            <p className="text-xs text-gray-300 mt-1 max-w-xs">
+              Toque nos botões para abrir os detalhes, editais e regras do evento:
+            </p>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("resumo")}>
+              RESUMO EVENTO
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("competicoes")}>
+              COMPETIÇÕES
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("lojas")}>
+              LOJAS PARCEIRAS
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("apoiadores")}>
+              APOIADORES
+            </GamerButton>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <GamerButton fullWidth size="md" onClick={() => handleOpenHub("organizacao")}>
+              ORGANIZAÇÃO
+            </GamerButton>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION: Versus (Cosplay & Torneios Gamers) */}
       <VersusSection
-        onOpenCosplay={() => setCosplayModalOpen(true)}
-        onOpenTournament={(id) => {
-          setActiveTournament(id);
-          setTournamentModalOpen(true);
-        }}
+        onOpenCosplay={() => handleOpenHub("cosplay")}
+        onOpenTournament={() => handleOpenHub("jogos")}
       />
 
       {/* SECTION: Modo História (Cronograma do Dia) */}
@@ -276,12 +335,20 @@ export default function Home() {
       <MobileDock
         currentSection={currentSection}
         onOpenTickets={() => setPixModalOpen(true)}
+        onOpenHub={handleOpenHub}
       />
 
       {/* Gamification HUD (Scouter Power Level + Mobile D-Pad Konami Code) */}
       <GamificationHUD />
 
       {/* Modals & Drawers */}
+      <EventHubModal
+        isOpen={hubModalOpen}
+        onClose={() => setHubModalOpen(false)}
+        initialView={hubInitialView}
+        onOpenPixModal={() => setPixModalOpen(true)}
+      />
+
       <PixModal
         isOpen={pixModalOpen}
         onClose={() => setPixModalOpen(false)}

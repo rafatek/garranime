@@ -12,6 +12,7 @@ export interface EventData {
   targetDateISO: string;
   instagram: string;
   whatsappContact: string;
+  whatsappDisplay?: string;
   pixKey: string;
   pixRecipient: string;
 }
@@ -27,7 +28,8 @@ export const EVENT_DATA: EventData = {
   venueStatus: "[A DEFINIR confirmação entre Escola Mário Brasil ou Ginásio Municipal]",
   targetDateISO: "2026-11-22T10:00:00-03:00",
   instagram: "@garranime",
-  whatsappContact: "5591999999999", // Placeholder seguro documentado em PENDENCIAS.md
+  whatsappContact: "5591985119031", // WhatsApp Oficial: +55 91 98511-9031
+  whatsappDisplay: "+55 (91) 98511-9031",
   pixKey: "pix@garranime.com.br", // Placeholder seguro documentado em PENDENCIAS.md
   pixRecipient: "Organização Garranime",
 };

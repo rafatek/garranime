@@ -5,13 +5,15 @@ import Image from "next/image";
 import { sound } from "@/lib/sound";
 import { Volume2, VolumeX, Settings, Ticket, Menu, X } from "lucide-react";
 import GamerButton from "./GamerButton";
+import { HubView } from "./EventHubModal";
 
 interface HeaderProps {
   onOpenTickets: () => void;
   onOpenOptions: () => void;
+  onOpenHub?: (view?: HubView) => void;
 }
 
-export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
+export default function Header({ onOpenTickets, onOpenOptions, onOpenHub }: HeaderProps) {
   const [isMuted, setIsMuted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -99,6 +101,17 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
           >
             Manual / FAQ
           </button>
+          {onOpenHub && (
+            <button
+              onClick={() => {
+                sound.playSelect();
+                onOpenHub("menu");
+              }}
+              className="text-[#FFE600] hover:text-white transition-colors bg-[#070B28] px-2.5 py-1 border border-[#FF7A00]"
+            >
+              Central do Evento
+            </button>
+          )}
         </nav>
 
         {/* Action Controls & CTA */}
@@ -145,16 +158,20 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
             </GamerButton>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button (Opens Image 1 Event Hub Menu) */}
           <button
             onClick={() => {
               sound.playSelect();
-              setMobileMenuOpen(!mobileMenuOpen);
+              if (onOpenHub) {
+                onOpenHub("menu");
+              } else {
+                setMobileMenuOpen(!mobileMenuOpen);
+              }
             }}
-            aria-label="Abrir menu"
-            className="lg:hidden p-2 bg-[#070B28] border border-[#1E2C6A] text-[#FF7A00]"
+            aria-label="Abrir menu de informações"
+            className="lg:hidden p-2 bg-[#070B28] border border-[#1E2C6A] hover:border-[#FF7A00] text-[#FF7A00]"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
