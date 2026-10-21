@@ -2,6 +2,7 @@
 
 import { EVENT_DATA } from "@/content/eventData";
 import { MapPin, Navigation, Compass, Calendar, Clock, AlertCircle } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 export default function ArenaMap() {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -70,15 +71,19 @@ export default function ArenaMap() {
               </div>
             </div>
 
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 w-full py-4 bg-[#00D2FF] hover:bg-white text-[#070B28] font-black text-sm uppercase tracking-wider border-2 border-white shonen-shadow active:scale-95 transition-all"
-            >
-              <Navigation className="w-5 h-5 fill-current" />
-              <span>Traçar Rota no Google Maps</span>
-            </a>
+            <div className="w-full">
+              <GamerButton
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                fullWidth
+                size="md"
+                ghost="orange"
+                icon={<Navigation className="w-5 h-5 fill-current" />}
+              >
+                Traçar Rota no Google Maps
+              </GamerButton>
+            </div>
           </div>
 
           {/* Right Stylized Arena Illustration / Map Visual */}

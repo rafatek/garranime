@@ -4,6 +4,7 @@ import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { EVENT_DATA, TOURNAMENTS } from "@/content/eventData";
 import { X, Gamepad2, MessageCircle } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface TournamentModalProps {
   isOpen: boolean;
@@ -117,13 +118,18 @@ export default function TournamentModal({
             A lista de participantes e tabelas de chaves serão impressas e publicadas antes do início das rodadas no dia do evento!
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-4 bg-[#00D2FF] hover:bg-white text-[#070B28] font-black text-sm uppercase tracking-wider border-2 border-white shonen-shadow flex items-center justify-center gap-2 active:scale-95 transition-all mt-6"
-          >
-            <MessageCircle className="w-5 h-5 fill-current" />
-            <span>Enviar Ficha de Inscrição</span>
-          </button>
+          <div className="w-full mt-6">
+            <GamerButton
+              type="submit"
+              fullWidth
+              size="md"
+              ghost="blue"
+              showPacman
+              icon={<MessageCircle className="w-5 h-5 fill-current" />}
+            >
+              Enviar Ficha de Inscrição
+            </GamerButton>
+          </div>
         </form>
       </div>
     </div>

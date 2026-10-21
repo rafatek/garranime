@@ -120,6 +120,88 @@ html {
   -webkit-text-stroke: 1.5px #FF7A00;
 }
 
+/* Garranime Custom 3D Button Text Shadow (Exact match to reference image) */
+.garranime-btn-text {
+  color: #FFFFFF;
+  text-shadow:
+    0 1px 0 #FF7A00,
+    0 2px 0 #FF7A00,
+    0 3px 0 #FF7A00,
+    0 4px 0 #E65100,
+    0 5px 0 #CC4400,
+    1px 2px 0 #FF7A00,
+    1px 3px 0 #FF7A00,
+    1px 4px 0 #E65100,
+    1px 5px 0 #B33600;
+}
+
+.garranime-btn-text-sm {
+  color: #FFFFFF;
+  text-shadow:
+    0 1px 0 #FF7A00,
+    0 2px 0 #FF7A00,
+    0 3px 0 #E65100,
+    1px 2px 0 #FF7A00,
+    1px 3px 0 #CC4400;
+}
+
+/* Pacman & Ghosts Animation Keyframes */
+@keyframes pacmanPatrol {
+  0% {
+    left: 8px;
+    transform: translateY(0) scaleX(1);
+  }
+  48% {
+    left: calc(100% - 34px);
+    transform: translateY(0) scaleX(1);
+  }
+  50% {
+    left: calc(100% - 34px);
+    transform: translateY(0) scaleX(-1);
+  }
+  98% {
+    left: 8px;
+    transform: translateY(0) scaleX(-1);
+  }
+  100% {
+    left: 8px;
+    transform: translateY(0) scaleX(1);
+  }
+}
+
+@keyframes ghostWiggle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(1px) rotate(3deg);
+  }
+}
+
+@keyframes ghostPeekTop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-pacman-patrol {
+  animation: pacmanPatrol 7s ease-in-out infinite;
+}
+
+.animate-ghost-wiggle {
+  animation: ghostWiggle 2.5s ease-in-out infinite;
+}
+
+.animate-ghost-peek {
+  animation: ghostPeekTop 2s ease-in-out infinite;
+}
+
 /* Energy Aura Pulse */
 @keyframes auraPulse {
   0%, 100% {

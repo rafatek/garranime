@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
 import { Volume2, VolumeX, Settings, Ticket, Menu, X } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface HeaderProps {
   onOpenTickets: () => void;
@@ -130,16 +131,19 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
           </button>
 
           {/* CTA Ingressos Button */}
-          <button
-            onClick={() => {
-              sound.playCoin();
-              onOpenTickets();
-            }}
-            className="hidden sm:inline-flex items-center gap-2 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-xs sm:text-sm uppercase tracking-wider px-4 sm:px-5 py-2.5 border-2 border-white shonen-shadow-cyan active:translate-x-0.5 active:translate-y-0.5 transition-all"
-          >
-            <Ticket className="w-4 h-4 fill-current" />
-            <span>Ingresso R$ 10</span>
-          </button>
+          <div className="hidden sm:block">
+            <GamerButton
+              size="sm"
+              ghost="orange"
+              onClick={() => {
+                sound.playCoin();
+                onOpenTickets();
+              }}
+              icon={<Ticket className="w-4 h-4 fill-current" />}
+            >
+              Ingresso R$ 10
+            </GamerButton>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -196,16 +200,22 @@ export default function Header({ onOpenTickets, onOpenOptions }: HeaderProps) {
             Manual do Evento / FAQ
           </button>
 
-          <button
-            onClick={() => {
-              sound.playCoin();
-              setMobileMenuOpen(false);
-              onOpenTickets();
-            }}
-            className="w-full mt-2 py-3 bg-[#FF7A00] text-[#070B28] font-black text-center text-sm uppercase border-2 border-white shonen-shadow-cyan"
-          >
-            🎟️ Comprar Ingresso Antecipado (R$ 10)
-          </button>
+          <div className="w-full mt-3">
+            <GamerButton
+              size="md"
+              fullWidth
+              showPacman
+              ghost="all"
+              onClick={() => {
+                sound.playCoin();
+                setMobileMenuOpen(false);
+                onOpenTickets();
+              }}
+              icon={<Ticket className="w-4 h-4 fill-current" />}
+            >
+              Comprar Ingresso (R$ 10)
+            </GamerButton>
+          </div>
         </div>
       )}
     </header>

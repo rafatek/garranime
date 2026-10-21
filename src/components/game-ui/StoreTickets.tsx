@@ -4,6 +4,7 @@ import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { TICKET_PLANS, EVENT_DATA } from "@/content/eventData";
 import { Ticket, CheckCircle2, Shield, QrCode, Copy, Check, ExternalLink } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface StoreTicketsProps {
   onOpenPixModal: (planId?: string) => void;
@@ -98,20 +99,22 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
               </div>
 
               {/* Action Button */}
-              <button
-                onClick={() => {
-                  sound.playCoin();
-                  onOpenPixModal(plan.id);
-                }}
-                className={`w-full py-4 font-black text-sm sm:text-base uppercase tracking-wider border-2 border-white shonen-shadow active:scale-95 transition-all flex items-center justify-center gap-2 ${
-                  plan.featured
-                    ? "bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28]"
-                    : "bg-[#00D2FF] hover:bg-white text-[#070B28]"
-                }`}
-              >
-                <Ticket className="w-5 h-5 fill-current" />
-                <span>{plan.ctaText}</span>
-              </button>
+              <div className="w-full">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  showPacman={plan.featured}
+                  ghost={plan.featured ? "orange" : "blue"}
+                  tilt={plan.featured ? "left" : "right"}
+                  onClick={() => {
+                    sound.playCoin();
+                    onOpenPixModal(plan.id);
+                  }}
+                  icon={<Ticket className="w-5 h-5 fill-current" />}
+                >
+                  {plan.ctaText}
+                </GamerButton>
+              </div>
             </div>
           ))}
         </div>
@@ -133,22 +136,23 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto items-center">
               <button
                 onClick={handleCopyPix}
-                className="px-5 py-3 bg-[#070B28] hover:bg-gray-900 border border-[#FFE600] text-[#FFE600] text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 active:scale-95 transition-all"
+                className="w-full sm:w-auto px-5 py-3 bg-[#070B28] hover:bg-gray-900 border border-[#FFE600] text-[#FFE600] text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 active:scale-95 transition-all"
               >
                 {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
                 <span>{copied ? "Chave Copiada!" : "Copiar Chave Pix"}</span>
               </button>
 
-              <button
+              <GamerButton
+                size="sm"
+                ghost="red"
                 onClick={() => onOpenPixModal()}
-                className="px-6 py-3 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-xs uppercase tracking-wider border border-white shonen-shadow flex items-center justify-center gap-2 active:scale-95 transition-all"
+                icon={<QrCode className="w-4 h-4" />}
               >
-                <QrCode className="w-4 h-4" />
-                <span>Abrir Checkout Pix</span>
-              </button>
+                Abrir Checkout Pix
+              </GamerButton>
             </div>
           </div>
         </div>

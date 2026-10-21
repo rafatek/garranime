@@ -130,11 +130,14 @@ export default function GamificationHUD() {
             sound.playSelect();
             setShowDpad(!showDpad);
           }}
-          className="bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] p-2.5 border-2 border-white shonen-shadow-cyan active:scale-95 transition-transform flex items-center gap-1.5 font-mono text-[11px] font-black uppercase"
+          className="group relative p-1 active:scale-95 transition-transform"
           title="Ativar D-Pad para Código Secreto"
         >
-          <Gamepad2 className="w-4 h-4" />
-          <span className="hidden sm:inline">CÓDIGO SECRETO</span>
+          <span className="absolute inset-0 bg-[#FF7A00] -rotate-2 group-hover:-rotate-3 transition-transform shadow-[2px_2px_0px_#070B28]" />
+          <span className="relative z-10 flex items-center gap-1.5 bg-[#0A1138] border border-[#FF7A00] px-2.5 py-1 text-white font-display uppercase tracking-wider text-xs garranime-btn-text-sm">
+            <Gamepad2 className="w-3.5 h-3.5 text-[#FFE600]" />
+            <span className="hidden sm:inline">CÓDIGO SECRETO</span>
+          </span>
         </button>
       </div>
 

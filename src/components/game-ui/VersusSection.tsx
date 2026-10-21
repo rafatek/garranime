@@ -4,6 +4,7 @@ import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { TOURNAMENTS, COSPLAY_DATA } from "@/content/eventData";
 import { Swords, Sparkles, Gamepad2, Award, Music, ShieldCheck, ChevronRight } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface VersusSectionProps {
   onOpenCosplay: () => void;
@@ -86,16 +87,20 @@ export default function VersusSection({
                 </p>
               </div>
 
-              <button
-                onClick={() => {
-                  sound.playConfirm();
-                  onOpenCosplay();
-                }}
-                className="w-full md:w-auto px-8 py-4 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black uppercase tracking-wider border-2 border-white shonen-shadow flex items-center justify-center gap-2 shrink-0 active:scale-95 transition-transform"
-              >
-                <span>Inscrever Meu Cosplay</span>
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              <div className="w-full md:w-auto shrink-0">
+                <GamerButton
+                  size="md"
+                  ghost="pink"
+                  showPacman
+                  onClick={() => {
+                    sound.playConfirm();
+                    onOpenCosplay();
+                  }}
+                  icon={<Sparkles className="w-4 h-4" />}
+                >
+                  Inscrever Meu Cosplay
+                </GamerButton>
+              </div>
             </div>
 
             {/* Categorias Grid */}
@@ -159,15 +164,21 @@ export default function VersusSection({
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      sound.playSelect();
-                      onOpenTournament(tourn.id);
-                    }}
-                    className="w-full mt-4 py-2.5 bg-[#00D2FF] hover:bg-white text-[#070B28] font-black text-xs uppercase tracking-wider border border-white shonen-shadow active:scale-95 transition-all"
-                  >
-                    Inscrever-se no Torneio
-                  </button>
+                  <div className="w-full mt-4">
+                    <GamerButton
+                      fullWidth
+                      size="sm"
+                      ghost="blue"
+                      tilt="right"
+                      onClick={() => {
+                        sound.playSelect();
+                        onOpenTournament(tourn.id);
+                      }}
+                      icon={<Gamepad2 className="w-4 h-4" />}
+                    >
+                      Inscrever-se no Torneio
+                    </GamerButton>
+                  </div>
                 </div>
               ))}
             </div>

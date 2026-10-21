@@ -4,6 +4,7 @@ import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { EVENT_DATA } from "@/content/eventData";
 import { X, Copy, Check, MessageCircle, Ticket, QrCode } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface PixModalProps {
   isOpen: boolean;
@@ -127,13 +128,18 @@ export default function PixModal({
         </div>
 
         {/* WhatsApp Send Confirmation Button */}
-        <button
-          onClick={handleWhatsApp}
-          className="w-full py-4 bg-[#25D366] hover:bg-[#20ba5a] text-[#070B28] font-black text-sm uppercase tracking-wider border-2 border-white shonen-shadow flex items-center justify-center gap-2 active:scale-95 transition-all mb-3"
-        >
-          <MessageCircle className="w-5 h-5 fill-current" />
-          <span>Enviar Comprovante via WhatsApp</span>
-        </button>
+        <div className="w-full mb-4">
+          <GamerButton
+            fullWidth
+            size="md"
+            ghost="orange"
+            showPacman
+            onClick={handleWhatsApp}
+            icon={<MessageCircle className="w-5 h-5 fill-current text-[#25D366]" />}
+          >
+            Confirmar no WhatsApp
+          </GamerButton>
+        </div>
 
         <p className="text-[11px] text-center text-gray-400 font-mono">
           Após o envio, a equipe registrará o número da sua pulseira oficial de acesso!

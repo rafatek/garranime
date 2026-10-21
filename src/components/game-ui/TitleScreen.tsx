@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
 import { Play, Sparkles, Volume2 } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface TitleScreenProps {
   onStart: () => void;
@@ -106,17 +107,20 @@ export default function TitleScreen({ onStart }: TitleScreenProps) {
         </div>
 
         {/* Pulsating PRESS START Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleStart();
-          }}
-          className="group relative inline-flex items-center gap-3 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-xl sm:text-2xl uppercase tracking-wider px-8 sm:px-12 py-4 border-4 border-white shonen-shadow-cyan active:translate-x-1 active:translate-y-1 transition-all duration-150 animate-bounce mb-8"
-        >
-          <Play className="w-6 h-6 fill-current text-[#070B28]" />
-          <span>TOQUE PARA COMEÇAR</span>
-          <Sparkles className="w-5 h-5 text-white" />
-        </button>
+        <div className="mb-8 animate-bounce">
+          <GamerButton
+            size="lg"
+            showPacman
+            ghost="all"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleStart();
+            }}
+            icon={<Play className="w-6 h-6 fill-current text-[#FFE600]" />}
+          >
+            TOQUE PARA COMEÇAR
+          </GamerButton>
+        </div>
 
         {/* Live Countdown Display */}
         <div className="w-full max-w-md bg-[#0F173D]/95 border-2 border-[#FF7A00] p-3 sm:p-4 shonen-shadow">

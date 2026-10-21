@@ -2,6 +2,7 @@
 
 import { CONFIRMED_STORES, EVENT_DATA } from "@/content/eventData";
 import { Store, Gift, Sparkles, ExternalLink } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 function InstagramIcon({ className = "w-5 h-5 text-pink-500" }: { className?: string }) {
   return (
@@ -49,16 +50,18 @@ export default function LojasPartners() {
             </p>
           </div>
 
-          <a
-            href={`https://instagram.com/${EVENT_DATA.instagram.replace("@", "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full md:w-auto px-6 py-3.5 bg-white hover:bg-[#FFE600] text-[#070B28] font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-[#070B28] shonen-shadow flex items-center justify-center gap-2 shrink-0 active:scale-95 transition-all"
-          >
-            <InstagramIcon className="w-5 h-5 text-pink-500" />
-            <span>Participar no Instagram</span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="w-full md:w-auto shrink-0">
+            <GamerButton
+              href={`https://instagram.com/${EVENT_DATA.instagram.replace("@", "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="md"
+              ghost="pink"
+              icon={<InstagramIcon className="w-5 h-5 text-pink-400" />}
+            >
+              Participar no Instagram
+            </GamerButton>
+          </div>
         </div>
 
         {/* Stores Grid */}

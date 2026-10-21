@@ -4,6 +4,7 @@ import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { EVENT_DATA } from "@/content/eventData";
 import { X, Sparkles, MessageCircle, Music } from "lucide-react";
+import GamerButton from "./GamerButton";
 
 interface CosplayModalProps {
   isOpen: boolean;
@@ -120,13 +121,18 @@ export default function CosplayModal({ isOpen, onClose }: CosplayModalProps) {
             </span>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-4 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-sm uppercase tracking-wider border-2 border-white shonen-shadow flex items-center justify-center gap-2 active:scale-95 transition-all mt-6"
-          >
-            <MessageCircle className="w-5 h-5 fill-current" />
-            <span>Confirmar Inscrição Gratuita</span>
-          </button>
+          <div className="w-full mt-6">
+            <GamerButton
+              type="submit"
+              fullWidth
+              size="md"
+              ghost="pink"
+              showPacman
+              icon={<MessageCircle className="w-5 h-5 fill-current" />}
+            >
+              Confirmar Inscrição Gratuita
+            </GamerButton>
+          </div>
         </form>
       </div>
     </div>

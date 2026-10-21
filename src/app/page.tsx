@@ -25,6 +25,7 @@ import PixModal from "@/components/game-ui/PixModal";
 import CosplayModal from "@/components/game-ui/CosplayModal";
 import TournamentModal from "@/components/game-ui/TournamentModal";
 import OptionsModal from "@/components/game-ui/OptionsModal";
+import GamerButton from "@/components/game-ui/GamerButton";
 
 import { Sparkles, Ticket, Swords, Clock } from "lucide-react";
 
@@ -163,75 +164,79 @@ export default function Home() {
           </div>
 
           <h1 className="text-xl sm:text-3xl font-black uppercase tracking-wider text-white max-w-2xl font-sans drop-shadow-md mb-2">
-            1º Evento Geek de Garrafão do Norte
+            O PRIMEIRO EVENTO GEEK DA CIDADE DE GARRAFÃO DO NORTE
           </h1>
 
           <p className="text-xs sm:text-base text-gray-300 max-w-xl mb-8 leading-relaxed">
-            Prepare seu cosplay, participe dos torneios e gincanas, e venha viver um dia inesquecível de anime, games clássicos e cultura pop japonesa!
+            Prepare seu Cosplay e sua energia para as competições, gincanas e muito mais que teremos no evento. Aqui você ficará por dentro de tudo o que vai acontecer no evento e detalhes, garanta seu ingresso, te esperamos lá!
           </p>
 
-          {/* Dual CTAs */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-10">
-            <button
+          {/* Dual CTAs (Using reference design: Orange angled backplate, Navy frontplate, 3D text shadow, Pacman & Ghosts) */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto mb-10 pt-2">
+            <GamerButton
+              size="lg"
+              showPacman
+              ghost="orange"
               onClick={() => {
                 sound.playCoin();
                 setPixModalOpen(true);
               }}
-              className="w-full sm:w-auto px-8 py-4 bg-[#FF7A00] hover:bg-[#FFE600] text-[#070B28] font-black text-sm sm:text-base uppercase tracking-wider border-2 border-white shonen-shadow-cyan active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
+              icon={<Ticket className="w-5 h-5 fill-current" />}
             >
-              <Ticket className="w-5 h-5 fill-current" />
-              <span>Garantir Ingresso (R$ 10)</span>
-            </button>
+              Garantir Ingresso (R$ 10)
+            </GamerButton>
 
-            <button
+            <GamerButton
+              size="lg"
+              tilt="right"
+              ghost="red"
               onClick={() => {
                 sound.playSelect();
                 const el = document.getElementById("versus");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full sm:w-auto px-7 py-4 bg-[#0F173D] hover:bg-[#1E2C6A] text-[#00D2FF] font-black text-sm sm:text-base uppercase tracking-wider border-2 border-[#00D2FF] shonen-shadow active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
+              icon={<Swords className="w-5 h-5" />}
             >
-              <Swords className="w-5 h-5" />
-              <span>Ver Torneios & Cosplay</span>
-            </button>
+              Ver Torneios & Cosplay
+            </GamerButton>
           </div>
 
-          {/* Live Flip Countdown Bar */}
-          <div className="w-full max-w-md bg-[#0F173D]/90 border-2 border-[#FF7A00] p-4 shonen-shadow">
-            <div className="flex items-center justify-between text-xs font-mono font-bold text-gray-300 mb-2">
-              <span className="flex items-center gap-1.5 text-[#FFE600]">
-                <Clock className="w-4 h-4" /> CONTAGEM OFICIAL:
-              </span>
-              <span className="text-[#00D2FF]">22/NOV/2026</span>
-            </div>
+            {/* Live Flip Countdown Bar */}
+            <div className="w-full max-w-md bg-[#0F173D]/90 border-2 border-[#FF7A00] p-4 shonen-shadow">
+              <div className="flex items-center justify-between text-xs font-mono font-bold text-gray-300 mb-2">
+                <span className="flex items-center gap-1.5 text-[#FFE600]">
+                  <Clock className="w-4 h-4" /> CONTAGEM OFICIAL:
+                </span>
+                <span className="text-[#00D2FF]">22/NOV/2026</span>
+              </div>
 
-            <div className="grid grid-cols-4 gap-2 text-center">
-              <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
-                <span className="block text-2xl sm:text-3xl font-black text-[#FF7A00] font-mono">
-                  {String(countdown.days).padStart(2, "0")}
-                </span>
-                <span className="text-[9px] uppercase font-bold text-gray-400">Dias</span>
-              </div>
-              <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
-                <span className="block text-2xl sm:text-3xl font-black text-[#00D2FF] font-mono">
-                  {String(countdown.hours).padStart(2, "0")}
-                </span>
-                <span className="text-[9px] uppercase font-bold text-gray-400">Horas</span>
-              </div>
-              <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
-                <span className="block text-2xl sm:text-3xl font-black text-[#FFE600] font-mono">
-                  {String(countdown.minutes).padStart(2, "0")}
-                </span>
-                <span className="text-[9px] uppercase font-bold text-gray-400">Min</span>
-              </div>
-              <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
-                <span className="block text-2xl sm:text-3xl font-black text-white font-mono">
-                  {String(countdown.seconds).padStart(2, "0")}
-                </span>
-                <span className="text-[9px] uppercase font-bold text-gray-400">Seg</span>
+              <div className="grid grid-cols-4 gap-2 text-center">
+                <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
+                  <span className="block text-2xl sm:text-3xl font-black text-[#FF7A00] font-mono">
+                    {String(countdown.days).padStart(2, "0")}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold text-gray-400">Dias</span>
+                </div>
+                <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
+                  <span className="block text-2xl sm:text-3xl font-black text-[#00D2FF] font-mono">
+                    {String(countdown.hours).padStart(2, "0")}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold text-gray-400">Horas</span>
+                </div>
+                <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
+                  <span className="block text-2xl sm:text-3xl font-black text-[#FFE600] font-mono">
+                    {String(countdown.minutes).padStart(2, "0")}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold text-gray-400">Min</span>
+                </div>
+                <div className="bg-[#070B28] p-2 border border-[#1E2C6A]">
+                  <span className="block text-2xl sm:text-3xl font-black text-white font-mono">
+                    {String(countdown.seconds).padStart(2, "0")}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold text-gray-400">Seg</span>
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 

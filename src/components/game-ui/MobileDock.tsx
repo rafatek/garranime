@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { sound } from "@/lib/sound";
 import { Home, Swords, Sparkles, Map, Ticket } from "lucide-react";
 
@@ -70,19 +71,40 @@ export default function MobileDock({
           <span className="text-[10px] font-mono font-bold tracking-tight uppercase">Fases</span>
         </button>
 
-        {/* Ingressos R$ 10 (High Priority Arcade CTA) */}
+        {/* Ingressos R$ 10 (High Priority Arcade CTA with angled orange backplate and navy plate) */}
         <button
           onClick={() => {
             sound.playCoin();
             onOpenTickets();
           }}
-          className="relative -top-2 flex flex-col items-center justify-center bg-gradient-to-t from-[#FF7A00] to-[#FFE600] text-[#070B28] p-2 px-3 border-2 border-white shonen-shadow-cyan active:scale-95 transition-transform"
+          className="group relative -top-3 flex flex-col items-center justify-center p-1.5 active:scale-95 transition-transform"
         >
-          <span className="absolute -top-2.5 bg-[#070B28] text-[#FFE600] text-[8px] font-black uppercase px-1.5 py-0.2 border border-[#FFE600]">
-            R$ 10
+          {/* Diagonal orange backplate */}
+          <span className="absolute inset-0 bg-[#FF7A00] -rotate-3 group-hover:-rotate-6 transition-transform shadow-[2px_2px_0px_#070B28]" />
+
+          {/* Peeking Clyde Ghost on top */}
+          <div className="absolute -top-3 right-0.5 z-20 pointer-events-none animate-ghost-peek">
+            <div className="relative w-4 h-4">
+              <Image
+                src="/assets/pack-man/trimmed/laranja.png"
+                alt=""
+                fill
+                sizes="16px"
+                className="object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Navy frontplate */}
+          <span className="relative z-10 flex flex-col items-center justify-center bg-[#0A1138] border border-[#FF7A00] p-1.5 px-2.5">
+            <span className="absolute -top-2 bg-[#FF7A00] text-white text-[7px] font-black uppercase px-1 border border-[#070B28]">
+              R$ 10
+            </span>
+            <Ticket className="w-4 h-4 text-[#FFE600] fill-current" />
+            <span className="text-[9px] font-black uppercase tracking-wider text-white garranime-btn-text-sm">
+              PIX
+            </span>
           </span>
-          <Ticket className="w-5 h-5 fill-current" />
-          <span className="text-[9px] font-black uppercase tracking-wider">PIX</span>
         </button>
       </div>
     </nav>
