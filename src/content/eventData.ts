@@ -232,12 +232,28 @@ export const CONFIRMED_STORES = [
   },
 ];
 
+/**
+ * ============================================================================
+ * 📢 PATROCINADORES OFICIAIS & LOGOS
+ * ============================================================================
+ * 📁 ONDE COLOCAR AS IMAGENS:
+ *    Coloque os arquivos de logo na pasta: public/assets/patrocinadores/
+ * 
+ * 🖼️ FORMATOS: .png (fundo transparente), .webp, .svg ou .jpg
+ * 
+ * 📝 COMO ATUALIZAR:
+ *    Altere o campo `logo` abaixo para o caminho do arquivo:
+ *    Exemplo: logo: "/assets/patrocinadores/minha-empresa.png"
+ *    Se ainda não tiver o arquivo de imagem, deixe `logo: null` que o site
+ *    exibirá o quadrado neon estilizado com as iniciais do patrocinador!
+ * ============================================================================
+ */
 export const CONFIRMED_SPONSORS = [
   {
     name: "Patrocinador Master",
     tier: "Cota Ouro",
     badge: "OFICIAL",
-    logo: null,
+    logo: "/assets/patrocinadores/patrocinador-master.png",
     initials: "PM",
     color: "#FF7A00",
     desc: "Apoio e incentivo principal à cultura geek em Garrafão do Norte",
@@ -246,7 +262,7 @@ export const CONFIRMED_SPONSORS = [
     name: "Apoio Cultural",
     tier: "Cota Prata",
     badge: "CULTURA",
-    logo: null,
+    logo: "/assets/patrocinadores/apoio-cultural.png",
     initials: "AC",
     color: "#00D2FF",
     desc: "Incentivo à juventude, lazer saudável e cultura pop",
@@ -255,7 +271,7 @@ export const CONFIRMED_SPONSORS = [
     name: "Conectividade Fibra",
     tier: "Internet Oficial",
     badge: "TECH",
-    logo: null,
+    logo: "/assets/patrocinadores/internet-oficial.png",
     initials: "CF",
     color: "#FFE600",
     desc: "Infraestrutura de alta velocidade para as arenas gamers",
@@ -264,7 +280,7 @@ export const CONFIRMED_SPONSORS = [
     name: "Comunicação & Gráfica",
     tier: "Mídia & Print",
     badge: "PARCERIA",
-    logo: null,
+    logo: "/assets/patrocinadores/midia-print.png",
     initials: "CG",
     color: "#A855F7",
     desc: "Cenografia, credenciais e comunicação visual oficial",

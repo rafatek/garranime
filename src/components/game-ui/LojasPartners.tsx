@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { CONFIRMED_STORES, CONFIRMED_SPONSORS, EVENT_DATA } from "@/content/eventData";
-import { Store, CheckCircle2, Sparkles, ShieldCheck } from "lucide-react";
+import { Store, CheckCircle2, Sparkles, ShieldCheck, HeartHandshake } from "lucide-react";
 
 export default function LojasPartners() {
   // Duplicando a lista (2 sets completos) para loop contínuo e perfeitamente fluido de 0% a -50%
@@ -132,80 +133,119 @@ export default function LojasPartners() {
         </div>
 
         {/* ======================================================== */}
-        {/* SEÇÃO: PATROCINADORES OFICIAIS (LOGO GRANDE)             */}
+        {/* SEÇÃO: PATROCINADORES OFICIAIS (CARDS QUADRADOS NEON)    */}
         {/* ======================================================== */}
         <div className="mt-12 sm:mt-16 pt-10 border-t-2 border-[#1E2C6A]/70">
           <div className="text-center mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FFE600] px-3.5 py-1 mb-2.5 clip-chamfer">
-              <Sparkles className="w-4 h-4 text-[#FFE600]" />
-              <span className="text-xs font-black uppercase text-[#FFE600] tracking-widest font-mono">
+            <div className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FF7A00] px-3.5 py-1 mb-2.5 clip-chamfer shadow-[0_0_15px_rgba(255,122,0,0.3)]">
+              <Sparkles className="w-4 h-4 text-[#FF7A00]" />
+              <span className="text-xs font-black uppercase text-[#FF7A00] tracking-widest font-mono">
                 APOIO & INCENTIVO
               </span>
             </div>
 
             <h3 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white font-sans">
-              PATROCINADORES <span className="text-[#00D2FF]">OFICIAIS</span>
+              PATROCINADORES <span className="text-[#FF7A00] drop-shadow-[0_0_15px_rgba(255,122,0,0.6)]">OFICIAIS</span>
             </h3>
             <p className="max-w-xl mx-auto mt-1.5 text-xs sm:text-sm text-gray-300">
               Marcas e apoiadores que fortalecem a cultura jovem e geek em Garrafão do Norte:
             </p>
           </div>
 
-          {/* Grid de Patrocinadores com Destaque para Logos Grandes */}
+          {/* Grid de Patrocinadores com Destaque para Cards Quadrados e Logos Grandes */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
             {CONFIRMED_SPONSORS.map((sponsor, idx) => (
-              <div
-                key={idx}
-                className="bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#00D2FF] p-4 sm:p-5 flex flex-col items-center justify-between transition-all duration-200 hover:-translate-y-1 shadow-[4px_4px_0px_#070B28] group text-center"
-              >
-                {/* Header do Card com Cota e Badge */}
-                <div className="w-full flex items-center justify-between mb-3 text-[10px] font-mono">
-                  <span className="text-gray-400 uppercase tracking-wider">{sponsor.tier}</span>
-                  <span
-                    className="px-1.5 py-0.5 font-bold uppercase text-[9px]"
-                    style={{ backgroundColor: `${sponsor.color}20`, color: sponsor.color, border: `1px solid ${sponsor.color}50` }}
-                  >
-                    {sponsor.badge}
-                  </span>
-                </div>
-
-                {/* Área da Logo Grande */}
-                <div className="w-full h-24 sm:h-28 rounded-lg bg-[#0F173D] border border-[#1E2C6A] flex flex-col items-center justify-center p-3 my-1.5 group-hover:border-[#00D2FF]/60 transition-colors">
-                  {sponsor.logo ? (
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      className="max-h-full max-w-full object-contain filter drop-shadow"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center gap-1.5">
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center font-mono font-black text-sm text-white shadow-md border border-white/20"
-                        style={{ backgroundColor: sponsor.color }}
-                      >
-                        {sponsor.initials}
-                      </div>
-                      <span className="text-[10px] font-mono uppercase text-gray-400 tracking-wider">
-                        LOGO OFICIAL
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Nome & Detalhe */}
-                <div className="w-full mt-2">
-                  <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans group-hover:text-[#00D2FF] transition-colors truncate">
-                    {sponsor.name}
-                  </h4>
-                  <p className="text-[11px] text-gray-400 font-mono mt-0.5 line-clamp-1">
-                    {sponsor.desc}
-                  </p>
-                </div>
-              </div>
+              <SponsorCard key={idx} sponsor={sponsor} />
             ))}
+          </div>
+
+          {/* CTA para Novos Patrocinadores */}
+          <div className="mt-8 text-center">
+            <a
+              href={`https://wa.me/5591985119031?text=${encodeURIComponent(
+                "Olá, equipe Garranime! Gostaria de ser um Apoiador / Patrocinador oficial do evento. Quais são as cotas de apoio disponíveis?"
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FF7A00]/60 hover:border-[#FF7A00] text-gray-300 hover:text-white px-4 py-2 rounded-lg text-xs font-mono uppercase tracking-wider transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,122,0,0.4)] hover:scale-105"
+            >
+              <HeartHandshake className="w-4 h-4 text-[#FF7A00]" />
+              <span>Quer ser um Patrocinador Oficial? Fale Conosco</span>
+            </a>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Card Quadrado com Destaque Neon Laranja e Foco 100% na Logo Oficial
+ */
+function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className="relative group bg-[#070B28] border-2 border-[#FF7A00] rounded-2xl p-3.5 sm:p-5 flex flex-col items-center justify-between aspect-square transition-all duration-300 hover:-translate-y-1.5 shadow-[0_0_22px_rgba(255,122,0,0.35)] hover:shadow-[0_0_35px_rgba(255,122,0,0.7)] hover:border-[#FFA500] overflow-hidden">
+      {/* Glow de Fundo Sutil no Hover */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FF7A00]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+      {/* Cantos Tecnológicos Estilo Gamer */}
+      <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 border-[#FF7A00] pointer-events-none" />
+      <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 border-[#FF7A00] pointer-events-none" />
+      <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 border-[#FF7A00] pointer-events-none" />
+      <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 border-[#FF7A00] pointer-events-none" />
+
+      {/* Topo do Card: Cota / Tag */}
+      <div className="w-full flex items-center justify-between text-[10px] font-mono z-10 pb-1.5 border-b border-[#FF7A00]/20">
+        <span className="text-[#FFE600] font-black uppercase tracking-wider text-[9px] sm:text-[11px] truncate">
+          {sponsor.tier}
+        </span>
+        <span
+          className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded font-mono tracking-wider"
+          style={{
+            backgroundColor: `${sponsor.color || "#FF7A00"}25`,
+            color: sponsor.color || "#FF7A00",
+            border: `1px solid ${sponsor.color || "#FF7A00"}60`,
+          }}
+        >
+          {sponsor.badge}
+        </span>
+      </div>
+
+      {/* Área Central: Logo Gigante em Destaque */}
+      <div className="w-full flex-1 flex items-center justify-center p-2 my-1 z-10 overflow-hidden">
+        {sponsor.logo && !imgError ? (
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            onError={() => setImgError(true)}
+            className="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(255,122,0,0.35)] group-hover:scale-110 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full rounded-xl bg-[#0F173D]/80 border-2 border-dashed border-[#FF7A00]/40 flex flex-col items-center justify-center p-2 group-hover:border-[#FF7A00] group-hover:bg-[#0F173D] transition-all duration-300">
+            <div
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-mono font-black text-lg sm:text-2xl text-white shadow-lg border border-white/20 transition-transform duration-300 group-hover:scale-110"
+              style={{
+                backgroundColor: sponsor.color || "#FF7A00",
+                boxShadow: `0 0 20px ${sponsor.color || "#FF7A00"}70`,
+              }}
+            >
+              {sponsor.initials}
+            </div>
+            <span className="mt-2 text-[9px] sm:text-[10px] font-mono uppercase text-[#FFE600] tracking-widest font-black">
+              LOGO OFICIAL
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Rodapé: Nome do Patrocinador (Limpo, sem texto corrido) */}
+      <div className="w-full text-center z-10 pt-1.5 border-t border-[#FF7A00]/20">
+        <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans truncate group-hover:text-[#FFE600] transition-colors">
+          {sponsor.name}
+        </h4>
+      </div>
+    </div>
   );
 }
