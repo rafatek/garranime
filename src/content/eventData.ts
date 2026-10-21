@@ -45,7 +45,7 @@ export const TICKET_PLANS = [
     tagline: "Economize e garanta sua vaga antecipada!",
     features: [
       "Acesso completo a todas as áreas e salas temáticas",
-      "Pulseira oficial numerada do evento (limite de 500 vagas)",
+      "Pulseira oficial do evento para identificação",
       "Direito de participar de gincanas e desafios interativos",
       "Participação no grande sorteio final de brindes geek",
       "Inscrição gratuita no Concurso Cosplay (Adulto ou Kids)",
@@ -63,9 +63,9 @@ export const TICKET_PLANS = [
     tagline: "Venda no local sujeito à lotação",
     features: [
       "Acesso a todas as áreas do evento",
-      "Pulseira oficial conforme disponibilidade restante",
+      "Pulseira oficial conforme disponibilidade",
       "Participação nas gincanas e torneios",
-      "Sujeito à lotação máxima das 500 pulseiras",
+      "Sujeito à capacidade do espaço",
     ],
     ctaText: "Ver Instruções de Pagamento",
     featured: false,
@@ -73,8 +73,7 @@ export const TICKET_PLANS = [
 ];
 
 export const EVENT_CAPACITY = {
-  totalWristbands: 500,
-  description: "Limite máximo de 500 pulseiras numeradas oficiais para garantir conforto e segurança de todos os participantes.",
+  description: "Pulseiras oficiais de acesso para garantir o conforto e a segurança de todos os participantes.",
 };
 
 export const TOURNAMENTS = [
@@ -169,30 +168,40 @@ export const CONFIRMED_STORES = [
     name: "Bankai Studio",
     type: "Estúdio & Artes Geek",
     badge: "CONFIRMADA",
+    initials: "BS",
+    color: "#FF7A00",
     desc: "Quadros, posters, colecionáveis e artes exclusivas dos animes mais marcantes.",
   },
   {
     name: "Pixangaa",
     type: "Moda & Acessórios",
     badge: "CONFIRMADA",
+    initials: "PX",
+    color: "#00D2FF",
     desc: "Vestuário, bonés, moletons e estampas de alta qualidade para o seu dia a dia geek.",
   },
   {
     name: "Botinha Store",
     type: "Vestuário & Calçados",
     badge: "CONFIRMADA",
+    initials: "BT",
+    color: "#FFE600",
     desc: "Calçados personalizados, meias temáticas e itens de vestuário inspirados na cultura pop.",
   },
   {
     name: "Makako Cards & Games",
     type: "Card Games & Colecionismo",
     badge: "CONFIRMADA",
+    initials: "MC",
+    color: "#A855F7",
     desc: "Boosters, decks, sleeves protetores e acessórios para torneios de TCG.",
   },
   {
     name: "Otaku's Mix",
     type: "Colecionáveis & Action Figures",
     badge: "CONFIRMADA",
+    initials: "OM",
+    color: "#EC4899",
     desc: "Action figures, chaveiros, bottons, katanas de colecionador e pelúcias.",
   },
 ];
@@ -255,7 +264,7 @@ export const FAQ_LIST = [
   },
   {
     q: "Como funcionam as pulseiras oficiais de acesso?",
-    a: "O evento possui uma capacidade limitada a 500 pulseiras oficiais numeradas. Ao garantir seu ingresso antecipado, você assegura sua pulseira com valor promocional de R$ 10,00 e garante participação em todas as salas, gincanas e no sorteio final de brindes do evento!",
+    a: "Ao garantir seu ingresso antecipado, você assegura sua pulseira oficial com valor promocional de R$ 10,00 e garante participação em todas as salas, gincanas e no grande sorteio final de brindes do evento!",
   },
   {
     q: "Quanto custa para participar do Concurso de Cosplay?",

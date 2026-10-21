@@ -25,9 +25,8 @@ Este documento mapeia todas as informações que necessitam de confirmação ofi
 - ✅ **Design dos Botões:** Estilo idêntico ao modelo do cliente (moldura comic laranja, base azul marinho, texto branco puro).
 - ✅ **Central do Evento (App Mobile):** Pop-ups com navegação para Resumo do Evento, Competições (Cosplay Kids/Adulto, Jogos Free Fire/Clash/Naruto com cards e pop-ups individuais), Lojas Parceiras, Apoiadores e Organização.
 - ✅ **Data:** 22 de Novembro.
-- ✅ **Ingressos:** R$ 10,00 (Antecipado) e R$ 15,00 (Na Hora do evento).
-- ✅ **Sistema de Pulseiras:** 500 unidades (250 Azuis para Time Azul / 250 Laranjas para Time Laranja).
-- ✅ **Gincanas por Equipe:** Time Azul vs Time Laranja com sorteio final exclusivo para o time vencedor.
+- ✅ **Ingressos:** R$ 10,00 (Antecipado) e R$ 15,00 (Na Hora do evento / Portaria).
+- ✅ **Acesso:** Pulseiras oficiais de acesso a todas as áreas, salas e atrações.
 - ✅ **Cosplay:** Inscrição gratuita (paga apenas o ingresso). Categorias Adulto e Kids.
 - ✅ **Modalidades Gamer:** Naruto, Free Fire e Clash Royale.
 - ✅ **Identidade Visual & Logo:** Logotipo oficial `LOGO-GNIME.png` e paleta Orange Shonen & Deep Konoha Navy.

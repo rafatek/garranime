@@ -250,11 +250,11 @@ export default function EventHubModal({
                 <div className="bg-[#0A1138] p-3 border-l-4 border-[#FFE600] flex items-start gap-3">
                   <Ticket className="w-5 h-5 text-[#FFE600] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white block uppercase">Capacidade & Ingressos:</strong>
+                    <strong className="text-white block uppercase">Pulseiras & Ingressos:</strong>
                     <span className="text-gray-300">
-                      Limite de 500 pulseiras (250 Time Azul vs 250 Time Laranja).
+                      Pulseira oficial com acesso a todas as áreas do evento.
                       <br />
-                      <strong>R$ 10,00</strong> Antecipado / <strong>R$ 15,00</strong> No dia.
+                      <strong>R$ 10,00</strong> Antecipado / <strong>R$ 15,00</strong> No dia (Portaria).
                     </span>
                   </div>
                 </div>

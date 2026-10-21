@@ -242,3 +242,23 @@ html {
 .safe-bottom-dock {
   padding-bottom: env(safe-area-inset-bottom, 16px);
 }
+
+/* Infinite Marquee Loop for Lojas & Parceiros Carousel */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-loop {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.animate-marquee-loop:hover {
+  animation-play-state: paused;
+}

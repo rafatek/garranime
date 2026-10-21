@@ -39,7 +39,7 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
             GARANTA SEU <span className="text-[#FFE600]">INGRESSO</span> <span className="text-[#00D2FF]">ANTECIPADO</span>
           </h2>
           <p className="max-w-xl mx-auto mt-2 text-sm text-gray-300">
-            Apenas 500 pulseiras disponíveis! Compre antecipado por R$ 10,00 e garanta seu acesso a todas as atrações, torneios e sorteios.
+            Compre antecipado por R$ 10,00 e garanta seu acesso a todas as atrações, torneios e sorteios do evento!
           </p>
         </div>
 
