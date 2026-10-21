@@ -48,7 +48,6 @@ export const TICKET_PLANS = [
       "Pulseira oficial do evento para identificação",
       "Direito de participar de gincanas e desafios interativos",
       "Participação no grande sorteio final de brindes geek",
-      "Inscrição gratuita no Concurso Cosplay (Adulto ou Kids)",
     ],
     ctaText: "Comprar Antecipado (R$ 10)",
     featured: true,
@@ -203,6 +202,45 @@ export const CONFIRMED_STORES = [
     initials: "OM",
     color: "#EC4899",
     desc: "Action figures, chaveiros, bottons, katanas de colecionador e pelúcias.",
+  },
+];
+
+export const CONFIRMED_SPONSORS = [
+  {
+    name: "Patrocinador Master",
+    tier: "Cota Ouro",
+    badge: "OFICIAL",
+    logo: null,
+    initials: "PM",
+    color: "#FF7A00",
+    desc: "Apoio e incentivo principal à cultura geek em Garrafão do Norte",
+  },
+  {
+    name: "Apoio Cultural",
+    tier: "Cota Prata",
+    badge: "CULTURA",
+    logo: null,
+    initials: "AC",
+    color: "#00D2FF",
+    desc: "Incentivo à juventude, lazer saudável e cultura pop",
+  },
+  {
+    name: "Conectividade Fibra",
+    tier: "Internet Oficial",
+    badge: "TECH",
+    logo: null,
+    initials: "CF",
+    color: "#FFE600",
+    desc: "Infraestrutura de alta velocidade para as arenas gamers",
+  },
+  {
+    name: "Comunicação & Gráfica",
+    tier: "Mídia & Print",
+    badge: "PARCERIA",
+    logo: null,
+    initials: "CG",
+    color: "#A855F7",
+    desc: "Cenografia, credenciais e comunicação visual oficial",
   },
 ];
 

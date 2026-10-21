@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
-import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS } from "@/content/eventData";
+import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS, CONFIRMED_SPONSORS } from "@/content/eventData";
 import {
   X,
   ArrowLeft,
@@ -730,21 +730,6 @@ export default function EventHubModal({
                   </div>
                 ))}
               </div>
-
-              <div className="pt-2">
-                <GamerButton
-                  fullWidth
-                  size="md"
-                  onClick={() =>
-                    openWhatsApp(
-                      `Olá, equipe Garranime! Tenho uma loja/marca geek e gostaria de expor no evento. Como funciona o estande de parceiro?`
-                    )
-                  }
-                  icon={<Store className="w-5 h-5" />}
-                >
-                  QUERO LEVAR MINHA LOJA (WHATSAPP)
-                </GamerButton>
-              </div>
             </div>
           )}
 
@@ -779,6 +764,21 @@ export default function EventHubModal({
                 <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
                   <strong className="text-white block uppercase">Apoio Comunitário:</strong>
                   Incentive o lazer saudável, a tecnologia e a cultura jovem no município!
+                </div>
+              </div>
+
+              {/* Lista Rápida de Patrocinadores / Apoio */}
+              <div className="pt-2">
+                <span className="text-[10px] font-mono text-[#00D2FF] uppercase font-bold block mb-2">
+                  Marcas Apoiadoras:
+                </span>
+                <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono">
+                  {CONFIRMED_SPONSORS.map((s, idx) => (
+                    <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] p-2">
+                      <span className="text-[9px] text-[#FFE600] uppercase block">{s.tier}</span>
+                      <strong className="text-white text-xs truncate block">{s.name}</strong>
+                    </div>
+                  ))}
                 </div>
               </div>
 

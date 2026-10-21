@@ -15,13 +15,9 @@ export default function PixModal({
   isOpen,
   onClose,
 }: PixModalProps) {
-  const [quantity, setQuantity] = useState(1);
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
-
-  const pricePerTicket = 10;
-  const totalPrice = quantity * pricePerTicket;
 
   const handleCopy = () => {
     sound.playConfirm();
@@ -33,7 +29,7 @@ export default function PixModal({
   const handleWhatsApp = () => {
     sound.playSelect();
     const text = encodeURIComponent(
-      `Olá, equipe Garranime! Acabei de realizar a transferência Pix no valor de R$ ${totalPrice},00 referente a ${quantity} ingresso(s) antecipado(s). Segue o comprovante para emissão da(s) pulseira(s) oficial(is)!`
+      "Olá, equipe Garranime! Acabei de realizar a transferência Pix no valor de R$ 10,00 referente ao meu ingresso antecipado. Segue o comprovante para emissão da minha pulseira oficial!"
     );
     window.open(`https://wa.me/${EVENT_DATA.whatsappContact}?text=${text}`, "_blank");
   };
@@ -46,7 +42,7 @@ export default function PixModal({
           <div className="flex items-center gap-2">
             <span className="p-1.5 bg-[#FF7A00] text-[#070B28] font-black text-xs">PIX</span>
             <h3 className="text-xl font-black uppercase text-white font-sans">
-              Checkout de Ingressos Antecipados
+              Checkout de Ingresso Antecipado
             </h3>
           </div>
 
@@ -61,56 +57,23 @@ export default function PixModal({
           </button>
         </div>
 
-        {/* Quantity */}
-        <div className="space-y-2 mb-6">
-          <div className="flex items-center justify-between">
-            <label className="block text-xs font-mono font-bold uppercase text-gray-300">
-              1. Quantidade de Ingressos:
-            </label>
-            <span className="text-xs font-mono text-[#FFE600] font-bold">
-              R$ 10,00 cada
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4 bg-[#070B28] border border-[#1E2C6A] p-2.5 max-w-[200px]">
-            <button
-              onClick={() => {
-                sound.playSelect();
-                setQuantity(Math.max(1, quantity - 1));
-              }}
-              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center active:scale-95"
-            >
-              -
-            </button>
-            <span className="font-mono font-black text-xl text-[#FFE600] flex-1 text-center">
-              {quantity}
-            </span>
-            <button
-              onClick={() => {
-                sound.playSelect();
-                setQuantity(Math.min(10, quantity + 1));
-              }}
-              className="w-8 h-8 bg-[#0F173D] text-white font-black text-lg border border-[#1E2C6A] flex items-center justify-center active:scale-95"
-            >
-              +
-            </button>
-          </div>
-        </div>
-
         {/* Total Price */}
         <div className="bg-[#070B28] border-2 border-[#FFE600] p-4 flex items-center justify-between mb-6">
-          <span className="text-xs font-mono font-bold uppercase text-gray-300">
-            Total a Transferir:
-          </span>
+          <div>
+            <span className="text-xs font-mono font-bold uppercase text-gray-300 block">
+              Total a Transferir:
+            </span>
+            <span className="text-[11px] font-mono text-[#00D2FF]">1x Ingresso Antecipado</span>
+          </div>
           <span className="text-2xl sm:text-3xl font-black text-[#FFE600] font-mono">
-            R$ {totalPrice},00
+            R$ 10,00
           </span>
         </div>
 
         {/* Pix Key Box */}
         <div className="space-y-2 mb-6">
           <label className="block text-xs font-mono font-bold uppercase text-gray-300">
-            2. Chave Pix Oficial do Evento:
+            Chave Pix Oficial do Evento:
           </label>
           <div className="flex items-center justify-between gap-2 bg-[#070B28] border border-[#FF7A00] p-3 text-xs font-mono text-white">
             <span className="truncate">{EVENT_DATA.pixKey}</span>
