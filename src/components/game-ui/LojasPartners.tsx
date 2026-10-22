@@ -152,8 +152,8 @@ export default function LojasPartners() {
             </p>
           </div>
 
-          {/* Grid de Patrocinadores: Responsivo no Celular (2 colunas) e no Computador (5 colunas) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {/* Grid de Patrocinadores: 3 Patrocinadores Confirmados */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {CONFIRMED_SPONSORS.map((sponsor, idx) => (
               <SponsorCard key={idx} sponsor={sponsor} />
             ))}
@@ -185,9 +185,10 @@ export default function LojasPartners() {
 function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
   const [imgError, setImgError] = useState(false);
   const accentColor = sponsor.color || "#FF7A00";
+  const isWhiteBgLogo = sponsor.logo?.includes("perfetura") || sponsor.logo?.includes("prefeitura");
 
   return (
-    <div className="group flex flex-col items-center w-full">
+    <div className="group flex flex-col items-center w-full max-w-[280px] sm:max-w-none mx-auto">
       {/* 1. O QUADRADO PREENCHIDO 100% PELA FOTO / LOGO */}
       <div
         className="relative w-full aspect-square rounded-2xl overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.03] bg-[#070B28]"
@@ -225,13 +226,13 @@ function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
         {/* Badges Flutuantes no Topo do Quadrado */}
         <div className="absolute top-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono z-20 pointer-events-none">
           <span
-            className="px-2 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/70 shadow"
+            className="px-2 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/75 shadow"
             style={{ color: accentColor, border: `1px solid ${accentColor}50` }}
           >
             {sponsor.tier}
           </span>
           <span
-            className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/70 shadow"
+            className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/75 shadow"
             style={{ color: accentColor, border: `1px solid ${accentColor}50` }}
           >
             {sponsor.badge}
@@ -240,12 +241,23 @@ function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
 
         {/* Imagem que preenche 100% do quadrado */}
         {sponsor.logo && !imgError ? (
-          <img
-            src={sponsor.logo}
-            alt={sponsor.name}
-            onError={() => setImgError(true)}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          isWhiteBgLogo ? (
+            <div className="w-full h-full bg-white flex items-center justify-center p-4">
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                onError={() => setImgError(true)}
+                className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+          ) : (
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          )
         ) : (
           <div
             className="w-full h-full bg-[#0F173D] border-2 border-dashed flex flex-col items-center justify-center p-3 transition-all"

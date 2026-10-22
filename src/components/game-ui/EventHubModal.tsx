@@ -347,13 +347,23 @@ export default function EventHubModal({
             <div className="space-y-4 animate-fadeIn">
               <div className="text-center pb-2 border-b border-[#1E2C6A]">
                 <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#FFE600]/40">
-                  22 DE NOVEMBRO • PROGRAMAÇÃO
+                  22 DE NOVEMBRO • ESCOLA MÁRIO BRASIL
                 </span>
                 <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
-                  CRONOGRAMA DO EVENTO
+                  CRONOGRAMA <span className="text-[#FFE600]">EM BREVE</span>
                 </h3>
                 <p className="text-xs text-gray-300 mt-1">
-                  Arraste para acompanhar todas as fases e horários da aventura:
+                  Abertura oficial a partir das <strong>08h00</strong>. Programação oficial em atualização!
+                </p>
+              </div>
+
+              {/* Banner de Aviso: Em Atualização */}
+              <div className="bg-[#0A1138] border-2 border-[#FF7A00] p-3 text-center space-y-1">
+                <span className="text-xs font-black uppercase text-[#FF7A00] tracking-wider font-mono flex items-center justify-center gap-1.5">
+                  <Clock className="w-4 h-4 text-[#FF7A00]" /> Programação Oficial Sendo Finalizada
+                </span>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  A organização está alinhando os horários detalhados de cada fase e atração. Confira abaixo o layout prévio das etapas do evento:
                 </p>
               </div>
 
@@ -1052,19 +1062,21 @@ export default function EventHubModal({
 
                 <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
                   <strong className="text-white block uppercase">Apoio Comunitário:</strong>
-                  Incentive o lazer saudável, a tecnologia e a cultura jovem no município!
+                  Prefeitura de Garrafão do Norte, José Henrique, Rafael Turbo Digital e Escola Mário Brasil!
                 </div>
               </div>
 
               {/* Lista Rápida de Patrocinadores / Apoio */}
               <div className="pt-2">
                 <span className="text-[10px] font-mono text-[#00D2FF] uppercase font-bold block mb-2">
-                  Marcas Apoiadoras:
+                  Marcas Apoiadoras Confirmadas:
                 </span>
-                <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs font-mono">
                   {CONFIRMED_SPONSORS.map((s, idx) => (
                     <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] p-2">
-                      <span className="text-[9px] text-[#FFE600] uppercase block">{s.tier}</span>
+                      <span className="text-[9px] uppercase block font-bold" style={{ color: s.color || "#FFE600" }}>
+                        {s.tier}
+                      </span>
                       <strong className="text-white text-xs truncate block">{s.name}</strong>
                     </div>
                   ))}

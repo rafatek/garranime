@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { sound } from "@/lib/sound";
 import { TICKET_PLANS, EVENT_DATA } from "@/content/eventData";
-import { Ticket, CheckCircle2, Shield, QrCode, Copy, Check, ExternalLink, MapPin } from "lucide-react";
+import { Ticket, CheckCircle2, Shield, QrCode, Copy, Check, ExternalLink, MapPin, Clock } from "lucide-react";
 import GamerButton from "./GamerButton";
 
 interface StoreTicketsProps {
@@ -41,6 +41,12 @@ export default function StoreTickets({ onOpenPixModal }: StoreTicketsProps) {
           <p className="max-w-xl mx-auto mt-2 text-sm text-gray-300">
             Compre antecipado por R$ 10,00 e garanta seu acesso a todas as atrações, torneios e sorteios do evento!
           </p>
+
+          {/* Aviso: Venda Antecipada até dia 15 */}
+          <div className="mt-4 inline-flex items-center gap-2 bg-[#070B28] border-2 border-[#FFE600] px-4 py-2 text-xs sm:text-sm font-mono font-bold text-[#FFE600] shadow-[0_0_15px_rgba(255,230,0,0.3)]">
+            <Clock className="w-4 h-4 text-[#FFE600] shrink-0" />
+            <span>⚠️ ATENÇÃO: VALOR ANTECIPADO (R$ 10,00) VÁLIDO SOMENTE ATÉ DIA 15 DE NOVEMBRO!</span>
+          </div>
         </div>
 
         {/* Pricing Cards Grid */}

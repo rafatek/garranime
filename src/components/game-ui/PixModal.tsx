@@ -42,7 +42,7 @@ export default function PixModal({
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm">
       <div className="w-full sm:max-w-lg bg-[#0F173D] border-t-4 sm:border-4 border-[#FF7A00] p-6 sm:p-8 shonen-shadow-orange rounded-t-2xl sm:rounded-none max-h-[90vh] overflow-y-auto">
         {/* Modal Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#1E2C6A] mb-6">
+        <div className="flex items-center justify-between pb-4 border-b border-[#1E2C6A] mb-4">
           <div className="flex items-center gap-2">
             <span className="p-1.5 bg-[#FF7A00] text-[#070B28] font-black text-xs">PIX</span>
             <h3 className="text-xl font-black uppercase text-white font-sans">
@@ -59,6 +59,12 @@ export default function PixModal({
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Early Bird Deadline Warning */}
+        <div className="bg-[#070B28] border border-[#FFE600] p-2.5 mb-5 flex items-center gap-2 text-[11px] font-mono font-bold text-[#FFE600]">
+          <span className="text-sm">⚠️</span>
+          <span>Venda antecipada (R$ 10,00) válida somente até dia 15 de Novembro!</span>
         </div>
 
         {/* Quantity */}

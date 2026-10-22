@@ -7,8 +7,11 @@ Este documento mapeia todas as informações que necessitam de confirmação ofi
 ## 1. Informações Práticas do Evento
 - [x] **Chave Pix Oficial:** ✅ Confirmada e Implementada: `91985119031` — Favorecido: Arlindo Costa da Silva (Nubank).
 - [x] **WhatsApp de Suporte / Validação:** ✅ Confirmado e Implementado: `+55 91 98511-9031` (wa.me/5591985119031).
-- [ ] **Local Exato e Endereço:** Confirmação se o local oficial será a Escola Mário Brasil ou ginásio municipal em Garrafão do Norte - PA.
-- [ ] **Horário de Funcionamento:** Horário exato de abertura dos portões e encerramento do evento (ex.: 10:00 às 20:00).
+- [x] **Local Exato e Endereço:** ✅ Confirmado: Escola Mário Brasil — Garrafão do Norte - PA.
+- [x] **Horário de Funcionamento:** ✅ Confirmado: A partir das 08:00 (Abertura dos Portões).
+- [x] **Patrocinadores Oficiais:** ✅ Confirmados (3 marcas): Rafael Turbo Digital, José Henrique e Prefeitura de Garrafão do Norte.
+- [x] **Prazo Ingresso Antecipado (R$ 10):** ✅ Confirmado: Válido até dia 15 de Novembro.
+- [ ] **Cronograma Detalhado por Horário:** Organização preparando a grade detalhada final (layout salvo e exibindo "Cronograma em Breve").
 - [ ] **Links Oficiais das Lojas Parceiras:** URLs do Instagram para Bankai Studio, Pixangaa, Botinha Store, Makako Cards & Games e Otaku's Mix.
 
 ---

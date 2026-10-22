@@ -56,7 +56,9 @@ export default function CreditsRoll() {
           <div>
             <h5 className="font-bold text-[#FFE600] uppercase mb-2">Apoio Comunitário</h5>
             <p className="text-gray-300">Escola Mário Brasil</p>
-            <p className="text-gray-400">Comércio & Amigos Geeks</p>
+            <p className="text-gray-300">Prefeitura de Garrafão do Norte</p>
+            <p className="text-gray-300">José Henrique</p>
+            <p className="text-gray-300">Rafael Turbo Digital</p>
           </div>
         </div>
 
