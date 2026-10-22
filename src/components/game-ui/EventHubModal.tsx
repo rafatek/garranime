@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sound } from "@/lib/sound";
-import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS, CONFIRMED_SPONSORS, TIMELINE_STAGES } from "@/content/eventData";
+import { EVENT_DATA, TOURNAMENTS, COSPLAY_DATA, CONFIRMED_STORES, THEMED_ROOMS, CONFIRMED_SPONSORS, TIMELINE_STAGES, STAGE_COMPETITIONS } from "@/content/eventData";
 import {
   X,
   ArrowLeft,
@@ -26,6 +26,8 @@ import {
   CheckCircle2,
   DoorOpen,
   Clock,
+  Laugh,
+  Palette,
 } from "lucide-react";
 import GamerButton from "./GamerButton";
 
@@ -37,6 +39,8 @@ export type HubView =
   | "cosplay"
   | "cosplay_kids"
   | "cosplay_adulto"
+  | "cosplay_cospobre"
+  | "danca"
   | "jogos"
   | "jogo_detalhe"
   | "salas"
@@ -435,14 +439,14 @@ export default function EventHubModal({
                 </p>
               </div>
 
-              <div className="space-y-3.5 pt-2">
-                {/* 1. Concurso de Cosplay */}
+              <div className="space-y-3 pt-2">
+                {/* 1. Concurso de Cosplay (3 categorias) */}
                 <div
                   onClick={() => navigateTo("cosplay")}
                   className="group bg-[#0A1138] border-2 border-[#FFE600] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
                 >
                   <span className="absolute top-2 right-2 text-[9px] bg-[#FFE600] text-black font-mono font-black px-1.5 py-0.5 uppercase">
-                    INSCRIÇÃO GRÁTIS
+                    3 CATEGORIAS
                   </span>
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-[#070B28] border border-[#FFE600] text-[#FFE600]">
@@ -453,13 +457,36 @@ export default function EventHubModal({
                         CONCURSO DE COSPLAY
                       </h4>
                       <p className="text-xs text-gray-300">
-                        Categorias Kids e Adulto. Apresentação no palco oficial!
+                        Categorias Adulto, Kids e Cospobre. Apresentação no palco oficial!
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* 2. Torneios Gamers */}
+                {/* 2. Competição de Dança Geek (Novo - Edital Oficial) */}
+                <div
+                  onClick={() => navigateTo("danca")}
+                  className="group bg-[#0A1138] border-2 border-[#EC4899] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
+                >
+                  <span className="absolute top-2 right-2 text-[9px] bg-[#EC4899] text-white font-mono font-black px-1.5 py-0.5 uppercase">
+                    EDITAL PUBLICADO
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-[#070B28] border border-[#EC4899] text-[#EC4899]">
+                      <Music className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black uppercase text-white font-sans group-hover:text-[#EC4899] transition-colors">
+                        COMPETIÇÃO DE DANÇA GEEK
+                      </h4>
+                      <p className="text-xs text-gray-300">
+                        K-Pop, Anime & Freestyle. Solo, duplas ou grupos. Veja o edital e regras!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Torneios Gamers */}
                 <div
                   onClick={() => navigateTo("jogos")}
                   className="group bg-[#0A1138] border-2 border-[#00D2FF] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
@@ -481,12 +508,39 @@ export default function EventHubModal({
                     </div>
                   </div>
                 </div>
+
+                {/* 4. Torneio de Batalha de Espadas */}
+                <div
+                  onClick={() =>
+                    openWhatsApp(
+                      "Olá, equipe Garranime! Gostaria de me inscrever no Torneio de Batalha de Espadas (Soft Combat) do evento!"
+                    )
+                  }
+                  className="group bg-[#0A1138] border-2 border-[#FF7A00] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
+                >
+                  <span className="absolute top-2 right-2 text-[9px] bg-[#FF7A00] text-black font-mono font-black px-1.5 py-0.5 uppercase">
+                    ARENA DE COMBATE
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-[#070B28] border border-[#FF7A00] text-[#FF7A00]">
+                      <Swords className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black uppercase text-white font-sans group-hover:text-[#FF7A00] transition-colors">
+                        BATALHA DE ESPADAS (SOFT COMBAT)
+                      </h4>
+                      <p className="text-xs text-gray-300">
+                        Duelos 1 vs 1 com espadas seguras acolchoadas. Inscrição grátis!
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {/* ========================================================== */}
-          {/* VIEW: COSPLAY OVERVIEW (ESCOLHA KIDS OU ADULTO)             */}
+          {/* VIEW: COSPLAY OVERVIEW (ESCOLHA KIDS, ADULTO OU COSPOBRE)   */}
           {/* ========================================================== */}
           {view === "cosplay" && (
             <div className="space-y-4 animate-fadeIn">
@@ -522,6 +576,17 @@ export default function EventHubModal({
                     onClick={() => navigateTo("cosplay_adulto")}
                   >
                     COSPLAY ADULTO (A PARTIR DE 14 ANOS)
+                  </GamerButton>
+                </div>
+
+                <div className="w-full">
+                  <GamerButton
+                    fullWidth
+                    size="md"
+                    ghost="orange"
+                    onClick={() => navigateTo("cosplay_cospobre")}
+                  >
+                    COSPOBRE (CRIATIVIDADE & BAIXO CUSTO)
                   </GamerButton>
                 </div>
               </div>
@@ -651,6 +716,135 @@ export default function EventHubModal({
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}
                 >
                   INSCREVER COSPLAY ADULTO NO WHATSAPP
+                </GamerButton>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* VIEW: EDITAL COSPLAY COSPOBRE                              */}
+          {/* ========================================================== */}
+          {view === "cosplay_cospobre" && (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="text-center pb-2 border-b border-[#1E2C6A]">
+                <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#FFE600]/40">
+                  CRIATIVIDADE & HUMOR
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
+                  CONCURSO COSPOBRE
+                </h3>
+                <p className="text-xs text-gray-300">
+                  A competição mais amistosa e divertida! Menos custo, muito mais imaginação!
+                </p>
+              </div>
+
+              <div className="space-y-2.5 text-xs font-mono text-gray-300">
+                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FFE600]">
+                  <strong className="text-white block uppercase">O Conceito:</strong>
+                  Criado para quem quer se divertir sem gastar muito! Vale usar papelão, caixas, fita crepe, baldes, vassouras, toalhas, garrafas PET e utensílios do dia a dia.
+                </div>
+
+                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
+                  <strong className="text-white block uppercase">Critérios de Avaliação do Júri:</strong>
+                  Criatividade na gambiarra, semelhança cômica com o personagem original, carisma no palco e resposta da torcida!
+                </div>
+
+                <div className="bg-[#0A1138] p-3 border-l-4 border-[#00D2FF]">
+                  <strong className="text-white block uppercase">Quem Pode Participar:</strong>
+                  Livre para todas as idades! Apresentações individuais, em duplas ou amigos em equipe.
+                </div>
+
+                <div className="bg-[#0A1138] p-3 border-l-4 border-green-400">
+                  <strong className="text-white block uppercase">Premiação & Troféu:</strong>
+                  Troféu especial de Mestre da Gambiarra / Campeão Cospobre Garranime 2026 + brindes geek divertidos!
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  ghost="orange"
+                  showPacman
+                  onClick={() =>
+                    openWhatsApp(
+                      `Olá, equipe Garranime! Quero me inscrever no Concurso de Cospobre:\n\nNome / Dupla:\nPersonagem Improvisado:\nAnime/Game de Referência:\nMateriais Utilizados (ex: papelão, fita):`
+                    )
+                  }
+                  icon={<MessageCircle className="w-5 h-5 fill-current" />}
+                >
+                  INSCREVER COSPOBRE NO WHATSAPP
+                </GamerButton>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* VIEW: EDITAL OFICIAL DE DANÇA (11 PONTOS DO REGULAMENTO)   */}
+          {/* ========================================================== */}
+          {view === "danca" && (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="text-center pb-2 border-b border-[#1E2C6A]">
+                <div className="inline-flex items-center gap-1.5 bg-[#0A1138] px-2.5 py-0.5 border border-[#EC4899]/50 mb-1">
+                  <Music className="w-3.5 h-3.5 text-[#EC4899]" />
+                  <span className="text-[10px] font-mono font-black uppercase text-[#EC4899] tracking-widest">
+                    REGULAMENTO OFICIAL
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black uppercase text-white font-sans">
+                  COMPETIÇÃO DE DANÇA GEEK
+                </h3>
+                <p className="text-xs text-gray-300 mt-1 max-w-md mx-auto">
+                  Normas gerais para participação no Palco Principal do Garranime 2026:
+                </p>
+              </div>
+
+              {/* Grid dos 11 Pontos Oficiais do Edital */}
+              <div className="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1">
+                {[
+                  { num: "01", title: "Inscrição", desc: "As inscrições deverão ser realizadas dentro do prazo divulgado, informando o nome dos participantes e o estilo de dança." },
+                  { num: "02", title: "Número de Participantes", desc: "Apresentações individuais, em dupla ou em grupo, com no máximo 5 integrantes por apresentação." },
+                  { num: "03", title: "Tempo de Apresentação", desc: "Cada apresentação terá duração máxima de 5 minutos. O tempo deverá ser rigorosamente respeitado por todos." },
+                  { num: "04", title: "Músicas & Conteúdo", desc: "Envio prévio para avaliação da organização. Proibidas músicas com palavrões, conteúdo sexual explícito, mensagens ofensivas, preconceituosas ou incitação à violência." },
+                  { num: "05", title: "Coreografias e Figurinos", desc: "Apresentações adequadas ao público livre de todas as idades, sem gestos obscenos. Figurinos e acessórios permitidos desde que não ofereçam riscos." },
+                  { num: "06", title: "Faixa Etária & Acompanhamento", desc: "Aberta a participantes de todas as idades. Menores de 18 anos deverão estar acompanhados por responsável legal durante todo o evento, inclusive na apresentação." },
+                  { num: "07", title: "Organização & Tolerância", desc: "Comparecer com antecedência. Após a chamada no palco, tolerância máxima de 10 minutos. O não comparecimento resulta em eliminação." },
+                  { num: "08", title: "Avaliação do Júri", desc: "Os jurados avaliarão criatividade, ritmo, sincronia, execução dos movimentos e presença de palco." },
+                  { num: "09", title: "Respeito e Fair Play", desc: "Respeito mútuo a jurados, organização e demais competidores. Não serão toleradas ofensas, discriminação ou atitudes antidesportivas." },
+                  { num: "10", title: "Penalidades", desc: "O descumprimento das regras poderá resultar em advertência ou desclassificação imediata, conforme a gravidade." },
+                  { num: "11", title: "Premiação & Disposições Gerais", desc: "Premiação oficial divulgada pela organização. Em caso de empate, aplicação do critério técnico de desempate. Implica na aceitação plena do regulamento." },
+                ].map((item, idx) => (
+                  <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#EC4899] p-2.5 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-[#EC4899] text-white font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
+                        {item.num}
+                      </span>
+                      <strong className="text-white text-xs font-sans uppercase">
+                        {item.title}
+                      </strong>
+                    </div>
+                    <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Botão de Inscrição Oficial da Dança */}
+              <div className="pt-2">
+                <GamerButton
+                  fullWidth
+                  size="md"
+                  ghost="pink"
+                  showPacman
+                  onClick={() =>
+                    openWhatsApp(
+                      `Olá, equipe Garranime! Li o edital e gostaria de inscrever minha apresentação na Competição de Dança Geek:\n\nNome do Dançarino / Grupo:\nEstilo de Dança:\nQuantidade de Integrantes (máx 5):\nNome do Responsável:`
+                    )
+                  }
+                  icon={<MessageCircle className="w-5 h-5 fill-current" />}
+                >
+                  INSCREVER APRESENTAÇÃO DE DANÇA NO WHATSAPP
                 </GamerButton>
               </div>
             </div>

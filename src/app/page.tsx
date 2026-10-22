@@ -318,6 +318,7 @@ export default function Home() {
       <VersusSection
         onOpenCosplay={() => handleOpenHub("cosplay")}
         onOpenTournament={() => handleOpenHub("jogos")}
+        onOpenDanceEdital={() => handleOpenHub("danca")}
       />
 
       {/* SECTION: Modo História (Cronograma do Dia) */}

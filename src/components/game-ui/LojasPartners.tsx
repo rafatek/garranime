@@ -152,8 +152,8 @@ export default function LojasPartners() {
             </p>
           </div>
 
-          {/* Grid de Patrocinadores com Destaque para Cards Quadrados e Logos Grandes */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          {/* Grid de Patrocinadores: Responsivo no Celular (2 colunas) e no Computador (5 colunas) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
             {CONFIRMED_SPONSORS.map((sponsor, idx) => (
               <SponsorCard key={idx} sponsor={sponsor} />
             ))}
@@ -180,99 +180,88 @@ export default function LojasPartners() {
 }
 
 /**
- * Card Quadrado com Destaque Neon Laranja e Foco 100% na Logo Oficial
- */
-/**
- * Card Quadrado com Destaque Neon Personalizado (Cor da Marca) e Foco 100% na Logo Oficial
+ * Card Quadrado com FOTO PREENCHENDO 100% DO QUADRADO e NOME BEM EMBAIXO
  */
 function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
   const [imgError, setImgError] = useState(false);
   const accentColor = sponsor.color || "#FF7A00";
 
   return (
-    <div
-      className="relative group bg-[#070B28] rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-between aspect-square transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
-      style={{
-        border: `2px solid ${accentColor}`,
-        boxShadow: `0 0 20px ${accentColor}40`,
-      }}
-    >
-      {/* Glow de Fundo Sutil no Hover */}
+    <div className="group flex flex-col items-center w-full">
+      {/* 1. O QUADRADO PREENCHIDO 100% PELA FOTO / LOGO */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="relative w-full aspect-square rounded-2xl overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.03] bg-[#070B28]"
         style={{
-          background: `radial-gradient(circle at center, ${accentColor}25 0%, transparent 70%)`,
+          border: `2px solid ${accentColor}`,
+          boxShadow: `0 0 25px ${accentColor}40`,
         }}
-      />
-
-      {/* Cantos Tecnológicos Estilo Gamer */}
-      <div
-        className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 pointer-events-none"
-        style={{ borderColor: accentColor }}
-      />
-      <div
-        className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 pointer-events-none"
-        style={{ borderColor: accentColor }}
-      />
-      <div
-        className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 pointer-events-none"
-        style={{ borderColor: accentColor }}
-      />
-      <div
-        className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 pointer-events-none"
-        style={{ borderColor: accentColor }}
-      />
-
-      {/* Topo do Card: Cota / Tag */}
-      <div
-        className="w-full flex items-center justify-between text-[10px] font-mono z-10 pb-1.5 border-b"
-        style={{ borderColor: `${accentColor}30` }}
       >
-        <span
-          className="font-black uppercase tracking-wider text-[9px] sm:text-[11px] truncate"
-          style={{ color: accentColor }}
-        >
-          {sponsor.tier}
-        </span>
-        <span
-          className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded font-mono tracking-wider"
+        {/* Glow Sutil de Fundo no Hover */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
           style={{
-            backgroundColor: `${accentColor}25`,
-            color: accentColor,
-            border: `1px solid ${accentColor}60`,
+            background: `radial-gradient(circle at center, ${accentColor}25 0%, transparent 70%)`,
           }}
-        >
-          {sponsor.badge}
-        </span>
-      </div>
+        />
 
-      {/* Área Central: Logo Gigante em Destaque */}
-      <div className="w-full flex-1 flex items-center justify-center p-1.5 my-1 z-10 overflow-hidden">
+        {/* Cantos Tecnológicos Estilo Gamer */}
+        <div
+          className="absolute top-1.5 left-1.5 w-3 h-3 border-t-2 border-l-2 pointer-events-none z-20"
+          style={{ borderColor: accentColor }}
+        />
+        <div
+          className="absolute top-1.5 right-1.5 w-3 h-3 border-t-2 border-r-2 pointer-events-none z-20"
+          style={{ borderColor: accentColor }}
+        />
+        <div
+          className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b-2 border-l-2 pointer-events-none z-20"
+          style={{ borderColor: accentColor }}
+        />
+        <div
+          className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b-2 border-r-2 pointer-events-none z-20"
+          style={{ borderColor: accentColor }}
+        />
+
+        {/* Badges Flutuantes no Topo do Quadrado */}
+        <div className="absolute top-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono z-20 pointer-events-none">
+          <span
+            className="px-2 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/70 shadow"
+            style={{ color: accentColor, border: `1px solid ${accentColor}50` }}
+          >
+            {sponsor.tier}
+          </span>
+          <span
+            className="px-1.5 py-0.5 font-black uppercase text-[8px] sm:text-[9px] rounded backdrop-blur-md bg-black/70 shadow"
+            style={{ color: accentColor, border: `1px solid ${accentColor}50` }}
+          >
+            {sponsor.badge}
+          </span>
+        </div>
+
+        {/* Imagem que preenche 100% do quadrado */}
         {sponsor.logo && !imgError ? (
-          <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black/50 border border-white/10 group-hover:border-white/25 transition-all">
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              onError={() => setImgError(true)}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          </div>
+          <img
+            src={sponsor.logo}
+            alt={sponsor.name}
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div
-            className="w-full h-full rounded-xl bg-[#0F173D]/80 border-2 border-dashed flex flex-col items-center justify-center p-2 transition-all duration-300"
+            className="w-full h-full bg-[#0F173D] border-2 border-dashed flex flex-col items-center justify-center p-3 transition-all"
             style={{ borderColor: `${accentColor}50` }}
           >
             <div
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center font-mono font-black text-lg sm:text-2xl text-white shadow-lg border border-white/20 transition-transform duration-300 group-hover:scale-110"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center font-mono font-black text-xl sm:text-3xl text-white shadow-lg border border-white/20 transition-transform duration-300 group-hover:scale-110"
               style={{
                 backgroundColor: accentColor,
-                boxShadow: `0 0 20px ${accentColor}70`,
+                boxShadow: `0 0 25px ${accentColor}80`,
               }}
             >
               {sponsor.initials}
             </div>
             <span
-              className="mt-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest font-black"
+              className="mt-2.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest font-black"
               style={{ color: accentColor }}
             >
               LOGO OFICIAL
@@ -281,14 +270,17 @@ function SponsorCard({ sponsor }: { sponsor: (typeof CONFIRMED_SPONSORS)[0] }) {
         )}
       </div>
 
-      {/* Rodapé: Nome do Patrocinador (Limpo, sem texto corrido) */}
-      <div
-        className="w-full text-center z-10 pt-1.5 border-t"
-        style={{ borderColor: `${accentColor}30` }}
-      >
-        <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans truncate group-hover:text-white transition-colors">
+      {/* 2. BEM EMBAIXO DO QUADRADO: NOME DO PATROCINADOR */}
+      <div className="mt-2 text-center w-full px-1">
+        <h4 className="text-xs sm:text-sm font-black uppercase text-white font-sans tracking-wide truncate group-hover:text-[#FFE600] transition-colors">
           {sponsor.name}
         </h4>
+        <span
+          className="text-[10px] sm:text-[11px] font-mono block mt-0.5 truncate font-bold"
+          style={{ color: accentColor }}
+        >
+          {sponsor.tier}
+        </span>
       </div>
     </div>
   );

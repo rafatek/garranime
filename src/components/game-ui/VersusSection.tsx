@@ -9,11 +9,13 @@ import GamerButton from "./GamerButton";
 interface VersusSectionProps {
   onOpenCosplay: () => void;
   onOpenTournament: (tournamentId: string) => void;
+  onOpenDanceEdital?: () => void;
 }
 
 export default function VersusSection({
   onOpenCosplay,
   onOpenTournament,
+  onOpenDanceEdital,
 }: VersusSectionProps) {
   const [activeCategory, setActiveCategory] = useState<"cosplay" | "games" | "torneios">("cosplay");
 
@@ -131,25 +133,32 @@ export default function VersusSection({
               </div>
             </div>
 
-            {/* Categorias Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Categorias Grid: 3 Colunas (Adulto, Kids e Cospobre) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {COSPLAY_DATA.categories.map((cat) => (
                 <div
                   key={cat.id}
-                  className="bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#FF7A00] p-6 shonen-shadow transition-colors"
+                  className="bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#FF7A00] p-5 sm:p-6 shonen-shadow transition-all flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <Award className="w-6 h-6 text-[#FFE600]" />
-                    <h4 className="text-xl font-black uppercase text-white font-sans">
-                      {cat.name}
-                    </h4>
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-[#FFE600]" />
+                        <h4 className="text-lg sm:text-xl font-black uppercase text-white font-sans">
+                          {cat.name}
+                        </h4>
+                      </div>
+                      <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-[#FF7A00]/20 text-[#FF7A00] border border-[#FF7A00]/40 shrink-0">
+                        {cat.badge || "OFICIAL"}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-gray-300 mb-4 leading-relaxed">{cat.desc}</p>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-300 mb-4">{cat.desc}</p>
 
-                  <div className="bg-[#0F173D] border border-[#1E2C6A] p-3 text-xs text-orange-200 flex items-start gap-2">
+                  <div className="bg-[#0F173D] border border-[#1E2C6A] p-3 text-xs text-orange-200 flex items-start gap-2 mt-2">
                     <Music className="w-4 h-4 text-[#FF7A00] shrink-0 mt-0.5" />
                     <span>
-                      <strong>Regra de Áudio:</strong> {cat.requirements}
+                      <strong>Regulamento:</strong> {cat.requirements}
                     </span>
                   </div>
                 </div>
@@ -262,7 +271,22 @@ export default function VersusSection({
                     </div>
                   </div>
 
-                  <div className="w-full pt-2">
+                  <div className="w-full pt-2 space-y-2">
+                    {comp.id === "danca" && onOpenDanceEdital && (
+                      <GamerButton
+                        fullWidth
+                        size="sm"
+                        ghost="pink"
+                        onClick={() => {
+                          sound.playSelect();
+                          onOpenDanceEdital();
+                        }}
+                        icon={<Music className="w-4 h-4" />}
+                      >
+                        VER EDITAL COMPLETO (11 PONTOS)
+                      </GamerButton>
+                    )}
+
                     <GamerButton
                       fullWidth
                       size="md"
