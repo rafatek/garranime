@@ -122,9 +122,16 @@ export default function PixModal({
               <span>{copied ? "Copiado!" : "Copiar"}</span>
             </button>
           </div>
-          <p className="text-[11px] text-gray-400">
-            Favorecido: <strong>{EVENT_DATA.pixRecipient}</strong>
-          </p>
+          <div className="text-[11px] text-gray-300 font-mono space-y-0.5">
+            <p>
+              Favorecido: <strong className="text-white">{EVENT_DATA.pixRecipient}</strong>
+            </p>
+            {EVENT_DATA.pixBank && (
+              <p>
+                Instituição / Banco: <strong className="text-[#00D2FF]">{EVENT_DATA.pixBank}</strong>
+              </p>
+            )}
+          </div>
         </div>
 
         {/* WhatsApp Send Confirmation Button */}

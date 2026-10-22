@@ -5,7 +5,7 @@ Este documento mapeia todas as informações que necessitam de confirmação ofi
 ---
 
 ## 1. Informações Práticas do Evento
-- [ ] **Chave Pix Oficial:** Definir chave Pix (e-mail, CPF, CNPJ ou chave aleatória) e QR Code gerado para exibição no checkout. *(Temporariamente utilizando placeholder seguro `pix@garranime.com.br` com aviso informativo).*
+- [x] **Chave Pix Oficial:** ✅ Confirmada e Implementada: `91985119031` — Favorecido: Arlindo Costa da Silva (Nubank).
 - [x] **WhatsApp de Suporte / Validação:** ✅ Confirmado e Implementado: `+55 91 98511-9031` (wa.me/5591985119031).
 - [ ] **Local Exato e Endereço:** Confirmação se o local oficial será a Escola Mário Brasil ou ginásio municipal em Garrafão do Norte - PA.
 - [ ] **Horário de Funcionamento:** Horário exato de abertura dos portões e encerramento do evento (ex.: 10:00 às 20:00).

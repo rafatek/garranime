@@ -15,6 +15,7 @@ export interface EventData {
   whatsappDisplay?: string;
   pixKey: string;
   pixRecipient: string;
+  pixBank?: string;
 }
 
 export const EVENT_DATA: EventData = {
@@ -30,8 +31,9 @@ export const EVENT_DATA: EventData = {
   instagram: "@garranime",
   whatsappContact: "5591985119031", // WhatsApp Oficial: +55 91 98511-9031
   whatsappDisplay: "+55 (91) 98511-9031",
-  pixKey: "pix@garranime.com.br", // Placeholder seguro documentado em PENDENCIAS.md
-  pixRecipient: "Organização Garranime",
+  pixKey: "91985119031",
+  pixRecipient: "Arlindo Costa da Silva",
+  pixBank: "Nubank",
 };
 
 export const TICKET_PLANS = [
