@@ -67,7 +67,7 @@ export default function ArenaMap() {
                 <span className="text-gray-400 block mb-1 flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-[#00D2FF]" /> Abertura dos Portões
                 </span>
-                <span className="text-sm font-bold text-white">10:00 da manhã</span>
+                <span className="text-sm font-bold text-white">08:00 da manhã</span>
               </div>
             </div>
 

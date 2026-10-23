@@ -59,7 +59,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const target = new Date("2026-11-22T10:00:00-03:00").getTime();
+    const target = new Date(EVENT_DATA.targetDateISO).getTime();
     const tick = () => {
       const now = new Date().getTime();
       const diff = target - now;

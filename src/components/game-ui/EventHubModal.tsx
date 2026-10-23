@@ -286,7 +286,7 @@ export default function EventHubModal({
                   <Calendar className="w-5 h-5 text-[#FF7A00] shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white block uppercase">Data & Horário:</strong>
-                    <span className="text-gray-300">22 de Novembro de 2026, a partir das 10h00</span>
+                    <span className="text-gray-300">22 de Novembro de 2026, a partir das 08h00</span>
                   </div>
                 </div>
 

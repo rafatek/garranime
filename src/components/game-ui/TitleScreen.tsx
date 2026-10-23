@@ -19,8 +19,8 @@ export default function TitleScreen({ onStart }: TitleScreenProps) {
   });
 
   useEffect(() => {
-    // Event date: Nov 22, 2026 10:00 AM
-    const target = new Date("2026-11-22T10:00:00-03:00").getTime();
+    // Event date: Nov 22, 2026 08:00 AM
+    const target = new Date("2026-11-22T08:00:00-03:00").getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
