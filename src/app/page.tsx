@@ -290,7 +290,7 @@ export default function Home() {
 
           <div className="w-full max-w-xs">
             <GamerButton fullWidth size="md" onClick={() => handleOpenHub("salas")}>
-              SALAS TEMÁTICAS
+              SALAS CONFIRMADAS
             </GamerButton>
           </div>
 
@@ -319,12 +319,13 @@ export default function Home() {
         onOpenCosplay={() => handleOpenHub("cosplay")}
         onOpenTournament={() => handleOpenHub("jogos")}
         onOpenDanceEdital={() => handleOpenHub("danca")}
+        onOpenSwordEdital={() => handleOpenHub("espadas")}
       />
 
       {/* SECTION: Modo História (Cronograma do Dia) */}
       <StoryTimeline onOpenTimeline={() => handleOpenHub("cronograma")} />
 
-      {/* SECTION: Seleção de Personagens & Salas Temáticas */}
+      {/* SECTION: Seleção de Personagens & Salas Confirmadas */}
       <CharacterSelect onOpenSalas={() => handleOpenHub("salas")} />
 
       {/* SECTION: Loja & Ingressos (R$ 10 Antecipado / R$ 15 Na Hora) */}

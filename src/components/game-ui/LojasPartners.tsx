@@ -91,28 +91,51 @@ export default function LojasPartners() {
             {loopedStores.map((store, i) => (
               <div
                 key={i}
-                className="w-[270px] sm:w-[320px] shrink-0 bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#FF7A00] p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 shadow-[4px_4px_0px_#070B28] group"
+                className="w-[280px] sm:w-[330px] shrink-0 bg-[#070B28] border-2 border-[#1E2C6A] hover:border-[#FF7A00] p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 shadow-[4px_4px_0px_#070B28] group"
               >
                 <div>
-                  {/* Top: Avatar Inicial + Nome da Loja + Categoria */}
+                  {/* Top: Logo Oficial da Loja + Nome da Loja + Categoria & Instagram */}
                   <div className="flex items-center gap-3 mb-2.5">
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center font-mono font-black text-xs text-white shrink-0 shadow-md border border-white/20"
-                      style={{ backgroundColor: store.color || "#FF7A00" }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center font-mono font-black text-xs text-white shrink-0 shadow-md border overflow-hidden p-1 bg-[#0A1138]"
+                      style={{ borderColor: `${store.color || "#FF7A00"}70` }}
                     >
-                      {store.initials || store.name.substring(0, 2).toUpperCase()}
+                      {store.logo ? (
+                        <img
+                          src={store.logo}
+                          alt={store.name}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full rounded-lg flex items-center justify-center font-bold"
+                          style={{ backgroundColor: store.color || "#FF7A00" }}
+                        >
+                          {store.initials || store.name.substring(0, 2).toUpperCase()}
+                        </div>
+                      )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <h4 className="text-sm sm:text-base font-black uppercase text-white font-sans group-hover:text-[#FF7A00] transition-colors truncate">
                         {store.name}
                       </h4>
-                      <span className="text-[11px] font-mono text-[#00D2FF] block truncate">
+                      <span className="text-[10px] font-mono text-[#00D2FF] block truncate">
                         {store.type}
                       </span>
+                      {store.instagram && (
+                        <a
+                          href={store.instagramUrl || `https://instagram.com/${store.instagram.replace("@", "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-mono text-pink-400 hover:text-white transition-colors block truncate hover:underline"
+                        >
+                          {store.instagram}
+                        </a>
+                      )}
                     </div>
                   </div>
 
-                  {/* Descrição Compacta e Objetiva */}
+                  {/* Descrição Compacta e Assertiva dos Posts */}
                   <p className="text-xs text-gray-300 leading-relaxed line-clamp-3">
                     {store.desc}
                   </p>

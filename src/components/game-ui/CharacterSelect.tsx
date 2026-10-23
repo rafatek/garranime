@@ -74,7 +74,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
           <div className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FFE600] px-4 py-1.5 mb-3 clip-chamfer">
             <Users className="w-4 h-4 text-[#FFE600]" />
             <span className="text-xs sm:text-sm font-black uppercase text-[#FFE600] tracking-widest font-mono">
-              SALAS TEMÁTICAS & SELEÇÃO DE HEROIS
+              SALAS CONFIRMADAS & SELEÇÃO DE HEROIS
             </span>
           </div>
 
@@ -82,7 +82,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
             ESCOLHA SEU <span className="text-[#00D2FF]">GUERREIRO</span> & <span className="text-[#FF7A00]">ATRAÇÃO</span>
           </h2>
           <p className="max-w-xl mx-auto mt-2 text-sm text-gray-300">
-            Conheça as salas temáticas do Garranime e veja as estatísticas dos maiores ícones dos animes!
+            Conheça as salas confirmadas do Garranime e veja as estatísticas dos maiores ícones dos animes!
           </p>
         </div>
 
@@ -186,11 +186,11 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-sans mb-2">
-            SALAS <span className="text-[#00D2FF]">TEMÁTICAS</span>
+            SALAS <span className="text-[#00D2FF]">CONFIRMADAS</span>
           </h3>
 
           <p className="text-xs sm:text-sm text-gray-300 max-w-sm mx-auto mb-6 leading-relaxed">
-            Karaokê Geek, Arena Gamer & Retrô, Sala Medieval RPG & TCG e Praça de Alimentação.
+            Karaokê, Sala RPG, Sala de Jogos, Just Dance, Sala para Cosplays, Fotos e Guarda Volumes.
           </p>
 
           <div className="w-full max-w-xs mx-auto">
@@ -203,7 +203,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
               }}
               icon={<Sparkles className="w-4 h-4" />}
             >
-              VER SALAS TEMÁTICAS
+              VER SALAS CONFIRMADAS
             </GamerButton>
           </div>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { sound } from "@/lib/sound";
-import { Flame, Clock } from "lucide-react";
+import { Flame, Clock, Sparkles, Trophy, Gamepad2 } from "lucide-react";
 import GamerButton from "./GamerButton";
 
 interface StoryTimelineProps {
@@ -20,7 +20,7 @@ export default function StoryTimeline({ onOpenTimeline }: StoryTimelineProps) {
           <div className="inline-flex items-center gap-2 bg-[#0F173D] border border-[#FF7A00] px-4 py-1.5 mb-3 clip-chamfer">
             <Flame className="w-4 h-4 text-[#FF7A00]" />
             <span className="text-xs sm:text-sm font-black uppercase text-[#FF7A00] tracking-widest font-mono">
-              22 DE NOVEMBRO • A PARTIR DAS 08H
+              22 DE NOVEMBRO • DAS 08H ÀS 20H • ESCOLA MÁRIO BRASIL
             </span>
           </div>
 
@@ -37,17 +37,33 @@ export default function StoryTimeline({ onOpenTimeline }: StoryTimelineProps) {
           <div className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FFE600] px-3.5 py-1 mb-3 clip-chamfer">
             <Clock className="w-4 h-4 text-[#FFE600]" />
             <span className="text-xs font-black uppercase text-[#FFE600] tracking-widest font-mono">
-              CRONOGRAMA EM BREVE
+              PROGRAMAÇÃO OFICIAL CONFIRMADA
             </span>
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-sans mb-2">
-            CRONOGRAMA <span className="text-[#FFE600]">EM BREVE</span>
+            CRONOGRAMA <span className="text-[#FFE600]">DO EVENTO</span>
           </h3>
 
-          <p className="text-xs sm:text-sm text-gray-300 max-w-sm mx-auto mb-6 leading-relaxed">
-            Abertura oficial a partir das <strong>08h00</strong> na Escola Mário Brasil! A organização está finalizando os horários exatos de cada atração.
+          <p className="text-xs sm:text-sm text-gray-300 max-w-sm mx-auto mb-4 leading-relaxed">
+            Confira a programação completa com as <strong>19 fases</strong> do Garranime: Torneios Gamers, Batalhas de Espadas, Gincanas, Dança Geek, Cosplay e o grande Boss Final!
           </p>
+
+          {/* Mini Highlights Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 mb-6 text-[10px] font-mono">
+            <span className="bg-[#070B28] text-[#00D2FF] px-2 py-0.5 border border-[#1E2C6A]">
+              🎮 3 Torneios Gamers
+            </span>
+            <span className="bg-[#070B28] text-[#EC4899] px-2 py-0.5 border border-[#1E2C6A]">
+              💃 Dança Geek
+            </span>
+            <span className="bg-[#070B28] text-[#FFE600] px-2 py-0.5 border border-[#1E2C6A]">
+              🎭 3 Categorias Cosplay
+            </span>
+            <span className="bg-[#070B28] text-[#FF7A00] px-2 py-0.5 border border-[#1E2C6A]">
+              🏆 Boss Final às 18h30
+            </span>
+          </div>
 
           <div className="w-full max-w-xs mx-auto">
             <GamerButton
@@ -61,7 +77,7 @@ export default function StoryTimeline({ onOpenTimeline }: StoryTimelineProps) {
               }}
               icon={<Clock className="w-4 h-4" />}
             >
-              VER CRONOGRAMA (EM BREVE)
+              VER CRONOGRAMA
             </GamerButton>
           </div>
         </div>

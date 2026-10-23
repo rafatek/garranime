@@ -196,7 +196,7 @@ export default function Header({ onOpenTickets, onOpenOptions, onOpenHub }: Head
             onClick={() => handleNavClick("atracoes")}
             className="text-left py-2 px-3 bg-[#0F173D] border-l-4 border-purple-500 text-white"
           >
-            Salas & Atrações
+            Salas Confirmadas & Atrações
           </button>
           <button
             onClick={() => handleNavClick("lojas")}

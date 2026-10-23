@@ -75,14 +75,26 @@ export default function CreditsRoll() {
           </a>
 
           <a
-            href={`https://wa.me/${EVENT_DATA.whatsappContact}`}
+            href={`https://wa.me/${EVENT_DATA.whatsappContact}?text=Olá,%20equipe%20Garranime!`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 bg-[#0F173D] hover:bg-green-700 text-white border border-[#1E2C6A] transition-colors"
           >
             <MessageCircle className="w-4 h-4 text-green-400" />
-            <span>WhatsApp Oficial</span>
+            <span>WhatsApp: {EVENT_DATA.whatsappDisplay}</span>
           </a>
+
+          {EVENT_DATA.whatsappContact2 && (
+            <a
+              href={`https://wa.me/${EVENT_DATA.whatsappContact2}?text=Olá,%20equipe%20Garranime!`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-[#0F173D] hover:bg-green-700 text-white border border-[#1E2C6A] transition-colors"
+            >
+              <MessageCircle className="w-4 h-4 text-green-400" />
+              <span>WhatsApp: {EVENT_DATA.whatsappDisplay2}</span>
+            </a>
+          )}
         </div>
 
         <p className="text-gray-500 text-[11px] pt-4 border-t border-[#1E2C6A]">
