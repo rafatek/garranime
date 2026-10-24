@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getVoteCounts, registerVote, getVotersList, isVotingClosed } from "@/lib/voteStorage";
+import { getVoteCounts, registerVote, getVotersList, isVotingClosed, isRedisAvailable } from "@/lib/voteStorage";
 
 export async function GET(req: NextRequest) {
   try {
@@ -8,17 +8,34 @@ export async function GET(req: NextRequest) {
 
     if (wantsList === "1" || wantsList === "true") {
       const voters = await getVotersList();
-      return NextResponse.json({ success: true, count: voters.length, voters });
+      return NextResponse.json(
+        { success: true, count: voters.length, voters },
+        {
+          headers: {
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+            Pragma: "no-cache",
+          },
+        }
+      );
     }
 
     const votes = await getVoteCounts();
-    return NextResponse.json({
-      success: true,
-      votes,
-      isClosed: isVotingClosed(),
-      deadline: "2026-11-18T23:59:59-03:00",
-      deadlineFormatted: "18 de Novembro às 23h59",
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        votes,
+        isClosed: isVotingClosed(),
+        deadline: "2026-11-18T23:59:59-03:00",
+        deadlineFormatted: "18 de Novembro às 23h59",
+        storage: isRedisAvailable() ? "redis" : "local",
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          Pragma: "no-cache",
+        },
+      }
+    );
   } catch (err) {
     console.error("Erro na rota GET /api/vote:", err);
     return NextResponse.json(

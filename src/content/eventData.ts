@@ -280,17 +280,47 @@ export const COSPLAY_DATA = {
   categories: [
     {
       id: "kids",
-      name: "Cosplay Kids",
-      badge: "INFANTIL (0 A 13 ANOS)",
+      name: "CosKids (Cosplay Infantil)",
+      badge: "INFANTIL • 100% GRATUITO",
       color: "#00D2FF",
-      desc: "Para as crianças e mini-heróis brilharem no palco com a família! Inscrição feita pelos pais ou responsáveis legais.",
-      requirements: "Trilha musical opcional do anime/desenho preferido para o desfile no palco.",
-      reward: "Medalhas Comemorativas + Brindes Geek Infantis",
+      desc: "Incentiva a criatividade, diversão e expressão artística das crianças através de personagens geek, animes, desenhos, filmes e cultura pop! Inscrição feita ou autorizada pelos pais ou responsáveis legais.",
+      requirements: "Desfile no palco com tempo máximo de 1:30 min. Trilha musical opcional do anime/desenho preferido enviada no credenciamento ou WhatsApp.",
+      reward: "1º Lugar: Troféu + Brinde Oficial (Palco)",
       editalSections: [
-        { num: "01", title: "Faixa Etária & Inscrição", text: "Para crianças de 0 a 13 anos. Inscrição 100% gratuita realizada pelos pais ou responsáveis legais com a pulseira do evento." },
-        { num: "02", title: "Desfile no Palco", text: "Desfile temático individual ou acompanhado pelos pais, com poses, apresentação do personagem e interação com o público." },
-        { num: "03", title: "Trilha Musical", text: "Envio opcional de trilha sonora do desenho/anime preferido via WhatsApp oficial ou pendrive no credenciamento." },
-        { num: "04", title: "Premiação Oficial", text: "Medalhas oficiais de honra Garranime Kids + kits de brindes das lojas parceiras." },
+        {
+          num: "01",
+          title: "Inscrições",
+          text: "As inscrições serão realizadas dentro do prazo divulgado pela organização. A inscrição deverá ser realizada ou autorizada pelo responsável legal da criança. No ato da inscrição, deverão ser informados o nome do participante, sua idade, o personagem escolhido e os dados de contato do responsável.",
+        },
+        {
+          num: "02",
+          title: "Regras de Participação",
+          text: "Poderão participar crianças dentro da faixa etária estabelecida neste edital. Serão permitidos figurinos, fantasias, acessórios e caracterizações inspirados em personagens da cultura geek e pop. A apresentação poderá incluir desfile, poses, interpretação ou pequenas performances, respeitando o tempo máximo de 1:30 minutos por participante. A participação deverá ocorrer em ambiente respeitoso, acolhedor e adequado ao público infantil. O responsável legal deverá acompanhar a criança ao local da competição no horário estabelecido. O nome de cada participante será mencionado antes da disputa; tolerância máxima de 10 minutos antes de eliminação.",
+        },
+        {
+          num: "03",
+          title: "Das Regras de Segurança",
+          text: "Não serão tolerados constrangimentos, discriminação, intimidação ou atitudes que prejudiquem o bem-estar dos participantes. Acessórios cenográficos deverão ser seguros, leves e adequados à idade. Não serão permitidos efeitos com fogo, fumaça, substâncias perigosas, objetos arremessados ou quaisquer itens que ofereçam risco à criança ou ao público. A organização poderá impedir o uso de qualquer acessório considerado inadequado ou inseguro.",
+        },
+        {
+          num: "04",
+          title: "Avaliação da Banca",
+          text: "A avaliação será realizada por uma banca julgadora escolhida pela organização. A avaliação deverá respeitar a idade dos participantes, valorizando a diversão, o esforço e a criatividade, sem exigir padrões profissionais de confecção ou apresentação.",
+        },
+        {
+          num: "05",
+          title: "PREMIAÇÃO E DISPOSIÇÕES FINAIS",
+          text: "Diretrizes oficiais de premiação e disposições da Competição CosKids:",
+          bullets: [
+            "A premiação será: troféu + brinde",
+            "A entrega ocorrerá no palco do evento.",
+            "Os participantes e responsáveis deverão respeitar as regras deste edital e as orientações da organização.",
+            "A inscrição no campeonato implica ciência e aceitação das regras aplicáveis.",
+            "Mais dúvidas, entre em contato com a organização do evento.",
+            "Situações não previstas serão analisadas pela coordenação, priorizando a segurança, o respeito e o bem-estar infantil.",
+            "A organização comunicará previamente eventuais alterações relevantes.",
+          ],
+        },
       ],
     },
     {

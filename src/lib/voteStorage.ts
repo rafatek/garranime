@@ -47,9 +47,12 @@ const BASELINE_VOTES = {
 } as const;
 
 // Caminho do arquivo JSON de banco de dados nativo
-const DB_FILE_PATH = path.join(process.cwd(), "data", "votes.json");
+// Na Vercel (serverless), o filesystem do projeto é read-only (/var/task). Usamos /tmp que é gravável.
+const DB_FILE_PATH = process.env.VERCEL
+  ? path.join("/tmp", "votes.json")
+  : path.join(process.cwd(), "data", "votes.json");
 
-// Cache em memória para casos de filesystem somente-leitura
+// Cache em memória para casos de filesystem somente-leitura ou reinício rápido
 let memoryCache: DatabaseSchema = {
   votes: {
     naruto: BASELINE_VOTES.naruto,
@@ -60,20 +63,49 @@ let memoryCache: DatabaseSchema = {
 };
 
 /**
+ * Inicializa o arquivo local em /tmp na Vercel a partir do template em data/votes.json
+ */
+function initLocalDatabaseFile(): void {
+  try {
+    if (process.env.VERCEL) {
+      const sourceTemplate = path.join(process.cwd(), "data", "votes.json");
+      if (!fs.existsSync(DB_FILE_PATH) && fs.existsSync(sourceTemplate)) {
+        fs.copyFileSync(sourceTemplate, DB_FILE_PATH);
+      }
+    }
+  } catch (err) {
+    console.warn("Aviso ao inicializar DB_FILE_PATH:", err);
+  }
+}
+
+/**
  * Lê o banco de dados local nativo (JSON)
  */
 function loadLocalDatabase(): DatabaseSchema {
   try {
+    initLocalDatabaseFile();
     if (fs.existsSync(DB_FILE_PATH)) {
       const raw = fs.readFileSync(DB_FILE_PATH, "utf-8");
       const parsed = JSON.parse(raw);
       if (parsed && parsed.votes && Array.isArray(parsed.voters)) {
-        memoryCache = parsed;
-        return parsed;
+        // Se a memória já possui mais votos que o disco (caso a escrita tenha falhado), mantém a memória
+        const diskTotal =
+          Number(parsed.votes.naruto || 0) +
+          Number(parsed.votes.luffy || 0) +
+          Number(parsed.votes.goku || 0);
+        const memTotal =
+          Number(memoryCache.votes.naruto || 0) +
+          Number(memoryCache.votes.luffy || 0) +
+          Number(memoryCache.votes.goku || 0);
+
+        if (diskTotal >= memTotal) {
+          memoryCache = parsed;
+          return parsed;
+        }
       }
     }
   } catch (err) {
-    console.warn("Aviso ao ler data/votes.json, usando cache em memória:", err);
+    console.warn("Aviso ao ler banco local, usando cache em memória:", err);
   }
   return memoryCache;
 }
@@ -90,8 +122,18 @@ function saveLocalDatabase(data: DatabaseSchema): void {
     }
     fs.writeFileSync(DB_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
   } catch (err) {
-    console.warn("Aviso ao gravar em data/votes.json (ambiente sem escrita em disco):", err);
+    console.warn("Aviso ao gravar no banco local:", err);
   }
+}
+
+/**
+ * Verifica se o Redis na nuvem (Vercel KV ou Upstash) está configurado
+ */
+export function isRedisAvailable(): boolean {
+  return !!(
+    (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) &&
+    (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)
+  );
 }
 
 /**

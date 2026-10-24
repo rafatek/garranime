@@ -90,7 +90,10 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
 
     const fetchVotes = async () => {
       try {
-        const res = await fetch("/api/vote");
+        const res = await fetch(`/api/vote?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
+        });
         const data = await res.json();
         if (data.success && data.votes) {
           setVotes(data.votes);

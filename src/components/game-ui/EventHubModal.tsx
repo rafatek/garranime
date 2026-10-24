@@ -634,10 +634,10 @@ export default function EventHubModal({
                   <GamerButton
                     fullWidth
                     size="md"
-                    ghost="pink"
+                    ghost="blue"
                     onClick={() => navigateTo("cosplay_kids")}
                   >
-                    COSPLAY KIDS (0 A 13 ANOS)
+                    COSKIDS (COSPLAY INFANTIL)
                   </GamerButton>
                 </div>
 
@@ -667,58 +667,79 @@ export default function EventHubModal({
           )}
 
           {/* ========================================================== */}
-          {/* VIEW: EDITAL COSPLAY KIDS                                  */}
+          {/* VIEW: EDITAL COSKIDS (COSPLAY INFANTIL)                    */}
           {/* ========================================================== */}
           {view === "cosplay_kids" && (
             <div className="space-y-4 animate-fadeIn">
               <div className="text-center pb-2 border-b border-[#1E2C6A]">
                 <span className="text-[10px] font-mono font-black uppercase text-[#00D2FF] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#00D2FF]/40">
-                  CATEGORIA INFANTIL • INSCRIÇÃO GRATUITA
+                  EDITAL OFICIAL • INSCRIÇÃO GRATUITA
                 </span>
                 <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
-                  COSPLAY KIDS
+                  COMPETIÇÃO COSKIDS (COSPLAY INFANTIL)
                 </h3>
                 <p className="text-xs text-gray-300">
-                  Para crianças até 13 anos brilharem no palco com a família!
+                  Criatividade, diversão e expressão artística para as crianças no palco do Garranime!
                 </p>
               </div>
 
-              <div className="space-y-2.5 text-xs font-mono text-gray-300">
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#00D2FF]">
-                  <strong className="text-white block uppercase">Faixa Etária & Acesso:</strong>
-                  Crianças de 0 a 13 anos. Inscrição gratuita para quem possui a pulseira oficial de entrada. Feita pelos pais ou responsáveis legais.
+              {/* Destaque de Premiação */}
+              <div className="bg-[#0A1138] p-3 border-2 border-[#00D2FF] text-center">
+                <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
+                  PREMIAÇÃO OFICIAL COSKIDS:
+                </span>
+                <div className="mt-1 text-center font-mono">
+                  <div className="p-2 bg-[#070B28] border border-[#00D2FF]/40 inline-block px-6">
+                    <span className="text-[9px] text-[#00D2FF] block uppercase font-bold">1º Lugar</span>
+                    <strong className="text-sm text-[#FFE600] uppercase">Troféu + Brinde Oficial</strong>
+                    <span className="text-[10px] text-gray-400 block mt-0.5">Entrega no palco principal do evento</span>
+                  </div>
                 </div>
+              </div>
 
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FFE600]">
-                  <strong className="text-white block uppercase">Formato da Apresentação:</strong>
-                  Desfile no palco principal com apresentação do personagem, poses heróicas e muita torcida da plateia!
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
-                  <strong className="text-white block uppercase">Trilha de Áudio & Dados:</strong>
-                  O responsável informará os dados da criança, personagem e pode enviar a trilha musical do anime/desenho preferido no WhatsApp ou pendrive.
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-green-400">
-                  <strong className="text-white block uppercase">Premiação:</strong>
-                  Medalhas comemorativas para os pequenos heróis e brindes geek infantis!
-                </div>
+              {/* Grid dos Pontos Oficiais do Edital */}
+              <div className="space-y-2.5 max-h-[44vh] overflow-y-auto pr-1">
+                {(COSPLAY_DATA.categories.find((c) => c.id === "kids")?.editalSections || []).map((sec, idx) => (
+                  <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#00D2FF] p-2.5 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-[#00D2FF] text-[#070B28] font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
+                        {sec.num}
+                      </span>
+                      <strong className="text-white text-xs font-sans uppercase">
+                        {sec.title}
+                      </strong>
+                    </div>
+                    <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
+                      {sec.text}
+                    </p>
+                    {sec.bullets && sec.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {sec.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
                 <GamerButton
                   fullWidth
                   size="md"
-                  ghost="pink"
+                  ghost="blue"
                   showPacman
                   onClick={() =>
                     openWhatsApp(
-                      `Olá, equipe Garranime! Quero inscrever meu filho(a) no Concurso de Cosplay Kids (Inscrição Gratuita):\n\nNome da Criança:\nIdade:\nPersonagem / Anime:\nNome do Responsável:\nConfirmo que possuímos a pulseira de entrada do evento!`
+                      `Olá, equipe Garranime! Quero inscrever meu filho(a) na Competição CosKids (Cosplay Infantil - Inscrição Gratuita):\n\nNome da Criança:\nIdade:\nPersonagem / Desenho / Anime:\nNome do Responsável Legal:\nTelefone do Responsável:\nTempo de Apresentação (até 1:30 min): Sim\n\nConfirmo que possuímos a pulseira de entrada do evento e aceitamos todas as regras do edital!`
                     )
                   }
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}
                 >
-                  INSCREVER COSPLAY KIDS NO WHATSAPP
+                  INSCREVER COSKIDS NO WHATSAPP
                 </GamerButton>
               </div>
             </div>

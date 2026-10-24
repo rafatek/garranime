@@ -191,7 +191,7 @@ export default function VersusSection({
                       }}
                       icon={<Sparkles className="w-4 h-4" />}
                     >
-                      {cat.id === "kids" ? "VER REGRAS KIDS" : cat.id === "cospobre" ? "VER EDITAL COSPOBRE" : "VER EDITAL COSPLAY ADULTO"}
+                      {cat.id === "kids" ? "VER EDITAL COSKIDS" : cat.id === "cospobre" ? "VER EDITAL COSPOBRE" : "VER EDITAL COSPLAY ADULTO"}
                     </GamerButton>
                   </div>
                 </div>
