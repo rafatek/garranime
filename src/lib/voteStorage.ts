@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { Redis } from "@upstash/redis";
+import IoRedis from "ioredis";
+import { Redis as UpstashRedis } from "@upstash/redis";
 
 export interface VoteCounts {
   naruto: number;
@@ -46,6 +47,47 @@ const BASELINE_VOTES = {
   goku: 0,
 } as const;
 
+// URL oficial do Redis Cloud (TCP)
+const REDIS_TCP_URL =
+  process.env.garranime_REDIS_URL ||
+  process.env.REDIS_URL ||
+  process.env.KV_URL ||
+  "redis://default:HjGjmbrkDano62SSgMEEca0J9hCnvG03@seafoam-ordinary-emblematic-81377.db.redis.io:15557";
+
+let ioRedisInstance: IoRedis | null = null;
+
+/**
+ * Cliente Redis TCP (Redis Cloud oficial via ioredis)
+ */
+function getIoRedisClient(): IoRedis | null {
+  if (ioRedisInstance) return ioRedisInstance;
+
+  if (
+    REDIS_TCP_URL &&
+    (REDIS_TCP_URL.startsWith("redis://") || REDIS_TCP_URL.startsWith("rediss://"))
+  ) {
+    try {
+      ioRedisInstance = new IoRedis(REDIS_TCP_URL, {
+        maxRetriesPerRequest: 2,
+        connectTimeout: 5000,
+        lazyConnect: false,
+        enableOfflineQueue: true,
+      });
+
+      ioRedisInstance.on("error", (err) => {
+        console.warn("Aviso na conexão TCP do Redis Cloud:", err.message);
+      });
+
+      return ioRedisInstance;
+    } catch (e) {
+      console.warn("Erro ao instanciar IoRedis:", e);
+      return null;
+    }
+  }
+
+  return null;
+}
+
 // Caminho do arquivo JSON de banco de dados nativo
 // Na Vercel (serverless), o filesystem do projeto é read-only (/var/task). Usamos /tmp que é gravável.
 const DB_FILE_PATH = process.env.VERCEL
@@ -88,7 +130,6 @@ function loadLocalDatabase(): DatabaseSchema {
       const raw = fs.readFileSync(DB_FILE_PATH, "utf-8");
       const parsed = JSON.parse(raw);
       if (parsed && parsed.votes && Array.isArray(parsed.voters)) {
-        // Se a memória já possui mais votos que o disco (caso a escrita tenha falhado), mantém a memória
         const diskTotal =
           Number(parsed.votes.naruto || 0) +
           Number(parsed.votes.luffy || 0) +
@@ -127,42 +168,37 @@ function saveLocalDatabase(data: DatabaseSchema): void {
 }
 
 /**
- * Verifica se o Redis na nuvem (Vercel KV ou Upstash) está configurado
+ * Verifica se o Redis na nuvem (Redis Cloud TCP ou Upstash REST) está configurado
  */
 export function isRedisAvailable(): boolean {
   return !!(
-    (process.env.KV_REST_API_URL ||
+    REDIS_TCP_URL ||
+    ((process.env.KV_REST_API_URL ||
       process.env.UPSTASH_REDIS_REST_URL ||
       process.env.REDIS_URL) &&
-    (process.env.KV_REST_API_TOKEN ||
-      process.env.UPSTASH_REDIS_REST_TOKEN ||
-      process.env.REDIS_TOKEN)
+      (process.env.KV_REST_API_TOKEN ||
+        process.env.UPSTASH_REDIS_REST_TOKEN ||
+        process.env.REDIS_TOKEN))
   );
 }
 
 /**
- * Tenta inicializar o cliente Redis caso as variáveis da Vercel ou Upstash estejam presentes.
+ * Tenta inicializar o cliente Upstash Redis (REST) caso configurado
  */
-function getRedisClient(): Redis | null {
-  const url =
-    process.env.KV_REST_API_URL ||
-    process.env.UPSTASH_REDIS_REST_URL ||
-    process.env.REDIS_URL;
-  const token =
-    process.env.KV_REST_API_TOKEN ||
-    process.env.UPSTASH_REDIS_REST_TOKEN ||
-    process.env.REDIS_TOKEN;
+function getUpstashClient(): UpstashRedis | null {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
-  if (url && token) {
+  if (url && token && (url.startsWith("http://") || url.startsWith("https://"))) {
     try {
-      return new Redis({ url, token });
+      return new UpstashRedis({ url, token });
     } catch (err) {
-      console.warn("Falha ao inicializar Redis com credenciais explícitas:", err);
+      console.warn("Falha ao inicializar Upstash Redis:", err);
     }
   }
 
   try {
-    return Redis.fromEnv();
+    return UpstashRedis.fromEnv();
   } catch {
     return null;
   }
@@ -185,22 +221,37 @@ export function sanitizeInstagramHandle(raw: string): string {
  * Obtém a contagem atual dos votos de cada guerreiro
  */
 export async function getVoteCounts(): Promise<VoteCounts> {
-  const redis = getRedisClient();
-
-  if (redis) {
+  // 1. Tenta buscar no Redis Cloud (TCP - ioredis)
+  const ioRedis = getIoRedisClient();
+  if (ioRedis) {
     try {
-      const data = await redis.hgetall<Record<string, number | string>>("garranime:hero_votes");
+      const data = await ioRedis.hgetall("garranime:hero_votes");
       const naruto = Number(data?.naruto ?? BASELINE_VOTES.naruto);
       const luffy = Number(data?.luffy ?? BASELINE_VOTES.luffy);
       const goku = Number(data?.goku ?? BASELINE_VOTES.goku);
       const total = naruto + luffy + goku;
       return { naruto, luffy, goku, total };
     } catch (e) {
-      console.warn("Erro ao buscar votos no Redis, usando fallback local:", e);
+      console.warn("Erro ao buscar votos no IoRedis, tentando Upstash ou fallback:", e);
     }
   }
 
-  // Fallback nativo: lê do banco local JSON
+  // 2. Tenta buscar no Upstash Redis (REST)
+  const upstash = getUpstashClient();
+  if (upstash) {
+    try {
+      const data = await upstash.hgetall<Record<string, number | string>>("garranime:hero_votes");
+      const naruto = Number(data?.naruto ?? BASELINE_VOTES.naruto);
+      const luffy = Number(data?.luffy ?? BASELINE_VOTES.luffy);
+      const goku = Number(data?.goku ?? BASELINE_VOTES.goku);
+      const total = naruto + luffy + goku;
+      return { naruto, luffy, goku, total };
+    } catch (e) {
+      console.warn("Erro ao buscar votos no Upstash, usando fallback local:", e);
+    }
+  }
+
+  // 3. Fallback nativo: lê do banco local JSON
   const db = loadLocalDatabase();
   const naruto = Number(db.votes.naruto ?? BASELINE_VOTES.naruto);
   const luffy = Number(db.votes.luffy ?? BASELINE_VOTES.luffy);
@@ -239,13 +290,12 @@ export async function registerVote(heroId: string, rawInstagram: string): Promis
     };
   }
 
-  const redis = getRedisClient();
-
-  if (redis) {
+  // 1. Tenta gravar no Redis Cloud oficial (TCP)
+  const ioRedis = getIoRedisClient();
+  if (ioRedis) {
     try {
-      // Verifica se o usuário já votou
-      const alreadyVoted = await redis.sismember("garranime:voters", cleanHandle);
-      if (alreadyVoted) {
+      const alreadyVoted = await ioRedis.sismember("garranime:voters", cleanHandle);
+      if (alreadyVoted === 1) {
         const votes = await getVoteCounts();
         return {
           success: false,
@@ -256,13 +306,13 @@ export async function registerVote(heroId: string, rawInstagram: string): Promis
       }
 
       // Registra o votante no conjunto de unicidade
-      await redis.sadd("garranime:voters", cleanHandle);
+      await ioRedis.sadd("garranime:voters", cleanHandle);
 
       // Incrementa o voto do personagem
-      await redis.hincrby("garranime:hero_votes", heroId, 1);
+      await ioRedis.hincrby("garranime:hero_votes", heroId, 1);
 
-      // Salva qual foi o herói votado pelo usuário para consulta
-      await redis.hset("garranime:voter_choice", { [cleanHandle]: heroId });
+      // Salva qual foi o herói votado pelo usuário para consulta e sorteio
+      await ioRedis.hset("garranime:voter_choice", cleanHandle, heroId);
 
       const updatedVotes = await getVoteCounts();
       return {
@@ -272,11 +322,42 @@ export async function registerVote(heroId: string, rawInstagram: string): Promis
         userVotedHero: heroId,
       };
     } catch (err) {
-      console.error("Erro ao gravar no Redis, tentando banco local:", err);
+      console.error("Erro ao gravar no IoRedis, tentando Upstash ou fallback:", err);
     }
   }
 
-  // Fallback nativo: banco local JSON
+  // 2. Tenta gravar no Upstash (REST) caso disponível
+  const upstash = getUpstashClient();
+  if (upstash) {
+    try {
+      const alreadyVoted = await upstash.sismember("garranime:voters", cleanHandle);
+      if (alreadyVoted) {
+        const votes = await getVoteCounts();
+        return {
+          success: false,
+          error: "ALREADY_VOTED",
+          message: `O perfil @${cleanHandle} já registrou um voto nesta disputa! Cada perfil tem direito a 1 voto.`,
+          votes,
+        };
+      }
+
+      await upstash.sadd("garranime:voters", cleanHandle);
+      await upstash.hincrby("garranime:hero_votes", heroId, 1);
+      await upstash.hset("garranime:voter_choice", { [cleanHandle]: heroId });
+
+      const updatedVotes = await getVoteCounts();
+      return {
+        success: true,
+        message: `Voto confirmado no guerreiro com sucesso! Seu @${cleanHandle} está concorrendo ao brinde especial!`,
+        votes: updatedVotes,
+        userVotedHero: heroId,
+      };
+    } catch (err) {
+      console.error("Erro ao gravar no Upstash, tentando banco local:", err);
+    }
+  }
+
+  // 3. Fallback nativo: banco local JSON
   const db = loadLocalDatabase();
   const alreadyVoted = db.voters.some((v) => v.handle === cleanHandle);
 
@@ -324,10 +405,10 @@ export async function registerVote(heroId: string, rawInstagram: string): Promis
  * Retorna a lista de todos os votantes (para sorteio da organização)
  */
 export async function getVotersList(): Promise<VoterRecord[]> {
-  const redis = getRedisClient();
-  if (redis) {
+  const ioRedis = getIoRedisClient();
+  if (ioRedis) {
     try {
-      const choices = await redis.hgetall<Record<string, string>>("garranime:voter_choice");
+      const choices = await ioRedis.hgetall("garranime:voter_choice");
       if (choices) {
         return Object.entries(choices).map(([handle, heroId]) => ({
           handle,
@@ -336,7 +417,23 @@ export async function getVotersList(): Promise<VoterRecord[]> {
         }));
       }
     } catch (e) {
-      console.warn("Erro ao buscar votantes no Redis:", e);
+      console.warn("Erro ao buscar votantes no IoRedis:", e);
+    }
+  }
+
+  const upstash = getUpstashClient();
+  if (upstash) {
+    try {
+      const choices = await upstash.hgetall<Record<string, string>>("garranime:voter_choice");
+      if (choices) {
+        return Object.entries(choices).map(([handle, heroId]) => ({
+          handle,
+          heroId: String(heroId),
+          timestamp: new Date().toISOString(),
+        }));
+      }
+    } catch (e) {
+      console.warn("Erro ao buscar votantes no Upstash:", e);
     }
   }
 
