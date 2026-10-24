@@ -135,7 +135,7 @@ export default function CharacterVoteModal({
         <div className="absolute inset-0 manga-dots opacity-10 pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="relative z-10 flex items-center justify-between pb-3 border-b-2 border-[#FF7A00]/50 mb-4">
+        <div className="relative z-10 flex items-center justify-between pb-3 border-b-2 border-[#FF7A00]/50 mb-3">
           <div className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-[#FFE600]" />
             <h3 className="text-lg sm:text-xl font-black uppercase text-white font-sans tracking-wide">
@@ -152,6 +152,16 @@ export default function CharacterVoteModal({
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Aviso Destacado de Prazo da Votação */}
+        <div className="relative z-10 mb-3 px-3 py-2 bg-red-950/60 border border-red-500/80 flex items-center justify-between gap-2 text-xs font-mono text-red-200">
+          <span className="flex items-center gap-1.5 font-bold">
+            ⏰ <strong>PRAZO:</strong> Votação encerra dia 18 de Novembro!
+          </span>
+          <span className="text-[10px] text-gray-300 hidden sm:inline">
+            Resultado no palco (22/Nov)
+          </span>
         </div>
 
         {/* ========================================================== */}
@@ -236,11 +246,16 @@ export default function CharacterVoteModal({
             <div className="p-3 bg-[#0F173D] border border-[#FF7A00]/40 flex items-start gap-2.5 text-xs text-gray-200">
               <Coffee className="w-5 h-5 text-[#FF7A00] shrink-0 mt-0.5" />
               <div className="space-y-0.5 leading-relaxed">
-                <strong className="text-[#FFE600] uppercase font-mono block">
-                  VALENDO CANECA TEMÁTICA & BRINDES:
-                </strong>
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <strong className="text-[#FFE600] uppercase font-mono block">
+                    VALENDO CANECA TEMÁTICA & BRINDES:
+                  </strong>
+                  <span className="text-[10px] font-mono bg-red-600/90 text-white font-black px-1.5 py-0.5 uppercase">
+                    ⏰ VOTAÇÃO ATÉ 18/NOV
+                  </span>
+                </div>
                 <span>
-                  O guerreiro mais votado virará uma <strong>caneca personalizada oficial</strong> + brindes secretos entregues no dia do evento (22/Nov)!
+                  O guerreiro mais votado virará uma <strong>caneca personalizada oficial</strong> + brindes secretos entregues no dia do evento (22/Nov)! Votações válidas somente até dia <strong>18 de Novembro</strong>.
                 </span>
               </div>
             </div>
@@ -286,7 +301,7 @@ export default function CharacterVoteModal({
                   />
                 </div>
                 <span className="text-[10px] text-gray-400 block">
-                  *Apenas 1 voto por perfil. Seu @ será checado no sorteio/entrega do brinde.
+                  *Apenas 1 voto por perfil. Votação válida até dia 18 de Novembro. Seu @ será checado no sorteio/entrega do brinde.
                 </span>
               </div>
 
@@ -300,7 +315,7 @@ export default function CharacterVoteModal({
                   className="mt-0.5 accent-[#FF7A00]"
                 />
                 <label htmlFor="ruleAccept" className="text-[11px] text-gray-300 cursor-pointer select-none leading-tight">
-                  Confirmo que sigo o perfil oficial <strong>@garranime</strong> para validar meu voto e concorrer à caneca e brindes no dia do evento.
+                  Confirmo que sigo o perfil oficial <strong>@garranime</strong> para validar meu voto até dia <strong>18/Nov</strong> e concorrer à caneca e brindes no dia do evento.
                 </label>
               </div>
 

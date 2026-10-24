@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getVoteCounts, registerVote, getVotersList } from "@/lib/voteStorage";
+import { getVoteCounts, registerVote, getVotersList, isVotingClosed } from "@/lib/voteStorage";
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,7 +12,13 @@ export async function GET(req: NextRequest) {
     }
 
     const votes = await getVoteCounts();
-    return NextResponse.json({ success: true, votes });
+    return NextResponse.json({
+      success: true,
+      votes,
+      isClosed: isVotingClosed(),
+      deadline: "2026-11-18T23:59:59-03:00",
+      deadlineFormatted: "18 de Novembro às 23h59",
+    });
   } catch (err) {
     console.error("Erro na rota GET /api/vote:", err);
     return NextResponse.json(

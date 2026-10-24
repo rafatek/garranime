@@ -32,6 +32,13 @@ export interface VoteResult {
   userVotedHero?: string;
 }
 
+// Prazo final para encerramento das votações dos personagens: 18 de Novembro de 2026 às 23:59:59 (Horário de Brasília, UTC-3)
+export const VOTING_DEADLINE = new Date("2026-11-18T23:59:59-03:00");
+
+export function isVotingClosed(): boolean {
+  return new Date() > VOTING_DEADLINE;
+}
+
 // Valores iniciais zerados para contagem real da comunidade
 const BASELINE_VOTES = {
   naruto: 0,
@@ -151,6 +158,17 @@ export async function getVoteCounts(): Promise<VoteCounts> {
  * Registra um novo voto com trava de unicidade pelo @ do Instagram
  */
 export async function registerVote(heroId: string, rawInstagram: string): Promise<VoteResult> {
+  // Trava de prazo: votação encerra dia 18 de Novembro de 2026
+  if (isVotingClosed()) {
+    const votes = await getVoteCounts();
+    return {
+      success: false,
+      error: "VOTING_CLOSED",
+      message: "A votação dos personagens foi encerrada no dia 18 de Novembro! O resultado oficial será anunciado no palco do evento (22/Nov).",
+      votes,
+    };
+  }
+
   const validHeroes = ["naruto", "luffy", "goku"];
   if (!validHeroes.includes(heroId)) {
     return { success: false, error: "INVALID_HERO", message: "Guerreiro inválido selecionado." };

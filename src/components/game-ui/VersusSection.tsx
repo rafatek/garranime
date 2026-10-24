@@ -8,14 +8,18 @@ import GamerButton from "./GamerButton";
 
 interface VersusSectionProps {
   onOpenCosplay: () => void;
+  onOpenCosplayCategory?: (catId: "kids" | "cospobre" | "adulto") => void;
   onOpenTournament: (tournamentId: string) => void;
+  onOpenGameEdital?: (tournamentId: string) => void;
   onOpenDanceEdital?: () => void;
   onOpenSwordEdital?: () => void;
 }
 
 export default function VersusSection({
   onOpenCosplay,
+  onOpenCosplayCategory,
   onOpenTournament,
+  onOpenGameEdital,
   onOpenDanceEdital,
   onOpenSwordEdital,
 }: VersusSectionProps) {
@@ -26,11 +30,11 @@ export default function VersusSection({
     let text = "";
     if (comp.id === "espadas") {
       text = encodeURIComponent(
-        `Olá, equipe Garranime! Gostaria de me inscrever no Torneio de Batalha de Espadas do evento (Taxa Antecipada: R$ 7,00)!\n\nNome Completo:\nNick / Apelido:\nConfirmo que possuo a pulseira de entrada do evento.`
+        `Olá, equipe Garranime! Gostaria de me inscrever no Torneio de Batalha de Espadas do evento (Taxa Antecipada: R$ 7,00)!\n\nNome Completo:\nNick / Apelido:\nConfirmo que possuo a pulseira de entrada do evento e estou ciente do regulamento para disputar o prêmio de Brinde Especial no palco!`
       );
     } else {
       text = encodeURIComponent(
-        `Olá, equipe Garranime! Gostaria de inscrever minha apresentação na Competição de Dança Geek (Valores Antecipados: Solo R$ 7,00 / Dupla R$ 14,00 / Grupos R$ 20,00):\n\nNome do Dançarino / Grupo:\nModalidade (Solo, Dupla ou Grupo de 3 a 5):\nEstilo de Dança:\nQuantidade de Integrantes:`
+        `Olá, equipe Garranime! Gostaria de inscrever minha apresentação na Competição de Dança Geek (Valores Antecipados: Solo R$ 7,00 / Dupla R$ 14,00 / Grupos R$ 20,00):\n\nNome do Dançarino / Grupo:\nModalidade (Solo, Dupla ou Grupo de 3 a 5):\nEstilo de Dança:\nQuantidade de Integrantes:\nEstou ciente do regulamento para disputar o prêmio de 100,00$ + Troféu no palco!`
       );
     }
     window.open(`https://wa.me/${EVENT_DATA.whatsappContact}?text=${text}`, "_blank");
@@ -171,6 +175,25 @@ export default function VersusSection({
                       <strong>Requisito:</strong> {cat.requirements}
                     </span>
                   </div>
+
+                  <div className="w-full mt-3">
+                    <GamerButton
+                      fullWidth
+                      size="sm"
+                      ghost={cat.id === "kids" ? "blue" : cat.id === "cospobre" ? "orange" : "pink"}
+                      onClick={() => {
+                        sound.playSelect();
+                        if (onOpenCosplayCategory) {
+                          onOpenCosplayCategory(cat.id as "kids" | "cospobre" | "adulto");
+                        } else {
+                          onOpenCosplay();
+                        }
+                      }}
+                      icon={<Sparkles className="w-4 h-4" />}
+                    >
+                      {cat.id === "kids" ? "VER REGRAS KIDS" : cat.id === "cospobre" ? "VER EDITAL COSPOBRE" : "VER EDITAL COSPLAY ADULTO"}
+                    </GamerButton>
+                  </div>
                 </div>
               ))}
             </div>
@@ -190,7 +213,7 @@ export default function VersusSection({
                 </div>
                 <div>
                   <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-[#00D2FF]">
-                    AVISO OFICIAL: INSCRIÇÕES DOS TORNEIOS GAMER SÃO PAGAS
+                    AVISO OFICIAL: INSCRIÇÕES DOS TORNEIOS GAMER SÃO PAGAS (1º LUGAR: 100,00$ + TROFÉU)
                   </h4>
                   <p className="text-[11px] sm:text-xs text-gray-300">
                     Valores antecipados para formação do chaveamento: <strong>R$ 7,00 individual</strong> (Naruto e Clash Royale) e <strong>R$ 14,00 por dupla</strong> no Free Fire (equivale a R$ 7,00/pessoa).
@@ -240,7 +263,24 @@ export default function VersusSection({
                     </div>
                   </div>
 
-                  <div className="w-full mt-4">
+                  <div className="w-full mt-4 space-y-2">
+                    <GamerButton
+                      fullWidth
+                      size="sm"
+                      ghost="blue"
+                      onClick={() => {
+                        sound.playSelect();
+                        if (onOpenGameEdital) {
+                          onOpenGameEdital(tourn.id);
+                        } else {
+                          onOpenTournament(tourn.id);
+                        }
+                      }}
+                      icon={<Gamepad2 className="w-4 h-4" />}
+                    >
+                      VER EDITAL DO TORNEIO (REGRAS)
+                    </GamerButton>
+
                     <GamerButton
                       fullWidth
                       size="sm"
@@ -250,7 +290,7 @@ export default function VersusSection({
                         sound.playSelect();
                         onOpenTournament(tourn.id);
                       }}
-                      icon={<Gamepad2 className="w-4 h-4" />}
+                      icon={<MessageCircle className="w-4 h-4" />}
                     >
                       {tourn.isDuo
                         ? "Inscrever Dupla (R$ 14,00)"
@@ -353,7 +393,7 @@ export default function VersusSection({
                         }}
                         icon={<ShieldCheck className="w-4 h-4" />}
                       >
-                        VER REGRAS BÁSICAS DO COMBATE
+                        VER EDITAL DA BATALHA DE ESPADAS (REGRAS)
                       </GamerButton>
                     )}
 

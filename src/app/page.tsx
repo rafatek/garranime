@@ -44,9 +44,13 @@ export default function Home() {
   const [optionsModalOpen, setOptionsModalOpen] = useState(false);
   const [hubModalOpen, setHubModalOpen] = useState(false);
   const [hubInitialView, setHubInitialView] = useState<HubView>("menu");
+  const [hubInitialGameId, setHubInitialGameId] = useState<string>("freefire");
 
-  const handleOpenHub = (view: HubView = "menu") => {
+  const handleOpenHub = (view: HubView = "menu", gameId?: string) => {
     setHubInitialView(view);
+    if (gameId) {
+      setHubInitialGameId(gameId);
+    }
     setHubModalOpen(true);
   };
 
@@ -317,7 +321,13 @@ export default function Home() {
       {/* SECTION: Versus (Cosplay & Torneios Gamers) */}
       <VersusSection
         onOpenCosplay={() => handleOpenHub("cosplay")}
-        onOpenTournament={() => handleOpenHub("jogos")}
+        onOpenCosplayCategory={(catId) => {
+          if (catId === "kids") handleOpenHub("cosplay_kids");
+          else if (catId === "cospobre") handleOpenHub("cosplay_cospobre");
+          else handleOpenHub("cosplay_adulto");
+        }}
+        onOpenTournament={(tournId) => handleOpenHub("jogo_detalhe", tournId)}
+        onOpenGameEdital={(tournId) => handleOpenHub("jogo_detalhe", tournId)}
         onOpenDanceEdital={() => handleOpenHub("danca")}
         onOpenSwordEdital={() => handleOpenHub("espadas")}
       />
@@ -360,6 +370,7 @@ export default function Home() {
         isOpen={hubModalOpen}
         onClose={() => setHubModalOpen(false)}
         initialView={hubInitialView}
+        initialGameId={hubInitialGameId}
         onOpenPixModal={() => setPixModalOpen(true)}
       />
 

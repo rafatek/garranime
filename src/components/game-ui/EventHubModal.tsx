@@ -53,6 +53,7 @@ interface EventHubModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialView?: HubView;
+  initialGameId?: string;
   onOpenPixModal: () => void;
 }
 
@@ -60,11 +61,12 @@ export default function EventHubModal({
   isOpen,
   onClose,
   initialView = "menu",
+  initialGameId = "freefire",
   onOpenPixModal,
 }: EventHubModalProps) {
   const [view, setView] = useState<HubView>(initialView);
   const [history, setHistory] = useState<HubView[]>([]);
-  const [selectedGameId, setSelectedGameId] = useState<string>("freefire");
+  const [selectedGameId, setSelectedGameId] = useState<string>(initialGameId);
   const [timelineFilter, setTimelineFilter] = useState<"todos" | "manha" | "tarde" | "noite">("todos");
 
   // Sincroniza a visualização sempre que o modal for aberto com uma rota específica
@@ -72,8 +74,11 @@ export default function EventHubModal({
     if (isOpen) {
       setView(initialView);
       setHistory([]);
+      if (initialGameId) {
+        setSelectedGameId(initialGameId);
+      }
     }
-  }, [isOpen, initialView]);
+  }, [isOpen, initialView, initialGameId]);
 
   if (!isOpen) return null;
 
@@ -531,7 +536,7 @@ export default function EventHubModal({
                   className="group bg-[#0A1138] border-2 border-[#EC4899] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
                 >
                   <span className="absolute top-2 right-2 text-[9px] bg-[#EC4899] text-white font-mono font-black px-1.5 py-0.5 uppercase">
-                    A PARTIR DE R$ 7,00
+                    1º LUGAR: 100,00$ + TROFÉU
                   </span>
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-[#070B28] border border-[#EC4899] text-[#EC4899]">
@@ -542,7 +547,7 @@ export default function EventHubModal({
                         COMPETIÇÃO DE DANÇA GEEK
                       </h4>
                       <p className="text-xs text-gray-300">
-                        Solo R$ 7 | Dupla R$ 14 | Grupos R$ 20. Confira os 11 pontos do edital oficial!
+                        Solo R$ 7 | Dupla R$ 14 | Grupos R$ 20. 1º Lugar: 100,00$ + Troféu Oficial entregue no palco!
                       </p>
                     </div>
                   </div>
@@ -554,7 +559,7 @@ export default function EventHubModal({
                   className="group bg-[#0A1138] border-2 border-[#00D2FF] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
                 >
                   <span className="absolute top-2 right-2 text-[9px] bg-[#00D2FF] text-black font-mono font-black px-1.5 py-0.5 uppercase">
-                    INSCRIÇÕES PAGAS
+                    1º LUGAR: 100,00$ + TROFÉU
                   </span>
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-[#070B28] border border-[#00D2FF] text-[#00D2FF]">
@@ -565,19 +570,19 @@ export default function EventHubModal({
                         TORNEIOS DE JOGOS (GAMES)
                       </h4>
                       <p className="text-xs text-gray-300">
-                        Naruto (R$ 7) | Clash Royale (R$ 7) | Free Fire (R$ 14 por dupla). Vagas limitadas!
+                        Naruto (R$ 7) | Clash Royale (R$ 7) | Free Fire (R$ 14 por dupla). 1º Lugar: 100,00$ + Troféu!
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* 4. Torneio de Batalha de Espadas (R$ 7,00 / Prêmio R$ 100 + Brinde) */}
+                {/* 4. Torneio de Batalha de Espadas (R$ 7,00 / Prêmio Brinde Especial) */}
                 <div
                   onClick={() => navigateTo("espadas")}
                   className="group bg-[#0A1138] border-2 border-[#FF7A00] p-4 cursor-pointer hover:bg-[#0D184E] transition-all relative overflow-hidden"
                 >
                   <span className="absolute top-2 right-2 text-[9px] bg-[#FF7A00] text-black font-mono font-black px-1.5 py-0.5 uppercase">
-                    PRÊMIO: R$ 100 + BRINDE
+                    PRÊMIO: BRINDE ESPECIAL
                   </span>
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-[#070B28] border border-[#FF7A00] text-[#FF7A00]">
@@ -588,7 +593,7 @@ export default function EventHubModal({
                         BATALHA DE ESPADAS (SOFT COMBAT)
                       </h4>
                       <p className="text-xs text-gray-300">
-                        Duelos 1 vs 1 na Arena. Inscrição Antecipada: R$ 7,00. Veja as regras básicas!
+                        Duelos 1 vs 1 na Arena. Inscrição Antecipada: R$ 7,00. 1º Lugar: Brinde Especial entregue no palco!
                       </p>
                     </div>
                   </div>
@@ -736,34 +741,54 @@ export default function EventHubModal({
                 </p>
               </div>
 
-              <div className="space-y-2.5 text-xs font-mono text-gray-300">
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FFE600]">
-                  <strong className="text-white block uppercase">Regra de Acesso:</strong>
-                  Inscrição totalmente gratuita! O único pré-requisito é possuir a pulseira oficial de entrada do evento.
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
-                  <strong className="text-white block uppercase">Critérios de Avaliação do Júri:</strong>
-                  Fidelidade e acabamento do traje/adereços, interpretação, performance e presença de palco.
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#00D2FF] flex items-start gap-2">
-                  <Music className="w-5 h-5 text-[#00D2FF] shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block uppercase">Envio Obrigatório de Áudio:</strong>
-                    É necessário o envio prévio de trilha musical de <strong>pelo menos 1 minuto</strong> via WhatsApp oficial ou entrega em pendrive no início do evento.
+              {/* Destaque de Premiação em Dinheiro */}
+              <div className="bg-[#0A1138] p-3 border-2 border-green-400 text-center">
+                <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
+                  PREMIAÇÃO OFICIAL EM DINHEIRO:
+                </span>
+                <div className="grid grid-cols-3 gap-2 mt-1 text-center font-mono">
+                  <div className="p-1.5 bg-[#070B28] border border-green-500/40">
+                    <span className="text-[9px] text-gray-400 block uppercase">1º Lugar</span>
+                    <strong className="text-xs text-green-400">400,00$ + Troféu</strong>
+                  </div>
+                  <div className="p-1.5 bg-[#070B28] border border-green-500/40">
+                    <span className="text-[9px] text-gray-400 block uppercase">2º Lugar</span>
+                    <strong className="text-xs text-green-400">200,00$ + Troféu</strong>
+                  </div>
+                  <div className="p-1.5 bg-[#070B28] border border-green-500/40">
+                    <span className="text-[9px] text-gray-400 block uppercase">3º Lugar</span>
+                    <strong className="text-xs text-[#FFE600]">Troféu + Brinde</strong>
                   </div>
                 </div>
+              </div>
 
-                <div className="bg-[#0A1138] p-3 border-l-4 border-green-400">
-                  <strong className="text-white block uppercase">Premiação Oficial:</strong>
-                  Troféu oficial Garranime 2026 + Kits de brindes das Lojas Parceiras!
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-red-500">
-                  <strong className="text-white block uppercase">Regras de Segurança:</strong>
-                  Proibido porte de armas com lâmina de metal cortante, pontas afiadas reais ou materiais inflamáveis/pirotecnia.
-                </div>
+              {/* Grid dos Pontos Oficiais do Edital */}
+              <div className="space-y-2.5 max-h-[44vh] overflow-y-auto pr-1">
+                {(COSPLAY_DATA.categories.find((c) => c.id === "adulto")?.editalSections || []).map((sec, idx) => (
+                  <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#FF7A00] p-2.5 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-[#FF7A00] text-[#070B28] font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
+                        {sec.num}
+                      </span>
+                      <strong className="text-white text-xs font-sans uppercase">
+                        {sec.title}
+                      </strong>
+                    </div>
+                    <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
+                      {sec.text}
+                    </p>
+                    {sec.bullets && sec.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {sec.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
@@ -802,26 +827,43 @@ export default function EventHubModal({
                 </p>
               </div>
 
-              <div className="space-y-2.5 text-xs font-mono text-gray-300">
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FFE600]">
-                  <strong className="text-white block uppercase">O Conceito:</strong>
-                  Criado para quem quer se divertir sem gastar muito! Vale usar papelão, caixas, fita crepe, baldes, vassouras, toalhas, garrafas PET e utensílios do dia a dia.
-                </div>
+              {/* Destaque de Premiação Cospobre */}
+              <div className="bg-[#0A1138] p-3 border-2 border-[#FFE600] text-center">
+                <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
+                  PREMIAÇÃO OFICIAL:
+                </span>
+                <span className="text-sm sm:text-base font-black text-[#FFE600] font-mono block mt-0.5">
+                  1º LUGAR: TROFÉU ESPECIAL + BRINDE GEEK
+                </span>
+              </div>
 
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#FF7A00]">
-                  <strong className="text-white block uppercase">Regra de Acesso:</strong>
-                  Inscrição 100% gratuita para quem possui a pulseira oficial de entrada do evento.
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#00D2FF]">
-                  <strong className="text-white block uppercase">Critérios de Avaliação do Júri:</strong>
-                  Criatividade na gambiarra, semelhança cômica com o personagem original, carisma no palco e resposta da torcida!
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-green-400">
-                  <strong className="text-white block uppercase">Premiação & Troféu:</strong>
-                  Troféu especial de Mestre da Gambiarra / Campeão Cospobre Garranime 2026 + brindes geek divertidos!
-                </div>
+              {/* Grid dos Pontos Oficiais do Edital */}
+              <div className="space-y-2.5 max-h-[44vh] overflow-y-auto pr-1">
+                {(COSPLAY_DATA.categories.find((c) => c.id === "cospobre")?.editalSections || []).map((sec, idx) => (
+                  <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#FFE600] p-2.5 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-[#FFE600] text-[#070B28] font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
+                        {sec.num}
+                      </span>
+                      <strong className="text-white text-xs font-sans uppercase">
+                        {sec.title}
+                      </strong>
+                    </div>
+                    <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
+                      {sec.text}
+                    </p>
+                    {sec.bullets && sec.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {sec.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
@@ -863,6 +905,16 @@ export default function EventHubModal({
                 </p>
               </div>
 
+              {/* Destaque de Premiação Oficial de Dança */}
+              <div className="bg-[#0A1138] p-3 border-2 border-green-400 text-center">
+                <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
+                  PREMIAÇÃO DO 1º LUGAR:
+                </span>
+                <span className="text-base font-black text-green-400 font-mono block mt-0.5">
+                  100,00$ + TROFÉU OFICIAL
+                </span>
+              </div>
+
               {/* Tabela de Valores Antecipados Destacada */}
               <div className="bg-[#0A1138] p-3.5 border-2 border-[#EC4899] space-y-2">
                 <div className="flex items-center justify-between">
@@ -892,21 +944,9 @@ export default function EventHubModal({
                 </p>
               </div>
 
-              {/* Grid dos 11 Pontos Oficiais do Edital */}
+              {/* Grid dos 11 Pontos Oficiais do Edital com Bullets */}
               <div className="space-y-2.5 max-h-[44vh] overflow-y-auto pr-1">
-                {[
-                  { num: "01", title: "Valores & Inscrição Antecipada", desc: "Inscrições antecipadas obrigatórias: Solo R$ 7,00 | Dupla R$ 14,00 | Grupos (Trio, Quarteto e Quinteto / de 3 a 5 integrantes) R$ 20,00 no total. Informar os nomes dos dançarinos e o estilo de dança." },
-                  { num: "02", title: "Número de Participantes", desc: "Apresentações individuais, em dupla ou em grupo, com no máximo 5 integrantes por apresentação." },
-                  { num: "03", title: "Tempo de Apresentação", desc: "Cada apresentação terá duração máxima de 5 minutos. O tempo deverá ser rigorosamente respeitado por todos." },
-                  { num: "04", title: "Músicas & Conteúdo", desc: "Envio prévio para avaliação da organização. Proibidas músicas com palavrões, conteúdo sexual explícito, mensagens ofensivas, preconceituosas ou incitação à violência." },
-                  { num: "05", title: "Coreografias e Figurinos", desc: "Apresentações adequadas ao público livre de todas as idades, sem gestos obscenos. Figurinos e acessórios permitidos desde que não ofereçam riscos." },
-                  { num: "06", title: "Faixa Etária & Acompanhamento", desc: "Aberta a participantes de todas as idades. Menores de 18 anos deverão estar acompanhados por responsável legal durante todo o evento, inclusive na apresentação." },
-                  { num: "07", title: "Organização & Tolerância", desc: "Comparecer com antecedência. Após a chamada no palco, tolerância máxima de 10 minutos. O não comparecimento resulta em eliminação." },
-                  { num: "08", title: "Avaliação do Júri", desc: "Os jurados avaliarão criatividade, ritmo, sincronia, execução dos movimentos e presença de palco." },
-                  { num: "09", title: "Respeito e Fair Play", desc: "Respeito mútuo a jurados, organização e demais competidores. Não serão toleradas ofensas, discriminação ou atitudes antidesportivas." },
-                  { num: "10", title: "Penalidades", desc: "O descumprimento das regras poderá resultar em advertência ou desclassificação imediata, conforme a gravidade." },
-                  { num: "11", title: "Premiação & Disposições Gerais", desc: "Premiação oficial divulgada pela organização. Em caso de empate, aplicação do critério técnico de desempate. Implica na aceitação plena do regulamento." },
-                ].map((item, idx) => (
+                {(STAGE_COMPETITIONS.find((c) => c.id === "danca")?.editalSections || []).map((item, idx) => (
                   <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#EC4899] p-2.5 transition-colors">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="bg-[#EC4899] text-white font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
@@ -917,8 +957,18 @@ export default function EventHubModal({
                       </strong>
                     </div>
                     <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
-                      {item.desc}
+                      {item.text}
                     </p>
+                    {item.bullets && item.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {item.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -932,7 +982,7 @@ export default function EventHubModal({
                   showPacman
                   onClick={() =>
                     openWhatsApp(
-                      `Olá, equipe Garranime! Li o edital e gostaria de inscrever minha apresentação na Competição de Dança Geek (Valores Antecipados: Solo R$ 7,00 / Dupla R$ 14,00 / Grupos R$ 20,00):\n\nNome do Dançarino / Grupo:\nModalidade (Solo / Dupla / Grupo):\nEstilo da Dança:\nQuantidade de Integrantes (máx 5):\nNome do Responsável:`
+                      `Olá, equipe Garranime! Li o edital e gostaria de inscrever minha apresentação na Competição de Dança Geek (Valores Antecipados: Solo R$ 7,00 / Dupla R$ 14,00 / Grupos R$ 20,00):\n\nNome do Dançarino / Grupo:\nModalidade (Solo / Dupla / Grupo):\nEstilo da Dança:\nQuantidade de Integrantes (máx 5):\nNome do Responsável:\n\nEstou ciente do regulamento para disputar o prêmio de 100,00$ + Troféu entregue no palco do evento!`
                     )
                   }
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}
@@ -952,7 +1002,7 @@ export default function EventHubModal({
                 <div className="inline-flex items-center gap-1.5 bg-[#0A1138] px-2.5 py-0.5 border border-[#FFE600]/50 mb-1">
                   <Swords className="w-3.5 h-3.5 text-[#FFE600]" />
                   <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-widest">
-                    ARENA DE COMBATE • REGRAS BÁSICAS
+                    ARENA DE COMBATE • REGRAS OFICIAIS
                   </span>
                 </div>
                 <h3 className="text-2xl font-black uppercase text-white font-sans">
@@ -970,7 +1020,7 @@ export default function EventHubModal({
                     PREMIAÇÃO DO CAMPEÃO:
                   </span>
                   <span className="text-sm sm:text-base font-black text-green-400 font-mono block mt-0.5">
-                    R$ 100,00 + BRINDE
+                    BRINDE ESPECIAL
                   </span>
                 </div>
 
@@ -984,40 +1034,9 @@ export default function EventHubModal({
                 </div>
               </div>
 
-              {/* Regras Básicas e Diretas (6 pontos) */}
+              {/* Grid dos Pontos Oficiais do Edital */}
               <div className="space-y-2.5 max-h-[46vh] overflow-y-auto pr-1">
-                {[
-                  {
-                    num: "01",
-                    title: "Inscrição & Taxa Antecipada",
-                    desc: "Inscrição antecipada a R$ 7,00 por participante. O participante deve possuir a pulseira oficial de entrada do evento. Vagas limitadas por chaveamento.",
-                  },
-                  {
-                    num: "02",
-                    title: "Formato dos Duelos",
-                    desc: "Combates individuais 1 contra 1 (1 vs 1) em chave eliminatória (mata-mata). Disputas em melhor de 3 rounds rápidos.",
-                  },
-                  {
-                    num: "03",
-                    title: "Equipamentos Fornecidos",
-                    desc: "Espadas seguras acolchoadas de espuma própria para soft combat e equipamentos de proteção individual fornecidos pela organização do evento.",
-                  },
-                  {
-                    num: "04",
-                    title: "Pontuação & Golpes Válidos",
-                    desc: "Toques limpos no tronco, braços e pernas contam 1 ponto. Quem somar mais pontos ou atingir o limite no round vence o confronto.",
-                  },
-                  {
-                    num: "05",
-                    title: "Golpes Proibidos & Penalidades",
-                    desc: "Terminantemente proibidos golpes na cabeça, pescoço e virilha, estocadas perigosas ou agarramento corpo a corpo. Descumprimento gera advertência ou desclassificação imediata.",
-                  },
-                  {
-                    num: "06",
-                    title: "Premiação Oficial",
-                    desc: "O grande vencedor da Arena de Combate recebe o troféu/título de Campeão + R$ 100,00 em dinheiro + Brinde Oficial Garranime!",
-                  },
-                ].map((rule, idx) => (
+                {(STAGE_COMPETITIONS.find((c) => c.id === "espadas")?.editalSections || []).map((rule, idx) => (
                   <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#FFE600] p-2.5 transition-colors">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="bg-[#FFE600] text-[#070B28] font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
@@ -1028,8 +1047,18 @@ export default function EventHubModal({
                       </strong>
                     </div>
                     <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
-                      {rule.desc}
+                      {rule.text}
                     </p>
+                    {rule.bullets && rule.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {rule.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1043,7 +1072,7 @@ export default function EventHubModal({
                   showPacman
                   onClick={() =>
                     openWhatsApp(
-                      `Olá, equipe Garranime! Gostaria de me inscrever no Torneio de Batalha de Espadas (Taxa Antecipada: R$ 7,00):\n\nNome Completo:\nNick / Apelido:\n\nConfirmo que possuo a pulseira de entrada do evento e estou ciente da taxa antecipada de R$ 7,00 para disputar o prêmio de R$ 100,00 + brinde!`
+                      `Olá, equipe Garranime! Gostaria de me inscrever no Torneio de Batalha de Espadas (Taxa Antecipada: R$ 7,00):\n\nNome Completo:\nNick / Apelido:\n\nConfirmo que possuo a pulseira de entrada do evento e estou ciente do regulamento para disputar o prêmio de Brinde Especial entregue no palco do evento!`
                     )
                   }
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}
@@ -1074,7 +1103,7 @@ export default function EventHubModal({
               {/* Aviso Obrigatório de Inscrições Pagas */}
               <div className="p-3 bg-[#0A1138] border-l-4 border-[#00D2FF] text-[11px] font-mono text-gray-300 space-y-1">
                 <span className="text-[#00D2FF] font-black uppercase block">
-                  ⚠️ INSCRIÇÕES ANTECIPADAS PAGAS:
+                  ⚠️ INSCRIÇÕES ANTECIPADAS PAGAS • 1º LUGAR: 100,00$ + TROFÉU:
                 </span>
                 <p>
                   As inscrições dos torneios gamer são pagas para composição da premiação e chaves: <strong>R$ 7,00 individual</strong> (Naruto e Clash) e <strong>R$ 14,00 por dupla</strong> (Free Fire).
@@ -1094,7 +1123,7 @@ export default function EventHubModal({
                     }}
                     icon={<Flame className="w-5 h-5 text-[#FF7A00]" />}
                   >
-                    FREE FIRE (R$ 14,00 POR DUPLA)
+                    FREE FIRE (R$ 14,00 DUPLA • PRÊMIO 100,00$)
                   </GamerButton>
                 </div>
 
@@ -1109,7 +1138,7 @@ export default function EventHubModal({
                     }}
                     icon={<Crown className="w-5 h-5 text-[#FFE600]" />}
                   >
-                    CLASH ROYALE (R$ 7,00 INDIVIDUAL)
+                    CLASH ROYALE (R$ 7,00 INDIVIDUAL • PRÊMIO 100,00$)
                   </GamerButton>
                 </div>
 
@@ -1124,7 +1153,7 @@ export default function EventHubModal({
                     }}
                     icon={<Gamepad2 className="w-5 h-5 text-[#00D2FF]" />}
                   >
-                    NARUTO STORM (R$ 7,00 INDIVIDUAL)
+                    NARUTO STORM (R$ 7,00 INDIVIDUAL • PRÊMIO 100,00$)
                   </GamerButton>
                 </div>
               </div>
@@ -1136,13 +1165,13 @@ export default function EventHubModal({
           )}
 
           {/* ========================================================== */}
-          {/* VIEW: DETALHE DO JOGO (POP-UP SOBRE O JOGO SELECIONADO)    */}
+          {/* VIEW: DETALHE DO JOGO (EDITAL OFICIAL DO JOGO SELECIONADO) */}
           {/* ========================================================== */}
           {view === "jogo_detalhe" && selectedGame && (
             <div className="space-y-4 animate-fadeIn">
               <div className="text-center pb-2 border-b border-[#1E2C6A]">
                 <span className="text-[10px] font-mono font-black uppercase text-[#00D2FF] tracking-widest bg-[#0A1138] px-2.5 py-0.5 border border-[#00D2FF]/40">
-                  {selectedGame.category}
+                  EDITAL OFICIAL • {selectedGame.category}
                 </span>
                 <h3 className="text-2xl font-black uppercase text-white font-sans mt-2">
                   {selectedGame.name}
@@ -1152,35 +1181,54 @@ export default function EventHubModal({
                 </p>
               </div>
 
-              {/* Caixa Destaque de Valor Antecipado */}
-              <div className="bg-[#0A1138] p-3 border-2 border-[#FFE600] flex items-center justify-between">
-                <div>
+              {/* Caixa Destaque de Premiação e Taxa Antecipada */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#0A1138] p-3 border-2 border-green-400 text-center">
                   <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
-                    TAXA DE INSCRIÇÃO ANTECIPADA:
+                    PREMIAÇÃO DO 1º LUGAR:
                   </span>
-                  <span className="text-sm font-black text-[#FFE600] font-mono">
+                  <span className="text-sm sm:text-base font-black text-green-400 font-mono block mt-0.5">
+                    {selectedGame.reward}
+                  </span>
+                </div>
+
+                <div className="bg-[#0A1138] p-3 border-2 border-[#FFE600] text-center">
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block font-mono">
+                    TAXA ANTECIPADA:
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-[#FFE600] font-mono block mt-0.5">
                     {selectedGame.feeBadge || selectedGame.fee}
                   </span>
                 </div>
-                <span className="text-[10px] bg-[#070B28] text-white px-2 py-1 border border-[#1E2C6A] font-mono font-bold uppercase">
-                  {selectedGame.isDuo ? "TORNEIO EM DUPLAS" : "INDIVIDUAL"}
-                </span>
               </div>
 
-              <div className="space-y-2.5 text-xs font-mono text-gray-300">
-                <div className="bg-[#0A1138] p-3 border-l-4 border-[#00D2FF]">
-                  <strong className="text-white block uppercase">Regulamento da Partida:</strong>
-                  {selectedGame.rules}
-                </div>
-
-                <div className="bg-[#0A1138] p-3 border-l-4 border-green-400">
-                  <strong className="text-white block uppercase">Premiação Oficial:</strong>
-                  {selectedGame.reward}
-                </div>
-
-                <div className="bg-[#070B28] p-3 border border-[#1E2C6A] text-[11px]">
-                  📌 <strong>Atenção:</strong> Vagas limitadas por chaveamento. A inscrição antecipada garante seu lugar na tabela oficial impressa no mural da Arena Gamer.
-                </div>
+              {/* Grid dos Pontos Oficiais do Edital do Jogo */}
+              <div className="space-y-2.5 max-h-[44vh] overflow-y-auto pr-1">
+                {(selectedGame.editalSections || []).map((sec, idx) => (
+                  <div key={idx} className="bg-[#0A1138] border border-[#1E2C6A] hover:border-[#00D2FF] p-2.5 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="bg-[#00D2FF] text-[#070B28] font-mono font-black text-[10px] px-1.5 py-0.2 rounded">
+                        {sec.num}
+                      </span>
+                      <strong className="text-white text-xs font-sans uppercase">
+                        {sec.title}
+                      </strong>
+                    </div>
+                    <p className="text-[11px] text-gray-300 font-mono leading-relaxed pl-6">
+                      {sec.text}
+                    </p>
+                    {sec.bullets && sec.bullets.length > 0 && (
+                      <div className="mt-2 pl-6 space-y-1">
+                        {sec.bullets.map((b, bIdx) => (
+                          <div key={bIdx} className="text-[11px] text-[#FFE600] font-mono leading-relaxed flex items-start gap-1.5">
+                            <span className="text-white shrink-0">•</span>
+                            <span>{b}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
@@ -1191,8 +1239,8 @@ export default function EventHubModal({
                   showPacman
                   onClick={() => {
                     const message = selectedGame.isDuo
-                      ? `Olá, equipe Garranime! Quero inscrever minha DUPLA no campeonato de ${selectedGame.name} (Taxa Antecipada: R$ 14,00 por dupla):\n\nNome da Dupla / Time:\nCapitão:\nNick Jogador 1:\nJogador 2:\nNick Jogador 2:\n\nEstamos cientes da taxa de R$ 14,00 e aguardamos as instruções para confirmação da vaga!`
-                      : `Olá, equipe Garranime! Quero me inscrever no campeonato gamer de ${selectedGame.name} (Taxa Antecipada: R$ 7,00):\n\nNome Completo:\nNick no Jogo:\n\nEstou ciente da taxa antecipada de R$ 7,00 e aguardo as instruções para confirmação da vaga!`;
+                      ? `Olá, equipe Garranime! Quero inscrever minha DUPLA no campeonato de ${selectedGame.name} (Taxa Antecipada: R$ 14,00 por dupla):\n\nNome da Dupla / Time:\nCapitão:\nNick Jogador 1:\nJogador 2:\nNick Jogador 2:\n\nEstamos cientes da taxa de R$ 14,00 e das regras do edital para disputar o prêmio de 100,00$ + troféu entregue no palco!`
+                      : `Olá, equipe Garranime! Quero me inscrever no campeonato gamer de ${selectedGame.name} (Taxa Antecipada: R$ 7,00):\n\nNome Completo:\nNick no Jogo:\nID de Jogador:\n\nEstou ciente da taxa antecipada de R$ 7,00 e das regras do edital para disputar o prêmio de 100,00$ + troféu entregue no palco!`;
                     openWhatsApp(message);
                   }}
                   icon={<MessageCircle className="w-5 h-5 fill-current" />}

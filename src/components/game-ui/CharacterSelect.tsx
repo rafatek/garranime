@@ -67,6 +67,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
   const [selectedHero, setSelectedHero] = useState(0);
   const [voteModalOpen, setVoteModalOpen] = useState(false);
   const [userVote, setUserVote] = useState<{ heroId: string; handle: string } | null>(null);
+  const [isVotingEnded, setIsVotingEnded] = useState(false);
 
   // Placar inicial zerado
   const [votes, setVotes] = useState<VoteCounts>({
@@ -93,6 +94,9 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
         const data = await res.json();
         if (data.success && data.votes) {
           setVotes(data.votes);
+          if (data.isClosed) {
+            setIsVotingEnded(true);
+          }
         }
       } catch (err) {
         console.warn("Usando contagem padrão de votos:", err);
@@ -101,6 +105,11 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
 
     fetchVotes();
   }, []);
+
+  // Votação encerra dia 18 de Novembro de 2026 às 23:59:59 (BRT)
+  const votingDeadlineReached =
+    isVotingEnded ||
+    (typeof window !== "undefined" && new Date() > new Date("2026-11-18T23:59:59-03:00"));
 
   const handleHeroSelect = (index: number) => {
     sound.playSelect();
@@ -158,10 +167,13 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
         
         {/* Header da Seção */}
         <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#070B28] border border-[#FFE600] px-4 py-1.5 mb-3 clip-chamfer">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-[#070B28] border border-[#FFE600] px-4 py-1.5 mb-3 clip-chamfer">
             <Trophy className="w-4 h-4 text-[#FFE600]" />
             <span className="text-xs sm:text-sm font-black uppercase text-[#FFE600] tracking-widest font-mono">
               VOTAÇÃO DA ARENA GEEK • BRINDE OFICIAL
+            </span>
+            <span className="bg-[#EF4444] text-white text-[10px] sm:text-xs font-black px-2 py-0.5 uppercase tracking-wider font-mono">
+              ⏰ VOTAÇÃO ATÉ 18 DE NOVEMBRO
             </span>
           </div>
 
@@ -169,7 +181,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
             ESCOLHA SEU <span className="text-[#00D2FF]">GUERREIRO</span> & <span className="text-[#FF7A00]">VOTE</span>
           </h2>
           <p className="max-w-xl mx-auto mt-2 text-xs sm:text-sm text-gray-300">
-            Conheça os guerreiros, vote no seu herói favorito e ajude a escolher o brinde oficial do evento!
+            Conheça os guerreiros, vote no seu herói favorito <strong className="text-[#FFE600]">até dia 18 de Novembro</strong> e ajude a escolher o brinde oficial do evento!
           </p>
 
           {/* Banner de Destaque da Caneca Temática */}
@@ -179,23 +191,33 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
                 <Coffee className="w-6 h-6" />
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-wider block">
-                  ☕ CANECA PERSONALIZADA OFICIAL
-                </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-black uppercase text-[#FFE600] tracking-wider block">
+                    ☕ CANECA PERSONALIZADA OFICIAL
+                  </span>
+                  <span className="text-[9px] font-mono bg-red-600 text-white font-black px-1.5 py-0.5 uppercase">
+                    ⏰ VOTAÇÃO ATÉ DIA 18/NOV
+                  </span>
+                </div>
                 <p className="text-xs sm:text-sm text-white font-bold leading-snug">
                   O guerreiro mais votado virará uma caneca exclusiva + brindes secretos revelados no palco!
                 </p>
                 <p className="text-[11px] text-gray-400 font-mono">
-                  Siga o <strong>@garranime</strong> no Instagram e confirme seu voto para concorrer.
+                  Siga o <strong>@garranime</strong> no Instagram e confirme seu voto até <strong>18 de Novembro</strong> para concorrer.
                 </p>
               </div>
             </div>
 
             <button
               onClick={handleOpenVoteModal}
-              className="w-full sm:w-auto shrink-0 px-4 py-2 bg-[#FF7A00] hover:bg-[#ff8c1a] text-[#070B28] font-mono font-black text-xs uppercase tracking-wider border-2 border-white shonen-shadow-cyan transition-all"
+              disabled={votingDeadlineReached}
+              className={`w-full sm:w-auto shrink-0 px-4 py-2 font-mono font-black text-xs uppercase tracking-wider border-2 border-white transition-all ${
+                votingDeadlineReached
+                  ? "bg-gray-700 text-gray-300 cursor-not-allowed border-gray-500"
+                  : "bg-[#FF7A00] hover:bg-[#ff8c1a] text-[#070B28] shonen-shadow-cyan"
+              }`}
             >
-              VOTAR AGORA
+              {votingDeadlineReached ? "VOTAÇÃO ENCERRADA" : "VOTAR AGORA"}
             </button>
           </div>
         </div>
@@ -295,14 +317,17 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
                 <GamerButton
                   fullWidth
                   size="md"
-                  ghost="orange"
-                  showPacman
+                  ghost={votingDeadlineReached ? "none" : "orange"}
+                  showPacman={!votingDeadlineReached}
+                  disabled={votingDeadlineReached}
                   onClick={handleOpenVoteModal}
                   icon={<Trophy className="w-5 h-5 text-[#FFE600]" />}
                 >
-                  {userVote?.heroId === current.id
+                  {votingDeadlineReached
+                    ? "VOTAÇÃO ENCERRADA EM 18/NOV"
+                    : userVote?.heroId === current.id
                     ? `SEU VOTO ESTÁ NO ${current.name.toUpperCase()} (CONFIRMADO)`
-                    : `VOTAR NO ${current.name.toUpperCase()} (VALENDO CANECA)`}
+                    : `VOTAR NO ${current.name.toUpperCase()} (ATÉ 18/NOV)`}
                 </GamerButton>
               </div>
             </div>
@@ -324,11 +349,16 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
               </h3>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-ping" />
-              <span className="text-xs font-mono font-bold text-gray-300">
-                Total de Votos: <strong className="text-[#FFE600] text-sm">{votes.total}</strong>
+            <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
+              <span className="text-[11px] font-mono bg-red-600/20 border border-red-500/50 text-red-300 font-bold px-2 py-0.5">
+                ⏰ Votação encerra dia 18 de Novembro
               </span>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-ping" />
+                <span className="text-xs font-mono font-bold text-gray-300">
+                  Total de Votos: <strong className="text-[#FFE600] text-sm">{votes.total}</strong>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -405,7 +435,7 @@ export default function CharacterSelect({ onOpenSalas }: CharacterSelectProps) {
                 Voto computado para <strong>@{userVote.handle}</strong>!
               </span>
               <span className="text-gray-300">
-                Resultado oficial revelado no palco do Garranime (22/Nov)!
+                Votações até 18/Nov • Resultado oficial revelado no palco do Garranime (22/Nov)!
               </span>
             </div>
           )}
