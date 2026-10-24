@@ -131,8 +131,12 @@ function saveLocalDatabase(data: DatabaseSchema): void {
  */
 export function isRedisAvailable(): boolean {
   return !!(
-    (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) &&
-    (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)
+    (process.env.KV_REST_API_URL ||
+      process.env.UPSTASH_REDIS_REST_URL ||
+      process.env.REDIS_URL) &&
+    (process.env.KV_REST_API_TOKEN ||
+      process.env.UPSTASH_REDIS_REST_TOKEN ||
+      process.env.REDIS_TOKEN)
   );
 }
 
@@ -140,18 +144,28 @@ export function isRedisAvailable(): boolean {
  * Tenta inicializar o cliente Redis caso as variáveis da Vercel ou Upstash estejam presentes.
  */
 function getRedisClient(): Redis | null {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url =
+    process.env.KV_REST_API_URL ||
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.REDIS_URL;
+  const token =
+    process.env.KV_REST_API_TOKEN ||
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.REDIS_TOKEN;
 
   if (url && token) {
     try {
       return new Redis({ url, token });
     } catch (err) {
-      console.warn("Falha ao inicializar Redis, usando fallback local:", err);
-      return null;
+      console.warn("Falha ao inicializar Redis com credenciais explícitas:", err);
     }
   }
-  return null;
+
+  try {
+    return Redis.fromEnv();
+  } catch {
+    return null;
+  }
 }
 
 /**
